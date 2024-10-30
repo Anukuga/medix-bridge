@@ -1,45 +1,43 @@
-/*
-
-TemplateMo 566 Medic Care
-
-https://templatemo.com/tm-566-medic-care
-
-*/
-
 /*---------------------------------------
-  CUSTOM PROPERTIES ( VARIABLES )             
+  ROOT VARIABLES
 -----------------------------------------*/
+
 :root {
-  --white-color:                  #FFFFFF;
-  --primary-color:                #247cff;
-  --section-bg-color:             #F9F9F9;
-  --dark-color:                   #000000;
-  --title-color:                  #565758;
-  --p-color:                      #717275;
-  --border-color:                 #eaeaea;
+  --primary-color: #5535df;
+  --secondary-color: #ff9f1c;
+  --section-bg-color: #F9F9F9;
+  --white-color: #FFFFFF;
+  --black-color: #000000;
+  --title-color: #565758;
+  --p-color: #717275;
+  --border-color: #eaeaea;
 
-  --body-font-family:             'Open Sans', sans-serif;
+  --body-font-family: 'Open Sans', sans-serif;
 
-  --h1-font-size:                 48px;
-  --h2-font-size:                 36px;
-  --h3-font-size:                 32px;
-  --h4-font-size:                 28px;
-  --h5-font-size:                 24px;
-  --h6-font-size:                 22px;
-  --p-font-size:                  18px;
-  --menu-font-size:               16px;
+  --h1-font-size: 48px;
+  --h2-font-size: 36px;
+  --h3-font-size: 32px;
+  --h4-font-size: 28px;
+  --h5-font-size: 24px;
+  --h6-font-size: 22px;
+  --p-font-size: 18px;
+  --menu-font-size: 16px;
 
-  --font-weight-light:            300;
-  --font-weight-normal:           400;
-  --font-weight-semibold:         600;
-  --font-weight-bold:             700;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 }
 
+/*---------------------------------------
+  BASE STYLES            
+-----------------------------------------*/
+
 body {
-    background: var(--white-color);
-    font-family: var(--body-font-family);    
-    position: relative;
-    padding-top: 94px;
+  background: var(--white-color);
+  font-family: var(--body-font-family);
+  position: relative;
+  padding-top: 94px;
 }
 
 /*---------------------------------------
@@ -51,7 +49,7 @@ h3,
 h4,
 h5,
 h6 {
-  color: var(--dark-color);
+  color: var(--black-color);
   line-height: inherit;
 }
 
@@ -101,7 +99,7 @@ p {
   letter-spacing: 0.5px;
 }
 
-a, 
+a,
 button {
   touch-action: manipulation;
   transition: all 0.3s;
@@ -114,6 +112,10 @@ a {
 
 a:hover {
   color: var(--primary-color);
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
 }
 
 .section-padding {
@@ -137,9 +139,9 @@ a:hover {
   box-sizing: border-box;
   margin: 0;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   overflow: hidden;
   border-radius: 0;
   text-transform: uppercase;
@@ -165,25 +167,6 @@ a:hover {
 b,
 strong {
   font-weight: var(--font-weight-bold);
-}
-
-/*---------------------------------------
-  LIST GROUP               
------------------------------------------*/
-.list-group-item {
-  background-color: transparent;
-  color: var(--p-color);
-  font-size: var(--p-font-size);
-  padding: 1rem 0;
-}
-
-.list-group-item:first-child {
-  padding-top: 0;
-}
-
-.list-group-item span {
-  font-weight: var(--font-weight-semibold);
-  margin-left: auto;
 }
 
 /*---------------------------------------
@@ -227,25 +210,31 @@ strong {
   0% {
     opacity: 0;
   }
+
   5% {
     opacity: 0;
     transform: translateY(5px);
   }
+
   10% {
     opacity: 1;
     transform: translateY(0px);
   }
+
   25% {
     opacity: 1;
     transform: translateY(0px);
   }
+
   30% {
     opacity: 0;
     transform: translateY(5px);
   }
+
   80% {
     opacity: 0;
   }
+
   100% {
     opacity: 0;
   }
@@ -254,7 +243,7 @@ strong {
 /*---------------------------------------
   HERO              
 -----------------------------------------*/
-.hero {  
+.hero {
   padding-top: 0rem;
 }
 
@@ -340,14 +329,18 @@ strong {
   padding-bottom: 15px;
 }
 
-.navbar-nav .nav-item.active .nav-link, 
-.nav-link:focus, 
+.navbar-nav .nav-item.active .nav-link,
+.nav-link:focus,
 .nav-link:hover {
-  color: var(--dark-color);
+  color: var(--black-color);
 }
 
 .nav-link:focus {
   color: var(--p-color);
+}
+
+.nav-link:hover {
+  color: var(--secondary-color);
 }
 
 .navbar-toggler {
@@ -386,7 +379,7 @@ strong {
 }
 
 .navbar-toggler .navbar-toggler-icon {
-  background: var(--dark-color);
+  background: var(--black-color);
   transition: background 10ms 300ms ease;
   display: block;
   width: 30px;
@@ -402,7 +395,7 @@ strong {
   position: absolute;
   right: 0;
   left: 0;
-  background: var(--dark-color);
+  background: var(--black-color);
   width: 30px;
   height: 2px;
   content: '';
@@ -416,6 +409,7 @@ strong {
   top: 8px;
 }
 
+/* TODO: Change classnames from Timeline to new name used for section */
 /*---------------------------------------
   TIMELINE               
 -----------------------------------------*/
@@ -428,13 +422,13 @@ strong {
   flex-direction: row-reverse;
 }
 
-.timeline h3, 
+.timeline h3,
 .timeline p {
   padding: 10px 30px;
-} 
+}
 
 .timeline h3 {
-  background: var(--dark-color);
+  background: var(--black-color);
 }
 
 .timeline::before {
@@ -464,7 +458,7 @@ strong {
 .timeline-nodes:nth-child(odd) .timeline-date {
   text-align: left;
 }
- 
+
 .timeline-nodes:nth-child(even) .timeline-date {
   text-align: right;
 }
@@ -476,7 +470,7 @@ strong {
   left: 100%;
   transform: translate(0, -50%);
   width: 0;
-  border-left: 10px solid var(--dark-color);
+  border-left: 10px solid var(--black-color);
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
 }
@@ -493,7 +487,7 @@ strong {
   right: 100%;
   transform: translate(0, -50%);
   width: 0;
-  border-right: 10px solid var(--dark-color);
+  border-right: 10px solid var(--black-color);
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
 }
@@ -512,9 +506,9 @@ strong {
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translate(-50%,0);
+  transform: translate(-50%, 0);
   background: var(--white-color);
-  box-shadow: 0 1rem 3rem rgba(0,0,0,.175);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
   z-index: 1;
 }
 
@@ -529,6 +523,7 @@ strong {
 }
 
 @media (max-width: 767px) {
+
   .timeline-nodes:nth-child(odd) h3,
   .timeline-nodes:nth-child(odd) p {
     text-align: left;
@@ -560,7 +555,7 @@ strong {
     left: auto;
     right: 100%;
     border-left: 0;
-    border-right: 10px solid var(--dark-color);
+    border-right: 10px solid var(--black-color);
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
   }
@@ -568,7 +563,7 @@ strong {
   .timeline-nodes:nth-child(even) h3::after {
     right: 100%;
     width: 0;
-    border-right: 10px solid var(--dark-color);
+    border-right: 10px solid var(--black-color);
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
   }
@@ -639,12 +634,12 @@ strong {
 }
 
 .reviews-carousel .owl-item.active.center .reviews-thumb {
-  background: var(--dark-color);
+  background: var(--black-color);
 }
 
 .reviews-carousel .owl-item.active.center .reviews-thumb,
 .reviews-carousel .owl-item.active.center .reviews-text {
-  color: var(--white-color);
+  color: var(--secondary-color);
 }
 
 .reviews-carousel .owl-nav {
@@ -696,36 +691,6 @@ strong {
 
 .reviews-carousel .owl-next span::before {
   content: "\f138";
-}
-
-/*---------------------------------------
-  BOOKING FORM            
------------------------------------------*/
-
-.booking-form .form-control {
-  background: transparent;
-  border-radius: 0;
-  border: 0;
-  border-bottom: 1px solid var(--border-color);
-  color: #6c757d;
-  font-weight: var(--font-weight-normal);
-  padding-top: 12px;
-  padding-bottom: 12px;
-  margin-top: 15px;
-  transition: all 0.3s;
-}
-
-.booking-form #submit-button {
-  background: var(--dark-color);
-  border-bottom: 0;
-  font-weight: var(--font-weight-semibold);
-  color: var(--white-color);
-  text-transform: uppercase;
-  margin-top: 35px;
-}
-
-.booking-form #submit-button:hover {
-  background: var(--primary-color);
 }
 
 /*---------------------------------------
