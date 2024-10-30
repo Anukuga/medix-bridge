@@ -15,17 +15,17 @@
 
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
-    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
 
-    <link href="css/owl.carousel.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
 
-    <link href="css/owl.theme.default.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
 
-    <link href="css/templatemo-medic-care.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
     <!---->
 </head>
 
@@ -69,11 +69,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#booking">Booking</a>
+                            <a class="nav-link" href="#contact">Contact</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#contact">Contact</a>
+                            <a class="nav-link" href="#">Portal</a>
                         </li>
                     </ul>
                 </div>
@@ -121,9 +121,8 @@
                                 iaculis.</p>
 
                             <div class="heroLinks d-flex flex-wrap align-items-center">
-                                <a class="custom-link me-4" href="#about" data-hover="Learn More">Learn More</a>
-
-                                <p class="contact-phone mb-0"><i class="bi-phone"></i> 010-020-0340</p>
+                                <a class="custom-link me-4" href="#" data-hover="Register Now">Go To Portal</a>
+                                <!--TODO: Make this dynamic: if logged in: "View Your Dashboard", if not: "Register Now"  -->
                             </div>
                         </div>
                     </div>
@@ -153,7 +152,7 @@
                     <div class="col-lg-4 col-md-5 col-12 mx-auto">
                         <div
                             class="featured-circle bg-white shadow-lg d-flex justify-content-center align-items-center">
-                            <p class="featured-text"><span class="featured-number">12</span> Years<br> of Experiences
+                            <p class="featured-text"><span class="featured-number">10</span> Years<br> of Experiences
                             </p>
                         </div>
                     </div>
@@ -198,7 +197,7 @@
                             </div>
 
                             <div class="col-3 col-sm-1 order-2 timeline-icons text-md-center">
-                                <i class="bi-patch-check-fill timeline-icon"></i>
+                                <i class="bi-arrow-down timeline-icon"></i>
                             </div>
 
                             <div class="col-9 col-md-5 ps-md-3 ps-lg-0 order-1 order-md-3 py-4 timeline-date">
@@ -411,92 +410,22 @@
             </div>
         </section>
 
-        <section class="section-padding" id="booking">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-8 col-12 mx-auto">
-                        <div class="booking-form">
-
-                            <h2 class="text-center mb-lg-3 mb-2">Book an appointment</h2>
-
-                            <form role="form" action="#booking" method="post">
-                                <div class="row">
-                                    <div class="col-lg-6 col-12">
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            placeholder="Full name" required>
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-                                        <input type="email" name="email" id="email" pattern="[^ @]*@[^ @]*"
-                                            class="form-control" placeholder="Email address" required>
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-                                        <input type="telephone" name="phone" id="phone"
-                                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control"
-                                            placeholder="Phone: 123-456-7890">
-                                    </div>
-
-                                    <div class="col-lg-6 col-12">
-                                        <input type="date" name="date" id="date" value="" class="form-control">
-
-                                    </div>
-
-                                    <div class="col-12">
-                                        <textarea class="form-control" rows="5" id="message" name="message"
-                                            placeholder="Additional Message"></textarea>
-                                    </div>
-
-                                    <div class="col-lg-3 col-md-4 col-6 mx-auto">
-                                        <button type="submit" class="form-control" id="submit-button">Book Now</button>
-                                    </div>
-                                </div>
-                            </form>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
     </main>
 
     <footer class="site-footer section-padding" id="contact">
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-5 me-auto col-12">
-                    <h5 class="mb-lg-4 mb-3">Opening Hours</h5>
-
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex">
-                            Sunday : Closed
-                        </li>
-
-                        <li class="list-group-item d-flex">
-                            Monday, Tuesday - Firday
-                            <span>8:00 AM - 3:30 PM</span>
-                        </li>
-
-                        <li class="list-group-item d-flex">
-                            Saturday
-                            <span>10:30 AM - 5:30 PM</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-2 col-md-6 col-12 my-4 my-lg-0">
-                    <h5 class="mb-lg-4 mb-3">Our Clinic</h5>
+                <div class="col-lg-5 col-md-6 col-12 my-4 my-lg-0">
+                    <h5 class="mb-lg-4 mb-3">MedixBridge Inc.</h5>
 
                     <p><a href="mailto:hello@medixbridge.de">hello@medixbridge.de</a>
                     <p>
 
-                    <p>123 Digital Art Street, San Diego, CA 92123</p>
+                    <p>Max-Breiherr-Straße 32, 84347 Pfarrkirchen</p>
                 </div>
 
-                <div class="col-lg-3 col-md-6 col-12 ms-auto">
+                <div class="col-lg-5 col-md-6 col-12 ms-auto">
                     <h5 class="mb-lg-4 mb-2">Socials</h5>
 
                     <ul class="social-icon">
