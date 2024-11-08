@@ -28,6 +28,6 @@ function setActiveLink(activePage) {
 }
 
 const currentPath = window.location.pathname;
-loadTemplate("header", "header.html", currentPath);
-loadTemplate("nav", "nav.html");
-loadTemplate("footer", "footer.html");
+loadTemplate("header", "loadedTemplates/header.html", currentPath);
+loadTemplate("nav", "loadedTemplates/nav.html");
+loadTemplate("footer", "loadedTemplates/footer.html");
