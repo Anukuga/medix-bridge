@@ -1,0 +1,73 @@
+<!-- TODO: FIX WELCOME BACK MESSAGE -->
+<!-- Welcome Back Slide-in (Based on Session Cookie) Start -->
+<!-- <div class="alert alert-success" id="welcomeAlert"
+    style="display: none; position: fixed; top: -100px; left: 50%; transform: translateX(-50%); z-Index: 2000"
+    role="alert">
+    Welcome back, <span id="username"></span>!
+</div>
+<?php
+$showWelcomeBack = isset($_GET['login']) && $_GET['login'] === 'success';
+?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // var showWelcomeBack = <? php echo json_encode($showWelcomeBack); ?>;
+        var user = getCookie("customSessionUser");
+
+        function checkForWelcomeBack() {
+            var user = getCookie("customSessionUser");
+            if (user) {
+                var welcomeAlert = document.getElementById("welcomeAlert");
+                var usernameSpan = document.getElementById("username");
+                usernameSpan.textContent = user;
+                welcomeAlert.style.display = "block";
+                welcomeAlert.classList.add("slide-in");
+
+                setTimeout(function () {
+                    welcomeAlert.classList.replace("slide-in", "slide-out");
+                }, 3000);
+            }
+        }
+
+        if (user && showWelcomeBack) {
+            checkForWelcomeBack()
+        }
+    });
+</script> -->
+<!-- Welcome Back Popup (Based on Session Cookie) End -->
+
+
+<!-- Sidebar Start -->
+<div class="sidebar pe-4 pb-3">
+    <nav class="navbar bg-secondary navbar-dark">
+        <a href="index.html" class="navbar-brand mx-4 mb-3">
+            <img src="img/logo.png" alt="MedixBridge logo" style="margin-left: -5%;">
+        </a>
+        <div class="d-flex align-items-center ms-4 mb-4">
+            <div class="position-relative">
+                <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                <div
+                    class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                </div>
+            </div>
+            <div class="ms-3">
+                <h6 class="mb-0">
+                    <?php echo $doctor_name; ?>
+                </h6>
+                <span>
+                    <?php echo $doctor_department; ?>
+                </span>
+            </div>
+        </div>
+        <div class="navbar-nav w-100">
+            <a href="index.html" class="nav-item nav-link" id="homeLink"><i class="fa fa-house me-2"></i>Home</a>
+            <a href="my-patients.html" class="nav-item nav-link" id="myPatientsLink"><i
+                    class="fa fa-hospital-user me-2"></i>My Patients</a>
+            <a href="register-patient.html" class="nav-item nav-link" id="registerPatientLink"><i
+                    class="fa fa-user-plus me-2"></i>Register Patient</a>
+            <a href="signin.html" class="nav-item nav-link" id="logoutLink"><i
+                    class="fa fa-right-from-bracket me-2"></i>Log out</a>
+        </div>
+    </nav>
+</div>
+<!-- Sidebar End -->
