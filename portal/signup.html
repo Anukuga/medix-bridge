@@ -43,32 +43,73 @@
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-secondary rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="index.html" class="">
-                                <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>DarkPan</h3>
+                            <a href="../mediBase/index.html" class="">
+                                <img src="img/logo.png" alt="mediBase logo" style="margin-left: -5%;">
                             </a>
-                            <h3>Sign Up</h3>
+                            <h3>Portal</h3>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingText" placeholder="jhondoe">
-                            <label for="floatingText">Username</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Email address</label>
-                        </div>
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Password</label>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                        <form action="<?php htmlspecialchars($_SERVER[" PHP_SELF"]) ?>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingText" placeholder="John Doe"
+                                    name="name" required>
+                                <label for="floatingText">Name</label>
                             </div>
-                            <a href="">Forgot Password</a>
-                        </div>
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
-                        <p class="text-center mb-0">Already have an Account? <a href="">Sign In</a></p>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingText" placeholder="jhondoe"
+                                    name="username" required>
+                                <label for="floatingText">Username</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="floatingInput"
+                                    placeholder="name@example.com" name="email" required>
+                                <label for="floatingInput">Email address</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control" id="speciality" name="speciality">
+                                    <option value="" disabled selected>Speciality</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="Dermatology">Dermatology</option>
+                                    <option value="Obstetrics and Gynecology (OB/GYN)">Obstetrics & Gynecology</option>
+                                    <option value="Psychiatry">Psychiatry</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Emergency">Emergency</option>
+                                </select>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="floatingText" name="birth_date" required>
+                                <label for="floatingText">Birthdate</label>
+                            </div>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                    name="password" required>
+                                <label for="floatingPassword">Password</label>
+                            </div>
+                            <div class="mb-4">
+                                <input type="checkbox" id="toggle-password">
+                                <label for="toggle-password">Show Password</label>
+                            </div>
+                            <div id="password-requirements" class="mb-4">
+                                <p id="min-length" class="requirement">Minimum 8 characters</p>
+                                <p id="lowercase" class="requirement">Contains lowercase letter</p>
+                                <p id="uppercase" class="requirement">Contains uppercase letter</p>
+                                <p id="number" class="requirement">Contains number</p>
+                                <p id="special-char" class="requirement">Contains special character</p>
+                                <hr>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+                                    <label class="form-check-label" for="exampleCheck1">I accept the <a href="#">terms
+                                            and conditions</a></label>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mb-4">
+                            </div>
+                            <button type="submit" id="signupButton" class="btn btn-primary py-3 w-100 mb-4">Sign
+                                Up</button>
+                            <p class="text-center mb-0">Already have an Account? <a href="signin.php">Sign In</a></p>
+                        </form>
                     </div>
                 </div>
             </div>
