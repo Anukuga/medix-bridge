@@ -5,7 +5,7 @@ async function loadTemplate(elementId, filePath, activePage = null) {
         const htmlContent = await response.text();
         document.getElementById(elementId).innerHTML = htmlContent;
 
-        if (elementId === "header" && activePage) {
+        if (elementId === "headerLoadedTemplate" && activePage) {
             setActiveLink(activePage);
         }
     } catch (error) {
@@ -31,9 +31,9 @@ const currentPath = window.location.pathname;
 const templateFolder = "loadedTemplates";
 
 (async function () {
-    await loadTemplate("header", `${templateFolder}/header.html`, currentPath);
-    await loadTemplate("nav", `${templateFolder}/nav.html`);
-    await loadTemplate("footer", `${templateFolder}/footer.html`);
+    await loadTemplate("headerLoadedTemplate", `${templateFolder}/header.html`, currentPath);
+    await loadTemplate("navLoadedTemplate", `${templateFolder}/nav.html`);
+    await loadTemplate("footerLoadedTemplate", `${templateFolder}/footer.html`);
 
     initMain();
 })();
