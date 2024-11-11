@@ -2,6 +2,10 @@ function initMain() {
     (function ($) {
         "use strict";
 
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+
         // Spinner
         let spinner = function () {
             setTimeout(function () {
@@ -32,9 +36,23 @@ function initMain() {
         });
 
         // Calendar
-        $("#calendar").datetimepicker({
+        $('#calendar-prev').datetimepicker({
+            viewDate: new Date(currentYear, currentMonth - 1, 1),
+            format: 'L',
             inline: true,
-            format: "L",
+            useCurrent: false
+        });
+
+        $('#calendar-current').datetimepicker({
+            format: 'L',
+            inline: true
+        });
+
+        $('#calendar-next').datetimepicker({
+            viewDate: new Date(currentYear, currentMonth + 1, 1),
+            format: 'L',
+            inline: true,
+            useCurrent: false
         });
     })(jQuery);
 
