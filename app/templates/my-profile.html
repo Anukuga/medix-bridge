@@ -102,13 +102,15 @@
                         <div class="container-fluid pt-4 px-4">
                                 <div class="bg-secondary rounded-top p-4">
                                         <h2 class="mb-4">Your Profile Details</h2>
-                                        <form action="">
+                                        <form action="/my-profile" method="POST">
                                                 <div class="row mb-3">
                                                         <label for="firstName" class="col-sm-2 col-form-label">First
                                                                 Name</label>
                                                         <div class="col-sm-10">
                                                                 <input type="text" class="form-control" id="firstName"
-                                                                        name="first_name" disabled required>
+                                                                        name="first_name"
+                                                                        value="{{ user_profile.first_name }}" disabled
+                                                                        required>
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -116,7 +118,9 @@
                                                                 Name</label>
                                                         <div class="col-sm-10">
                                                                 <input type="text" class="form-control" id="lastName"
-                                                                        name="last_name" disabled required>
+                                                                        name="last_name"
+                                                                        value="{{ user_profile.last_name }}" disabled
+                                                                        required>
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -124,7 +128,9 @@
                                                                 Birth</label>
                                                         <div class="col-sm-10">
                                                                 <input type="date" class="form-control" id="birthDate"
-                                                                        name="birth_date" disabled required>
+                                                                        name="birth_date"
+                                                                        value="{{ user_profile.birth_date }}" disabled
+                                                                        required>
                                                         </div>
                                                 </div>
                                                 <fieldset class="row mb-3">
@@ -133,14 +139,18 @@
                                                                 <div class="form-check">
                                                                         <input class="form-check-input" type="radio"
                                                                                 name="gender" id="genderMale"
-                                                                                value="male" disabled>
+                                                                                value="male" {% if
+                                                                                user_profile.gender=='male' %}checked{%
+                                                                                endif %} disabled>
                                                                         <label class="form-check-label"
                                                                                 for="genderMale">Male</label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                         <input class="form-check-input" type="radio"
                                                                                 name="gender" id="genderFemale"
-                                                                                value="female" disabled>
+                                                                                value="female" {% if
+                                                                                user_profile.gender=='female'
+                                                                                %}checked{% endif %} disabled>
                                                                         <label class="form-check-label"
                                                                                 for="genderFemale">Female</label>
                                                                 </div>
@@ -153,351 +163,950 @@
                                                                 <!-- Country Names -->
                                                                 <select class="form-select" id="nationality"
                                                                         name="nationality" required disabled>
-                                                                        <option value="" selected disabled>Select
-                                                                                Country</option>
-                                                                        <option value="Afghanistan">Afghanistan</option>
-                                                                        <option value="Aland Islands">Aland Islands
+                                                                        <option value="" {% if
+                                                                                user_profile.nationality==""
+                                                                                %}selected{% endif %} disabled>Select
+                                                                                Country
                                                                         </option>
-                                                                        <option value="Albania">Albania</option>
-                                                                        <option value="Algeria">Algeria</option>
-                                                                        <option value="American Samoa">American Samoa
+                                                                        <option value="Afghanistan" {% if
+                                                                                user_profile.nationality=="Afghanistan"
+                                                                                %}selected{% endif %}>Afghanistan
                                                                         </option>
-                                                                        <option value="Andorra">Andorra</option>
-                                                                        <option value="Angola">Angola</option>
-                                                                        <option value="Anguilla">Anguilla</option>
-                                                                        <option value="Antarctica">Antarctica</option>
-                                                                        <option value="Antigua and Barbuda">Antigua and
+                                                                        <option value="Aland Islands" {% if
+                                                                                user_profile.nationality=="Aland Islands"
+                                                                                %}selected{% endif %}>Aland Islands
+                                                                        </option>
+                                                                        <option value="Albania" {% if
+                                                                                user_profile.nationality=="Albania"
+                                                                                %}selected{% endif %}>Albania</option>
+                                                                        <option value="Algeria" {% if
+                                                                                user_profile.nationality=="Algeria"
+                                                                                %}selected{% endif %}>Algeria</option>
+                                                                        <option value="American Samoa" {% if
+                                                                                user_profile.nationality=="American Samoa"
+                                                                                %}selected{% endif %}>American Samoa
+                                                                        </option>
+                                                                        <option value="Andorra" {% if
+                                                                                user_profile.nationality=="Andorra"
+                                                                                %}selected{% endif %}>Andorra</option>
+                                                                        <option value="Angola" {% if
+                                                                                user_profile.nationality=="Angola"
+                                                                                %}selected{% endif %}>Angola</option>
+                                                                        <option value="Anguilla" {% if
+                                                                                user_profile.nationality=="Anguilla"
+                                                                                %}selected{% endif %}>Anguilla</option>
+                                                                        <option value="Antarctica" {% if
+                                                                                user_profile.nationality=="Antarctica"
+                                                                                %}selected{% endif %}>Antarctica
+                                                                        </option>
+                                                                        <option value="Antigua and Barbuda" {% if
+                                                                                user_profile.nationality=="Antigua and Barbuda"
+                                                                                %}selected{% endif %}>Antigua and
                                                                                 Barbuda</option>
-                                                                        <option value="Argentina">Argentina</option>
-                                                                        <option value="Armenia">Armenia</option>
-                                                                        <option value="Aruba">Aruba</option>
-                                                                        <option value="Australia">Australia</option>
-                                                                        <option value="Austria">Austria</option>
-                                                                        <option value="Azerbaijan">Azerbaijan</option>
-                                                                        <option value="Bahamas">Bahamas</option>
-                                                                        <option value="Bahrain">Bahrain</option>
-                                                                        <option value="Bangladesh">Bangladesh</option>
-                                                                        <option value="Barbados">Barbados</option>
-                                                                        <option value="Belarus">Belarus</option>
-                                                                        <option value="Belgium">Belgium</option>
-                                                                        <option value="Belize">Belize</option>
-                                                                        <option value="Benin">Benin</option>
-                                                                        <option value="Bermuda">Bermuda</option>
-                                                                        <option value="Bhutan">Bhutan</option>
-                                                                        <option value="Bolivia">Bolivia</option>
-                                                                        <option
-                                                                                value="Bonaire, Sint Eustatius and Saba">
-                                                                                Bonaire, Sint Eustatius and Saba
+                                                                        <option value="Argentina" {% if
+                                                                                user_profile.nationality=="Argentina"
+                                                                                %}selected{% endif %}>Argentina</option>
+                                                                        <option value="Armenia" {% if
+                                                                                user_profile.nationality=="Armenia"
+                                                                                %}selected{% endif %}>Armenia</option>
+                                                                        <option value="Aruba" {% if
+                                                                                user_profile.nationality=="Aruba"
+                                                                                %}selected{% endif %}>Aruba</option>
+                                                                        <option value="Australia" {% if
+                                                                                user_profile.nationality=="Australia"
+                                                                                %}selected{% endif %}>Australia</option>
+                                                                        <option value="Austria" {% if
+                                                                                user_profile.nationality=="Austria"
+                                                                                %}selected{% endif %}>Austria</option>
+                                                                        <option value="Azerbaijan" {% if
+                                                                                user_profile.nationality=="Azerbaijan"
+                                                                                %}selected{% endif %}>Azerbaijan
                                                                         </option>
-                                                                        <option value="Bosnia and Herzegovina">Bosnia
-                                                                                and Herzegovina</option>
-                                                                        <option value="Botswana">Botswana</option>
-                                                                        <option value="Bouvet Island">Bouvet Island
+                                                                        <option value="Bahamas" {% if
+                                                                                user_profile.nationality=="Bahamas"
+                                                                                %}selected{% endif %}>Bahamas</option>
+                                                                        <option value="Bahrain" {% if
+                                                                                user_profile.nationality=="Bahrain"
+                                                                                %}selected{% endif %}>Bahrain</option>
+                                                                        <option value="Bangladesh" {% if
+                                                                                user_profile.nationality=="Bangladesh"
+                                                                                %}selected{% endif %}>Bangladesh
                                                                         </option>
-                                                                        <option value="Brazil">Brazil</option>
-                                                                        <option value="British Indian Ocean Territory">
-                                                                                British Indian Ocean Territory
+                                                                        <option value="Barbados" {% if
+                                                                                user_profile.nationality=="Barbados"
+                                                                                %}selected{% endif %}>Barbados</option>
+                                                                        <option value="Belarus" {% if
+                                                                                user_profile.nationality=="Belarus"
+                                                                                %}selected{% endif %}>Belarus</option>
+                                                                        <option value="Belgium" {% if
+                                                                                user_profile.nationality=="Belgium"
+                                                                                %}selected{% endif %}>Belgium</option>
+                                                                        <option value="Belize" {% if
+                                                                                user_profile.nationality=="Belize"
+                                                                                %}selected{% endif %}>Belize</option>
+                                                                        <option value="Benin" {% if
+                                                                                user_profile.nationality=="Benin"
+                                                                                %}selected{% endif %}>Benin</option>
+                                                                        <option value="Bermuda" {% if
+                                                                                user_profile.nationality=="Bermuda"
+                                                                                %}selected{% endif %}>Bermuda</option>
+                                                                        <option value="Bhutan" {% if
+                                                                                user_profile.nationality=="Bhutan"
+                                                                                %}selected{% endif %}>Bhutan</option>
+                                                                        <option value="Bolivia" {% if
+                                                                                user_profile.nationality=="Bolivia"
+                                                                                %}selected{% endif %}>Bolivia</option>
+                                                                        <option value="Bonaire, Sint Eustatius and Saba"
+                                                                                {% if
+                                                                                user_profile.nationality=="Bonaire, Sint Eustatius and Saba"
+                                                                                %}selected{% endif %}>Bonaire, Sint
+                                                                                Eustatius and Saba</option>
+                                                                        <option value="Bosnia and Herzegovina" {% if
+                                                                                user_profile.nationality=="Bosnia and Herzegovina"
+                                                                                %}selected{% endif %}>Bosnia and
+                                                                                Herzegovina</option>
+                                                                        <option value="Botswana" {% if
+                                                                                user_profile.nationality=="Botswana"
+                                                                                %}selected{% endif %}>Botswana</option>
+                                                                        <option value="Bouvet Island" {% if
+                                                                                user_profile.nationality=="Bouvet Island"
+                                                                                %}selected{% endif %}>Bouvet Island
                                                                         </option>
-                                                                        <option value="Brunei Darussalam">Brunei
-                                                                                Darussalam</option>
-                                                                        <option value="Bulgaria">Bulgaria</option>
-                                                                        <option value="Burkina Faso">Burkina Faso
+                                                                        <option value="Brazil" {% if
+                                                                                user_profile.nationality=="Brazil"
+                                                                                %}selected{% endif %}>Brazil</option>
+                                                                        <option value="British Indian Ocean Territory"
+                                                                                {% if
+                                                                                user_profile.nationality=="British Indian Ocean Territory"
+                                                                                %}selected{% endif %}>British Indian
+                                                                                Ocean Territory</option>
+                                                                        <option value="Brunei Darussalam" {% if
+                                                                                user_profile.nationality=="Brunei Darussalam"
+                                                                                %}selected{% endif %}>Brunei Darussalam
                                                                         </option>
-                                                                        <option value="Burundi">Burundi</option>
-                                                                        <option value="Cambodia">Cambodia</option>
-                                                                        <option value="Cameroon">Cameroon</option>
-                                                                        <option value="Canada">Canada</option>
-                                                                        <option value="Cape Verde">Cape Verde</option>
-                                                                        <option value="Cayman Islands">Cayman Islands
+                                                                        <option value="Bulgaria" {% if
+                                                                                user_profile.nationality=="Bulgaria"
+                                                                                %}selected{% endif %}>Bulgaria</option>
+                                                                        <option value="Burkina Faso" {% if
+                                                                                user_profile.nationality=="Burkina Faso"
+                                                                                %}selected{% endif %}>Burkina Faso
                                                                         </option>
-                                                                        <option value="Central African Republic">Central
-                                                                                African Republic</option>
-                                                                        <option value="Chad">Chad</option>
-                                                                        <option value="Chile">Chile</option>
-                                                                        <option value="China">China</option>
-                                                                        <option value="Christmas Island">Christmas
-                                                                                Island</option>
-                                                                        <option value="Cocos (Keeling) Islands">Cocos
-                                                                                (Keeling) Islands</option>
-                                                                        <option value="Colombia">Colombia</option>
-                                                                        <option value="Comoros">Comoros</option>
-                                                                        <option value="Congo">Congo</option>
-                                                                        <option
-                                                                                value="Congo, Democratic Republic of the Congo">
-                                                                                Congo, Democratic Republic
-                                                                                of the Congo</option>
-                                                                        <option value="Cook Islands">Cook Islands
+                                                                        <option value="Burundi" {% if
+                                                                                user_profile.nationality=="Burundi"
+                                                                                %}selected{% endif %}>Burundi</option>
+                                                                        <option value="Cambodia" {% if
+                                                                                user_profile.nationality=="Cambodia"
+                                                                                %}selected{% endif %}>Cambodia</option>
+                                                                        <option value="Cameroon" {% if
+                                                                                user_profile.nationality=="Cameroon"
+                                                                                %}selected{% endif %}>Cameroon</option>
+                                                                        <option value="Canada" {% if
+                                                                                user_profile.nationality=="Canada"
+                                                                                %}selected{% endif %}>Canada</option>
+                                                                        <option value="Cape Verde" {% if
+                                                                                user_profile.nationality=="Cape Verde"
+                                                                                %}selected{% endif %}>Cape Verde
                                                                         </option>
-                                                                        <option value="Costa Rica">Costa Rica</option>
-                                                                        <option value="Cote D'Ivoire">Cote D'Ivoire
+                                                                        <option value="Cayman Islands" {% if
+                                                                                user_profile.nationality=="Cayman Islands"
+                                                                                %}selected{% endif %}>Cayman Islands
                                                                         </option>
-                                                                        <option value="Croatia">Croatia</option>
-                                                                        <option value="Cuba">Cuba</option>
-                                                                        <option value="Curacao">Curacao</option>
-                                                                        <option value="Cyprus">Cyprus</option>
-                                                                        <option value="Czech Republic">Czech Republic
-                                                                        </option>
-                                                                        <option value="Denmark">Denmark</option>
-                                                                        <option value="Djibouti">Djibouti</option>
-                                                                        <option value="Dominica">Dominica</option>
-                                                                        <option value="Dominican Republic">Dominican
+                                                                        <option value="Central African Republic" {% if
+                                                                                user_profile.nationality=="Central African Republic"
+                                                                                %}selected{% endif %}>Central African
                                                                                 Republic</option>
-                                                                        <option value="Ecuador">Ecuador</option>
-                                                                        <option value="Egypt">Egypt</option>
-                                                                        <option value="El Salvador">El Salvador</option>
-                                                                        <option value="Equatorial Guinea">Equatorial
-                                                                                Guinea</option>
-                                                                        <option value="Eritrea">Eritrea</option>
-                                                                        <option value="Estonia">Estonia</option>
-                                                                        <option value="Ethiopia">Ethiopia</option>
-                                                                        <option value="Falkland Islands (Malvinas)">
-                                                                                Falkland Islands (Malvinas)</option>
-                                                                        <option value="Faroe Islands">Faroe Islands
+                                                                        <option value="Chad" {% if
+                                                                                user_profile.nationality=="Chad"
+                                                                                %}selected{% endif %}>Chad</option>
+                                                                        <option value="Chile" {% if
+                                                                                user_profile.nationality=="Chile"
+                                                                                %}selected{% endif %}>Chile</option>
+                                                                        <option value="China" {% if
+                                                                                user_profile.nationality=="China"
+                                                                                %}selected{% endif %}>China</option>
+                                                                        <option value="Christmas Island" {% if
+                                                                                user_profile.nationality=="Christmas Island"
+                                                                                %}selected{% endif %}>Christmas Island
                                                                         </option>
-                                                                        <option value="Fiji">Fiji</option>
-                                                                        <option value="Finland">Finland</option>
-                                                                        <option value="France">France</option>
-                                                                        <option value="French Guiana">French Guiana
-                                                                        </option>
-                                                                        <option value="French Polynesia">French
-                                                                                Polynesia</option>
-                                                                        <option value="French Southern Territories">
-                                                                                French Southern Territories</option>
-                                                                        <option value="Gabon">Gabon</option>
-                                                                        <option value="Gambia">Gambia</option>
-                                                                        <option value="Georgia">Georgia</option>
-                                                                        <option value="Germany">Germany</option>
-                                                                        <option value="Ghana">Ghana</option>
-                                                                        <option value="Gibraltar">Gibraltar</option>
-                                                                        <option value="Greece">Greece</option>
-                                                                        <option value="Greenland">Greenland</option>
-                                                                        <option value="Grenada">Grenada</option>
-                                                                        <option value="Guadeloupe">Guadeloupe</option>
-                                                                        <option value="Guam">Guam</option>
-                                                                        <option value="Guatemala">Guatemala</option>
-                                                                        <option value="Guernsey">Guernsey</option>
-                                                                        <option value="Guinea">Guinea</option>
-                                                                        <option value="Guinea-Bissau">Guinea-Bissau
-                                                                        </option>
-                                                                        <option value="Guyana">Guyana</option>
-                                                                        <option value="Haiti">Haiti</option>
-                                                                        <option
-                                                                                value="Heard Island and Mcdonald Islands">
-                                                                                Heard Island and Mcdonald Islands
-                                                                        </option>
-                                                                        <option value="Holy See (Vatican City State)">
-                                                                                Holy See (Vatican City State)</option>
-                                                                        <option value="Honduras">Honduras</option>
-                                                                        <option value="Hong Kong">Hong Kong</option>
-                                                                        <option value="Hungary">Hungary</option>
-                                                                        <option value="Iceland">Iceland</option>
-                                                                        <option value="India">India</option>
-                                                                        <option value="Indonesia">Indonesia</option>
-                                                                        <option value="Iran, Islamic Republic of">Iran,
-                                                                                Islamic Republic of</option>
-                                                                        <option value="Iraq">Iraq</option>
-                                                                        <option value="Ireland">Ireland</option>
-                                                                        <option value="Isle of Man">Isle of Man</option>
-                                                                        <option value="Italy">Italy</option>
-                                                                        <option value="Jamaica">Jamaica</option>
-                                                                        <option value="Japan">Japan</option>
-                                                                        <option value="Jersey">Jersey</option>
-                                                                        <option value="Jordan">Jordan</option>
-                                                                        <option value="Kazakhstan">Kazakhstan</option>
-                                                                        <option value="Kenya">Kenya</option>
-                                                                        <option value="Kiribati">Kiribati</option>
-                                                                        <option
-                                                                                value="Korea, Democratic People's Republic of">
-                                                                                Korea, Democratic People's
-                                                                                Republic of</option>
-                                                                        <option value="Korea, Republic of">Korea,
-                                                                                Republic of</option>
-                                                                        <option value="Kosovo">Kosovo</option>
-                                                                        <option value="Kuwait">Kuwait</option>
-                                                                        <option value="Kyrgyzstan">Kyrgyzstan</option>
-                                                                        <option
-                                                                                value="Lao People's Democratic Republic">
-                                                                                Lao People's Democratic Republic
-                                                                        </option>
-                                                                        <option value="Latvia">Latvia</option>
-                                                                        <option value="Lebanon">Lebanon</option>
-                                                                        <option value="Lesotho">Lesotho</option>
-                                                                        <option value="Liberia">Liberia</option>
-                                                                        <option value="Libyan Arab Jamahiriya">Libyan
-                                                                                Arab Jamahiriya</option>
-                                                                        <option value="Liechtenstein">Liechtenstein
-                                                                        </option>
-                                                                        <option value="Lithuania">Lithuania</option>
-                                                                        <option value="Luxembourg">Luxembourg</option>
-                                                                        <option value="Macao">Macao</option>
-                                                                        <option
-                                                                                value="Macedonia, the Former Yugoslav Republic of">
-                                                                                Macedonia, the Former
-                                                                                Yugoslav Republic of</option>
-                                                                        <option value="Madagascar">Madagascar</option>
-                                                                        <option value="Malawi">Malawi</option>
-                                                                        <option value="Malaysia">Malaysia</option>
-                                                                        <option value="Maldives">Maldives</option>
-                                                                        <option value="Mali">Mali</option>
-                                                                        <option value="Malta">Malta</option>
-                                                                        <option value="Marshall Islands">Marshall
+                                                                        <option value="Cocos (Keeling) Islands" {% if
+                                                                                user_profile.nationality=="Cocos (Keeling) Islands"
+                                                                                %}selected{% endif %}>Cocos (Keeling)
                                                                                 Islands</option>
-                                                                        <option value="Martinique">Martinique</option>
-                                                                        <option value="Mauritania">Mauritania</option>
-                                                                        <option value="Mauritius">Mauritius</option>
-                                                                        <option value="Mayotte">Mayotte</option>
-                                                                        <option value="Mexico">Mexico</option>
-                                                                        <option value="Micronesia, Federated States of">
-                                                                                Micronesia, Federated States of
+                                                                        <option value="Colombia" {% if
+                                                                                user_profile.nationality=="Colombia"
+                                                                                %}selected{% endif %}>Colombia</option>
+                                                                        <option value="Comoros" {% if
+                                                                                user_profile.nationality=="Comoros"
+                                                                                %}selected{% endif %}>Comoros</option>
+                                                                        <option value="Congo" {% if
+                                                                                user_profile.nationality=="Congo"
+                                                                                %}selected{% endif %}>Congo</option>
+                                                                        <option value="Congo, Democratic Republic of the Congo"
+                                                                                {% if
+                                                                                user_profile.nationality=="Congo, Democratic Republic of the Congo"
+                                                                                %}selected{% endif %}>Congo, Democratic
+                                                                                Republic of the Congo</option>
+                                                                        <option value="Cook Islands" {% if
+                                                                                user_profile.nationality=="Cook Islands"
+                                                                                %}selected{% endif %}>Cook Islands
                                                                         </option>
-                                                                        <option value="Moldova, Republic of">Moldova,
+                                                                        <option value="Costa Rica" {% if
+                                                                                user_profile.nationality=="Costa Rica"
+                                                                                %}selected{% endif %}>Costa Rica
+                                                                        </option>
+                                                                        <option value="Cote D'Ivoire" {% if
+                                                                                user_profile.nationality=="Cote D'Ivoire"
+                                                                                %}selected{% endif %}>Cote D'Ivoire
+                                                                        </option>
+                                                                        <option value="Croatia" {% if
+                                                                                user_profile.nationality=="Croatia"
+                                                                                %}selected{% endif %}>Croatia</option>
+                                                                        <option value="Cuba" {% if
+                                                                                user_profile.nationality=="Cuba"
+                                                                                %}selected{% endif %}>Cuba</option>
+                                                                        <option value="Curacao" {% if
+                                                                                user_profile.nationality=="Curacao"
+                                                                                %}selected{% endif %}>Curacao</option>
+                                                                        <option value="Cyprus" {% if
+                                                                                user_profile.nationality=="Cyprus"
+                                                                                %}selected{% endif %}>Cyprus</option>
+                                                                        <option value="Czech Republic" {% if
+                                                                                user_profile.nationality=="Czech Republic"
+                                                                                %}selected{% endif %}>Czech Republic
+                                                                        </option>
+                                                                        <option value="Denmark" {% if
+                                                                                user_profile.nationality=="Denmark"
+                                                                                %}selected{% endif %}>Denmark</option>
+                                                                        <option value="Djibouti" {% if
+                                                                                user_profile.nationality=="Djibouti"
+                                                                                %}selected{% endif %}>Djibouti</option>
+                                                                        <option value="Dominica" {% if
+                                                                                user_profile.nationality=="Dominica"
+                                                                                %}selected{% endif %}>Dominica</option>
+                                                                        <option value="Dominican Republic" {% if
+                                                                                user_profile.nationality=="Dominican Republic"
+                                                                                %}selected{% endif %}>Dominican Republic
+                                                                        </option>
+                                                                        <option value="Ecuador" {% if
+                                                                                user_profile.nationality=="Ecuador"
+                                                                                %}selected{% endif %}>Ecuador</option>
+                                                                        <option value="Egypt" {% if
+                                                                                user_profile.nationality=="Egypt"
+                                                                                %}selected{% endif %}>Egypt</option>
+                                                                        <option value="El Salvador" {% if
+                                                                                user_profile.nationality=="El Salvador"
+                                                                                %}selected{% endif %}>El Salvador
+                                                                        </option>
+                                                                        <option value="Equatorial Guinea" {% if
+                                                                                user_profile.nationality=="Equatorial Guinea"
+                                                                                %}selected{% endif %}>Equatorial Guinea
+                                                                        </option>
+                                                                        <option value="Eritrea" {% if
+                                                                                user_profile.nationality=="Eritrea"
+                                                                                %}selected{% endif %}>Eritrea</option>
+                                                                        <option value="Estonia" {% if
+                                                                                user_profile.nationality=="Estonia"
+                                                                                %}selected{% endif %}>Estonia</option>
+                                                                        <option value="Ethiopia" {% if
+                                                                                user_profile.nationality=="Ethiopia"
+                                                                                %}selected{% endif %}>Ethiopia</option>
+                                                                        <option value="Falkland Islands (Malvinas)" {%
+                                                                                if
+                                                                                user_profile.nationality=="Falkland Islands (Malvinas)"
+                                                                                %}selected{% endif %}>Falkland Islands
+                                                                                (Malvinas)</option>
+                                                                        <option value="Faroe Islands" {% if
+                                                                                user_profile.nationality=="Faroe Islands"
+                                                                                %}selected{% endif %}>Faroe Islands
+                                                                        </option>
+                                                                        <option value="Fiji" {% if
+                                                                                user_profile.nationality=="Fiji"
+                                                                                %}selected{% endif %}>Fiji</option>
+                                                                        <option value="Finland" {% if
+                                                                                user_profile.nationality=="Finland"
+                                                                                %}selected{% endif %}>Finland</option>
+                                                                        <option value="France" {% if
+                                                                                user_profile.nationality=="France"
+                                                                                %}selected{% endif %}>France</option>
+                                                                        <option value="French Guiana" {% if
+                                                                                user_profile.nationality=="French Guiana"
+                                                                                %}selected{% endif %}>French Guiana
+                                                                        </option>
+                                                                        <option value="French Polynesia" {% if
+                                                                                user_profile.nationality=="French Polynesia"
+                                                                                %}selected{% endif %}>French Polynesia
+                                                                        </option>
+                                                                        <option value="French Southern Territories" {%
+                                                                                if
+                                                                                user_profile.nationality=="French Southern Territories"
+                                                                                %}selected{% endif %}>French Southern
+                                                                                Territories</option>
+                                                                        <option value="Gabon" {% if
+                                                                                user_profile.nationality=="Gabon"
+                                                                                %}selected{% endif %}>Gabon</option>
+                                                                        <option value="Gambia" {% if
+                                                                                user_profile.nationality=="Gambia"
+                                                                                %}selected{% endif %}>Gambia</option>
+                                                                        <option value="Georgia" {% if
+                                                                                user_profile.nationality=="Georgia"
+                                                                                %}selected{% endif %}>Georgia</option>
+                                                                        <option value="Germany" {% if
+                                                                                user_profile.nationality=="Germany"
+                                                                                %}selected{% endif %}>Germany</option>
+                                                                        <option value="Ghana" {% if
+                                                                                user_profile.nationality=="Ghana"
+                                                                                %}selected{% endif %}>Ghana</option>
+                                                                        <option value="Gibraltar" {% if
+                                                                                user_profile.nationality=="Gibraltar"
+                                                                                %}selected{% endif %}>Gibraltar</option>
+                                                                        <option value="Greece" {% if
+                                                                                user_profile.nationality=="Greece"
+                                                                                %}selected{% endif %}>Greece</option>
+                                                                        <option value="Greenland" {% if
+                                                                                user_profile.nationality=="Greenland"
+                                                                                %}selected{% endif %}>Greenland</option>
+                                                                        <option value="Grenada" {% if
+                                                                                user_profile.nationality=="Grenada"
+                                                                                %}selected{% endif %}>Grenada</option>
+                                                                        <option value="Guadeloupe" {% if
+                                                                                user_profile.nationality=="Guadeloupe"
+                                                                                %}selected{% endif %}>Guadeloupe
+                                                                        </option>
+                                                                        <option value="Guam" {% if
+                                                                                user_profile.nationality=="Guam"
+                                                                                %}selected{% endif %}>Guam</option>
+                                                                        <option value="Guatemala" {% if
+                                                                                user_profile.nationality=="Guatemala"
+                                                                                %}selected{% endif %}>Guatemala</option>
+                                                                        <option value="Guernsey" {% if
+                                                                                user_profile.nationality=="Guernsey"
+                                                                                %}selected{% endif %}>Guernsey</option>
+                                                                        <option value="Guinea" {% if
+                                                                                user_profile.nationality=="Guinea"
+                                                                                %}selected{% endif %}>Guinea</option>
+                                                                        <option value="Guinea-Bissau" {% if
+                                                                                user_profile.nationality=="Guinea-Bissau"
+                                                                                %}selected{% endif %}>Guinea-Bissau
+                                                                        </option>
+                                                                        <option value="Guyana" {% if
+                                                                                user_profile.nationality=="Guyana"
+                                                                                %}selected{% endif %}>Guyana</option>
+                                                                        <option value="Haiti" {% if
+                                                                                user_profile.nationality=="Haiti"
+                                                                                %}selected{% endif %}>Haiti</option>
+                                                                        <option value="Heard Island and Mcdonald Islands"
+                                                                                {% if
+                                                                                user_profile.nationality=="Heard Island and Mcdonald Islands"
+                                                                                %}selected{% endif %}>Heard Island and
+                                                                                Mcdonald Islands</option>
+                                                                        <option value="Holy See (Vatican City State)" {%
+                                                                                if
+                                                                                user_profile.nationality=="Holy See (Vatican City State)"
+                                                                                %}selected{% endif %}>Holy See (Vatican
+                                                                                City State)</option>
+                                                                        <option value="Honduras" {% if
+                                                                                user_profile.nationality=="Honduras"
+                                                                                %}selected{% endif %}>Honduras</option>
+                                                                        <option value="Hong Kong" {% if
+                                                                                user_profile.nationality=="Hong Kong"
+                                                                                %}selected{% endif %}>Hong Kong</option>
+                                                                        <option value="Hungary" {% if
+                                                                                user_profile.nationality=="Hungary"
+                                                                                %}selected{% endif %}>Hungary</option>
+                                                                        <option value="Iceland" {% if
+                                                                                user_profile.nationality=="Iceland"
+                                                                                %}selected{% endif %}>Iceland</option>
+                                                                        <option value="India" {% if
+                                                                                user_profile.nationality=="India"
+                                                                                %}selected{% endif %}>India</option>
+                                                                        <option value="Indonesia" {% if
+                                                                                user_profile.nationality=="Indonesia"
+                                                                                %}selected{% endif %}>Indonesia</option>
+                                                                        <option value="Iran, Islamic Republic of" {% if
+                                                                                user_profile.nationality=="Iran, Islamic Republic of"
+                                                                                %}selected{% endif %}>Iran, Islamic
                                                                                 Republic of</option>
-                                                                        <option value="Monaco">Monaco</option>
-                                                                        <option value="Mongolia">Mongolia</option>
-                                                                        <option value="Montenegro">Montenegro</option>
-                                                                        <option value="Montserrat">Montserrat</option>
-                                                                        <option value="Morocco">Morocco</option>
-                                                                        <option value="Mozambique">Mozambique</option>
-                                                                        <option value="Myanmar">Myanmar</option>
-                                                                        <option value="Namibia">Namibia</option>
-                                                                        <option value="Nauru">Nauru</option>
-                                                                        <option value="Nepal">Nepal</option>
-                                                                        <option value="Netherlands">Netherlands</option>
-                                                                        <option value="Netherlands Antilles">Netherlands
+                                                                        <option value="Iraq" {% if
+                                                                                user_profile.nationality=="Iraq"
+                                                                                %}selected{% endif %}>Iraq</option>
+                                                                        <option value="Ireland" {% if
+                                                                                user_profile.nationality=="Ireland"
+                                                                                %}selected{% endif %}>Ireland</option>
+                                                                        <option value="Isle of Man" {% if
+                                                                                user_profile.nationality=="Isle of Man"
+                                                                                %}selected{% endif %}>Isle of Man
+                                                                        </option>
+                                                                        <option value="Italy" {% if
+                                                                                user_profile.nationality=="Italy"
+                                                                                %}selected{% endif %}>Italy</option>
+                                                                        <option value="Jamaica" {% if
+                                                                                user_profile.nationality=="Jamaica"
+                                                                                %}selected{% endif %}>Jamaica</option>
+                                                                        <option value="Japan" {% if
+                                                                                user_profile.nationality=="Japan"
+                                                                                %}selected{% endif %}>Japan</option>
+                                                                        <option value="Jersey" {% if
+                                                                                user_profile.nationality=="Jersey"
+                                                                                %}selected{% endif %}>Jersey</option>
+                                                                        <option value="Jordan" {% if
+                                                                                user_profile.nationality=="Jordan"
+                                                                                %}selected{% endif %}>Jordan</option>
+                                                                        <option value="Kazakhstan" {% if
+                                                                                user_profile.nationality=="Kazakhstan"
+                                                                                %}selected{% endif %}>Kazakhstan
+                                                                        </option>
+                                                                        <option value="Kenya" {% if
+                                                                                user_profile.nationality=="Kenya"
+                                                                                %}selected{% endif %}>Kenya</option>
+                                                                        <option value="Kiribati" {% if
+                                                                                user_profile.nationality=="Kiribati"
+                                                                                %}selected{% endif %}>Kiribati</option>
+                                                                        <option value="Korea, Democratic People's Republic of"
+                                                                                {% if
+                                                                                user_profile.nationality=="Korea, Democratic People's Republic of"
+                                                                                %}selected{% endif %}>Korea, Democratic
+                                                                                People's Republic of</option>
+                                                                        <option value="Korea, Republic of" {% if
+                                                                                user_profile.nationality=="Korea, Republic of"
+                                                                                %}selected{% endif %}>Korea, Republic of
+                                                                        </option>
+                                                                        <option value="Kosovo" {% if
+                                                                                user_profile.nationality=="Kosovo"
+                                                                                %}selected{% endif %}>Kosovo</option>
+                                                                        <option value="Kuwait" {% if
+                                                                                user_profile.nationality=="Kuwait"
+                                                                                %}selected{% endif %}>Kuwait</option>
+                                                                        <option value="Kyrgyzstan" {% if
+                                                                                user_profile.nationality=="Kyrgyzstan"
+                                                                                %}selected{% endif %}>Kyrgyzstan
+                                                                        </option>
+                                                                        <option value="Lao People's Democratic Republic"
+                                                                                {% if
+                                                                                user_profile.nationality=="Lao People's Democratic Republic"
+                                                                                %}selected{% endif %}>Lao People's
+                                                                                Democratic Republic</option>
+                                                                        <option value="Latvia" {% if
+                                                                                user_profile.nationality=="Latvia"
+                                                                                %}selected{% endif %}>Latvia</option>
+                                                                        <option value="Lebanon" {% if
+                                                                                user_profile.nationality=="Lebanon"
+                                                                                %}selected{% endif %}>Lebanon</option>
+                                                                        <option value="Lesotho" {% if
+                                                                                user_profile.nationality=="Lesotho"
+                                                                                %}selected{% endif %}>Lesotho</option>
+                                                                        <option value="Liberia" {% if
+                                                                                user_profile.nationality=="Liberia"
+                                                                                %}selected{% endif %}>Liberia</option>
+                                                                        <option value="Libyan Arab Jamahiriya" {% if
+                                                                                user_profile.nationality=="Libyan Arab Jamahiriya"
+                                                                                %}selected{% endif %}>Libyan Arab
+                                                                                Jamahiriya</option>
+                                                                        <option value="Liechtenstein" {% if
+                                                                                user_profile.nationality=="Liechtenstein"
+                                                                                %}selected{% endif %}>Liechtenstein
+                                                                        </option>
+                                                                        <option value="Lithuania" {% if
+                                                                                user_profile.nationality=="Lithuania"
+                                                                                %}selected{% endif %}>Lithuania</option>
+                                                                        <option value="Luxembourg" {% if
+                                                                                user_profile.nationality=="Luxembourg"
+                                                                                %}selected{% endif %}>Luxembourg
+                                                                        </option>
+                                                                        <option value="Macao" {% if
+                                                                                user_profile.nationality=="Macao"
+                                                                                %}selected{% endif %}>Macao</option>
+                                                                        <option value="Macedonia, the Former Yugoslav Republic of"
+                                                                                {% if
+                                                                                user_profile.nationality=="Macedonia, the Former Yugoslav Republic of"
+                                                                                %}selected{% endif %}>Macedonia, the
+                                                                                Former Yugoslav Republic of</option>
+                                                                        <option value="Madagascar" {% if
+                                                                                user_profile.nationality=="Madagascar"
+                                                                                %}selected{% endif %}>Madagascar
+                                                                        </option>
+                                                                        <option value="Malawi" {% if
+                                                                                user_profile.nationality=="Malawi"
+                                                                                %}selected{% endif %}>Malawi</option>
+                                                                        <option value="Malaysia" {% if
+                                                                                user_profile.nationality=="Malaysia"
+                                                                                %}selected{% endif %}>Malaysia</option>
+                                                                        <option value="Maldives" {% if
+                                                                                user_profile.nationality=="Maldives"
+                                                                                %}selected{% endif %}>Maldives</option>
+                                                                        <option value="Mali" {% if
+                                                                                user_profile.nationality=="Mali"
+                                                                                %}selected{% endif %}>Mali</option>
+                                                                        <option value="Malta" {% if
+                                                                                user_profile.nationality=="Malta"
+                                                                                %}selected{% endif %}>Malta</option>
+                                                                        <option value="Marshall Islands" {% if
+                                                                                user_profile.nationality=="Marshall Islands"
+                                                                                %}selected{% endif %}>Marshall Islands
+                                                                        </option>
+                                                                        <option value="Martinique" {% if
+                                                                                user_profile.nationality=="Martinique"
+                                                                                %}selected{% endif %}>Martinique
+                                                                        </option>
+                                                                        <option value="Mauritania" {% if
+                                                                                user_profile.nationality=="Mauritania"
+                                                                                %}selected{% endif %}>Mauritania
+                                                                        </option>
+                                                                        <option value="Mauritius" {% if
+                                                                                user_profile.nationality=="Mauritius"
+                                                                                %}selected{% endif %}>Mauritius</option>
+                                                                        <option value="Mayotte" {% if
+                                                                                user_profile.nationality=="Mayotte"
+                                                                                %}selected{% endif %}>Mayotte</option>
+                                                                        <option value="Mexico" {% if
+                                                                                user_profile.nationality=="Mexico"
+                                                                                %}selected{% endif %}>Mexico</option>
+                                                                        <option value="Micronesia, Federated States of"
+                                                                                {% if
+                                                                                user_profile.nationality=="Micronesia, Federated States of"
+                                                                                %}selected{% endif %}>Micronesia,
+                                                                                Federated States of</option>
+                                                                        <option value="Moldova, Republic of" {% if
+                                                                                user_profile.nationality=="Moldova, Republic of"
+                                                                                %}selected{% endif %}>Moldova, Republic
+                                                                                of</option>
+                                                                        <option value="Monaco" {% if
+                                                                                user_profile.nationality=="Monaco"
+                                                                                %}selected{% endif %}>Monaco</option>
+                                                                        <option value="Mongolia" {% if
+                                                                                user_profile.nationality=="Mongolia"
+                                                                                %}selected{% endif %}>Mongolia</option>
+                                                                        <option value="Montenegro" {% if
+                                                                                user_profile.nationality=="Montenegro"
+                                                                                %}selected{% endif %}>Montenegro
+                                                                        </option>
+                                                                        <option value="Montserrat" {% if
+                                                                                user_profile.nationality=="Montserrat"
+                                                                                %}selected{% endif %}>Montserrat
+                                                                        </option>
+                                                                        <option value="Morocco" {% if
+                                                                                user_profile.nationality=="Morocco"
+                                                                                %}selected{% endif %}>Morocco</option>
+                                                                        <option value="Mozambique" {% if
+                                                                                user_profile.nationality=="Mozambique"
+                                                                                %}selected{% endif %}>Mozambique
+                                                                        </option>
+                                                                        <option value="Myanmar" {% if
+                                                                                user_profile.nationality=="Myanmar"
+                                                                                %}selected{% endif %}>Myanmar</option>
+                                                                        <option value="Namibia" {% if
+                                                                                user_profile.nationality=="Namibia"
+                                                                                %}selected{% endif %}>Namibia</option>
+                                                                        <option value="Nauru" {% if
+                                                                                user_profile.nationality=="Nauru"
+                                                                                %}selected{% endif %}>Nauru</option>
+                                                                        <option value="Nepal" {% if
+                                                                                user_profile.nationality=="Nepal"
+                                                                                %}selected{% endif %}>Nepal</option>
+                                                                        <option value="Netherlands" {% if
+                                                                                user_profile.nationality=="Netherlands"
+                                                                                %}selected{% endif %}>Netherlands
+                                                                        </option>
+                                                                        <option value="Netherlands Antilles" {% if
+                                                                                user_profile.nationality=="Netherlands Antilles"
+                                                                                %}selected{% endif %}>Netherlands
                                                                                 Antilles</option>
-                                                                        <option value="New Caledonia">New Caledonia
+                                                                        <option value="New Caledonia" {% if
+                                                                                user_profile.nationality=="New Caledonia"
+                                                                                %}selected{% endif %}>New Caledonia
                                                                         </option>
-                                                                        <option value="New Zealand">New Zealand</option>
-                                                                        <option value="Nicaragua">Nicaragua</option>
-                                                                        <option value="Niger">Niger</option>
-                                                                        <option value="Nigeria">Nigeria</option>
-                                                                        <option value="Niue">Niue</option>
-                                                                        <option value="Norfolk Island">Norfolk Island
+                                                                        <option value="New Zealand" {% if
+                                                                                user_profile.nationality=="New Zealand"
+                                                                                %}selected{% endif %}>New Zealand
                                                                         </option>
-                                                                        <option value="Northern Mariana Islands">
-                                                                                Northern Mariana Islands</option>
-                                                                        <option value="Norway">Norway</option>
-                                                                        <option value="Oman">Oman</option>
-                                                                        <option value="Pakistan">Pakistan</option>
-                                                                        <option value="Palau">Palau</option>
-                                                                        <option value="Palestine">Palestine</option>
-                                                                        <option value="Panama">Panama</option>
-                                                                        <option value="Papua New Guinea">Papua New
-                                                                                Guinea</option>
-                                                                        <option value="Paraguay">Paraguay</option>
-                                                                        <option value="Peru">Peru</option>
-                                                                        <option value="Philippines">Philippines</option>
-                                                                        <option value="Pitcairn">Pitcairn</option>
-                                                                        <option value="Poland">Poland</option>
-                                                                        <option value="Portugal">Portugal</option>
-                                                                        <option value="Puerto Rico">Puerto Rico</option>
-                                                                        <option value="Qatar">Qatar</option>
-                                                                        <option value="Reunion">Reunion</option>
-                                                                        <option value="Romania">Romania</option>
-                                                                        <option value="Russian Federation">Russian
-                                                                                Federation</option>
-                                                                        <option value="Rwanda">Rwanda</option>
-                                                                        <option value="Saint Barthelemy">Saint
-                                                                                Barthelemy</option>
-                                                                        <option value="Saint Helena">Saint Helena
+                                                                        <option value="Nicaragua" {% if
+                                                                                user_profile.nationality=="Nicaragua"
+                                                                                %}selected{% endif %}>Nicaragua</option>
+                                                                        <option value="Niger" {% if
+                                                                                user_profile.nationality=="Niger"
+                                                                                %}selected{% endif %}>Niger</option>
+                                                                        <option value="Nigeria" {% if
+                                                                                user_profile.nationality=="Nigeria"
+                                                                                %}selected{% endif %}>Nigeria</option>
+                                                                        <option value="Niue" {% if
+                                                                                user_profile.nationality=="Niue"
+                                                                                %}selected{% endif %}>Niue</option>
+                                                                        <option value="Norfolk Island" {% if
+                                                                                user_profile.nationality=="Norfolk Island"
+                                                                                %}selected{% endif %}>Norfolk Island
                                                                         </option>
-                                                                        <option value="Saint Kitts and Nevis">Saint
-                                                                                Kitts and Nevis</option>
-                                                                        <option value="Saint Lucia">Saint Lucia</option>
-                                                                        <option value="Saint Martin">Saint Martin
-                                                                        </option>
-                                                                        <option value="Saint Pierre and Miquelon">Saint
-                                                                                Pierre and Miquelon</option>
-                                                                        <option
-                                                                                value="Saint Vincent and the Grenadines">
-                                                                                Saint Vincent and the Grenadines
-                                                                        </option>
-                                                                        <option value="Samoa">Samoa</option>
-                                                                        <option value="San Marino">San Marino</option>
-                                                                        <option value="Sao Tome and Principe">Sao Tome
-                                                                                and Principe</option>
-                                                                        <option value="Saudi Arabia">Saudi Arabia
-                                                                        </option>
-                                                                        <option value="Senegal">Senegal</option>
-                                                                        <option value="Serbia">Serbia</option>
-                                                                        <option value="Serbia and Montenegro">Serbia and
-                                                                                Montenegro</option>
-                                                                        <option value="Seychelles">Seychelles</option>
-                                                                        <option value="Sierra Leone">Sierra Leone
-                                                                        </option>
-                                                                        <option value="Singapore">Singapore</option>
-                                                                        <option value="Sint Maarten">Sint Maarten
-                                                                        </option>
-                                                                        <option value="Slovakia">Slovakia</option>
-                                                                        <option value="Slovenia">Slovenia</option>
-                                                                        <option value="Solomon Islands">Solomon Islands
-                                                                        </option>
-                                                                        <option value="Somalia">Somalia</option>
-                                                                        <option value="South Africa">South Africa
-                                                                        </option>
-                                                                        <option
-                                                                                value="South Georgia and the South Sandwich Islands">
-                                                                                South Georgia and the
-                                                                                South Sandwich Islands</option>
-                                                                        <option value="South Sudan">South Sudan</option>
-                                                                        <option value="Spain">Spain</option>
-                                                                        <option value="Sri Lanka">Sri Lanka</option>
-                                                                        <option value="Sudan">Sudan</option>
-                                                                        <option value="Suriname">Suriname</option>
-                                                                        <option value="Svalbard and Jan Mayen">Svalbard
-                                                                                and Jan Mayen</option>
-                                                                        <option value="Swaziland">Swaziland</option>
-                                                                        <option value="Sweden">Sweden</option>
-                                                                        <option value="Switzerland">Switzerland</option>
-                                                                        <option value="Syrian Arab Republic">Syrian Arab
-                                                                                Republic</option>
-                                                                        <option value="Taiwan, Province of China">
-                                                                                Taiwan, Province of China</option>
-                                                                        <option value="Tajikistan">Tajikistan</option>
-                                                                        <option value="Tanzania, United Republic of">
-                                                                                Tanzania, United Republic of</option>
-                                                                        <option value="Thailand">Thailand</option>
-                                                                        <option value="Timor-Leste">Timor-Leste</option>
-                                                                        <option value="Togo">Togo</option>
-                                                                        <option value="Tokelau">Tokelau</option>
-                                                                        <option value="Tonga">Tonga</option>
-                                                                        <option value="Trinidad and Tobago">Trinidad and
-                                                                                Tobago</option>
-                                                                        <option value="Tunisia">Tunisia</option>
-                                                                        <option value="Turkey">Turkey</option>
-                                                                        <option value="Turkmenistan">Turkmenistan
-                                                                        </option>
-                                                                        <option value="Turks and Caicos Islands">Turks
-                                                                                and Caicos Islands</option>
-                                                                        <option value="Tuvalu">Tuvalu</option>
-                                                                        <option value="Uganda">Uganda</option>
-                                                                        <option value="Ukraine">Ukraine</option>
-                                                                        <option value="United Arab Emirates">United Arab
-                                                                                Emirates</option>
-                                                                        <option value="United Kingdom">United Kingdom
-                                                                        </option>
-                                                                        <option value="United States">United States
-                                                                        </option>
-                                                                        <option
-                                                                                value="United States Minor Outlying Islands">
-                                                                                United States Minor Outlying
+                                                                        <option value="Northern Mariana Islands" {% if
+                                                                                user_profile.nationality=="Northern Mariana Islands"
+                                                                                %}selected{% endif %}>Northern Mariana
                                                                                 Islands</option>
-                                                                        <option value="Uruguay">Uruguay</option>
-                                                                        <option value="Uzbekistan">Uzbekistan</option>
-                                                                        <option value="Vanuatu">Vanuatu</option>
-                                                                        <option value="Venezuela">Venezuela</option>
-                                                                        <option value="Viet Nam">Viet Nam</option>
-                                                                        <option value="Virgin Islands, British">Virgin
-                                                                                Islands, British</option>
-                                                                        <option value="Virgin Islands, U.s.">Virgin
-                                                                                Islands, U.s.</option>
-                                                                        <option value="Wallis and Futuna">Wallis and
-                                                                                Futuna</option>
-                                                                        <option value="Western Sahara">Western Sahara
+                                                                        <option value="Norway" {% if
+                                                                                user_profile.nationality=="Norway"
+                                                                                %}selected{% endif %}>Norway</option>
+                                                                        <option value="Oman" {% if
+                                                                                user_profile.nationality=="Oman"
+                                                                                %}selected{% endif %}>Oman</option>
+                                                                        <option value="Pakistan" {% if
+                                                                                user_profile.nationality=="Pakistan"
+                                                                                %}selected{% endif %}>Pakistan</option>
+                                                                        <option value="Palau" {% if
+                                                                                user_profile.nationality=="Palau"
+                                                                                %}selected{% endif %}>Palau</option>
+                                                                        <option value="Palestine" {% if
+                                                                                user_profile.nationality=="Palestine"
+                                                                                %}selected{% endif %}>Palestine</option>
+                                                                        <option value="Panama" {% if
+                                                                                user_profile.nationality=="Panama"
+                                                                                %}selected{% endif %}>Panama</option>
+                                                                        <option value="Papua New Guinea" {% if
+                                                                                user_profile.nationality=="Papua New Guinea"
+                                                                                %}selected{% endif %}>Papua New Guinea
                                                                         </option>
-                                                                        <option value="Yemen">Yemen</option>
-                                                                        <option value="Zambia">Zambia</option>
-                                                                        <option value="Zimbabwe">Zimbabwe</option>
+                                                                        <option value="Paraguay" {% if
+                                                                                user_profile.nationality=="Paraguay"
+                                                                                %}selected{% endif %}>Paraguay</option>
+                                                                        <option value="Peru" {% if
+                                                                                user_profile.nationality=="Peru"
+                                                                                %}selected{% endif %}>Peru</option>
+                                                                        <option value="Philippines" {% if
+                                                                                user_profile.nationality=="Philippines"
+                                                                                %}selected{% endif %}>Philippines
+                                                                        </option>
+                                                                        <option value="Pitcairn" {% if
+                                                                                user_profile.nationality=="Pitcairn"
+                                                                                %}selected{% endif %}>Pitcairn</option>
+                                                                        <option value="Poland" {% if
+                                                                                user_profile.nationality=="Poland"
+                                                                                %}selected{% endif %}>Poland</option>
+                                                                        <option value="Portugal" {% if
+                                                                                user_profile.nationality=="Portugal"
+                                                                                %}selected{% endif %}>Portugal</option>
+                                                                        <option value="Puerto Rico" {% if
+                                                                                user_profile.nationality=="Puerto Rico"
+                                                                                %}selected{% endif %}>Puerto Rico
+                                                                        </option>
+                                                                        <option value="Qatar" {% if
+                                                                                user_profile.nationality=="Qatar"
+                                                                                %}selected{% endif %}>Qatar</option>
+                                                                        <option value="Reunion" {% if
+                                                                                user_profile.nationality=="Reunion"
+                                                                                %}selected{% endif %}>Reunion</option>
+                                                                        <option value="Romania" {% if
+                                                                                user_profile.nationality=="Romania"
+                                                                                %}selected{% endif %}>Romania</option>
+                                                                        <option value="Russian Federation" {% if
+                                                                                user_profile.nationality=="Russian Federation"
+                                                                                %}selected{% endif %}>Russian Federation
+                                                                        </option>
+                                                                        <option value="Rwanda" {% if
+                                                                                user_profile.nationality=="Rwanda"
+                                                                                %}selected{% endif %}>Rwanda</option>
+                                                                        <option value="Saint Barthelemy" {% if
+                                                                                user_profile.nationality=="Saint Barthelemy"
+                                                                                %}selected{% endif %}>Saint Barthelemy
+                                                                        </option>
+                                                                        <option value="Saint Helena" {% if
+                                                                                user_profile.nationality=="Saint Helena"
+                                                                                %}selected{% endif %}>Saint Helena
+                                                                        </option>
+                                                                        <option value="Saint Kitts and Nevis" {% if
+                                                                                user_profile.nationality=="Saint Kitts and Nevis"
+                                                                                %}selected{% endif %}>Saint Kitts and
+                                                                                Nevis</option>
+                                                                        <option value="Saint Lucia" {% if
+                                                                                user_profile.nationality=="Saint Lucia"
+                                                                                %}selected{% endif %}>Saint Lucia
+                                                                        </option>
+                                                                        <option value="Saint Martin" {% if
+                                                                                user_profile.nationality=="Saint Martin"
+                                                                                %}selected{% endif %}>Saint Martin
+                                                                        </option>
+                                                                        <option value="Saint Pierre and Miquelon" {% if
+                                                                                user_profile.nationality=="Saint Pierre and Miquelon"
+                                                                                %}selected{% endif %}>Saint Pierre and
+                                                                                Miquelon</option>
+                                                                        <option value="Saint Vincent and the Grenadines"
+                                                                                {% if
+                                                                                user_profile.nationality=="Saint Vincent and the Grenadines"
+                                                                                %}selected{% endif %}>Saint Vincent and
+                                                                                the Grenadines</option>
+                                                                        <option value="Samoa" {% if
+                                                                                user_profile.nationality=="Samoa"
+                                                                                %}selected{% endif %}>Samoa</option>
+                                                                        <option value="San Marino" {% if
+                                                                                user_profile.nationality=="San Marino"
+                                                                                %}selected{% endif %}>San Marino
+                                                                        </option>
+                                                                        <option value="Sao Tome and Principe" {% if
+                                                                                user_profile.nationality=="Sao Tome and Principe"
+                                                                                %}selected{% endif %}>Sao Tome and
+                                                                                Principe</option>
+                                                                        <option value="Saudi Arabia" {% if
+                                                                                user_profile.nationality=="Saudi Arabia"
+                                                                                %}selected{% endif %}>Saudi Arabia
+                                                                        </option>
+                                                                        <option value="Senegal" {% if
+                                                                                user_profile.nationality=="Senegal"
+                                                                                %}selected{% endif %}>Senegal</option>
+                                                                        <option value="Serbia" {% if
+                                                                                user_profile.nationality=="Serbia"
+                                                                                %}selected{% endif %}>Serbia</option>
+                                                                        <option value="Serbia and Montenegro" {% if
+                                                                                user_profile.nationality=="Serbia and Montenegro"
+                                                                                %}selected{% endif %}>Serbia and
+                                                                                Montenegro</option>
+                                                                        <option value="Seychelles" {% if
+                                                                                user_profile.nationality=="Seychelles"
+                                                                                %}selected{% endif %}>Seychelles
+                                                                        </option>
+                                                                        <option value="Sierra Leone" {% if
+                                                                                user_profile.nationality=="Sierra Leone"
+                                                                                %}selected{% endif %}>Sierra Leone
+                                                                        </option>
+                                                                        <option value="Singapore" {% if
+                                                                                user_profile.nationality=="Singapore"
+                                                                                %}selected{% endif %}>Singapore</option>
+                                                                        <option value="Sint Maarten" {% if
+                                                                                user_profile.nationality=="Sint Maarten"
+                                                                                %}selected{% endif %}>Sint Maarten
+                                                                        </option>
+                                                                        <option value="Slovakia" {% if
+                                                                                user_profile.nationality=="Slovakia"
+                                                                                %}selected{% endif %}>Slovakia</option>
+                                                                        <option value="Slovenia" {% if
+                                                                                user_profile.nationality=="Slovenia"
+                                                                                %}selected{% endif %}>Slovenia</option>
+                                                                        <option value="Solomon Islands" {% if
+                                                                                user_profile.nationality=="Solomon Islands"
+                                                                                %}selected{% endif %}>Solomon Islands
+                                                                        </option>
+                                                                        <option value="Somalia" {% if
+                                                                                user_profile.nationality=="Somalia"
+                                                                                %}selected{% endif %}>Somalia</option>
+                                                                        <option value="South Africa" {% if
+                                                                                user_profile.nationality=="South Africa"
+                                                                                %}selected{% endif %}>South Africa
+                                                                        </option>
+                                                                        <option value="South Georgia and the South Sandwich Islands"
+                                                                                {% if
+                                                                                user_profile.nationality=="South Georgia and the South Sandwich Islands"
+                                                                                %}selected{% endif %}>South Georgia and
+                                                                                the South Sandwich Islands</option>
+                                                                        <option value="South Sudan" {% if
+                                                                                user_profile.nationality=="South Sudan"
+                                                                                %}selected{% endif %}>South Sudan
+                                                                        </option>
+                                                                        <option value="Spain" {% if
+                                                                                user_profile.nationality=="Spain"
+                                                                                %}selected{% endif %}>Spain</option>
+                                                                        <option value="Sri Lanka" {% if
+                                                                                user_profile.nationality=="Sri Lanka"
+                                                                                %}selected{% endif %}>Sri Lanka</option>
+                                                                        <option value="Sudan" {% if
+                                                                                user_profile.nationality=="Sudan"
+                                                                                %}selected{% endif %}>Sudan</option>
+                                                                        <option value="Suriname" {% if
+                                                                                user_profile.nationality=="Suriname"
+                                                                                %}selected{% endif %}>Suriname</option>
+                                                                        <option value="Svalbard and Jan Mayen" {% if
+                                                                                user_profile.nationality=="Svalbard and Jan Mayen"
+                                                                                %}selected{% endif %}>Svalbard and Jan
+                                                                                Mayen</option>
+                                                                        <option value="Swaziland" {% if
+                                                                                user_profile.nationality=="Swaziland"
+                                                                                %}selected{% endif %}>Swaziland</option>
+                                                                        <option value="Sweden" {% if
+                                                                                user_profile.nationality=="Sweden"
+                                                                                %}selected{% endif %}>Sweden</option>
+                                                                        <option value="Switzerland" {% if
+                                                                                user_profile.nationality=="Switzerland"
+                                                                                %}selected{% endif %}>Switzerland
+                                                                        </option>
+                                                                        <option value="Syrian Arab Republic" {% if
+                                                                                user_profile.nationality=="Syrian Arab Republic"
+                                                                                %}selected{% endif %}>Syrian Arab
+                                                                                Republic</option>
+                                                                        <option value="Taiwan, Province of China" {% if
+                                                                                user_profile.nationality=="Taiwan, Province of China"
+                                                                                %}selected{% endif %}>Taiwan, Province
+                                                                                of China</option>
+                                                                        <option value="Tajikistan" {% if
+                                                                                user_profile.nationality=="Tajikistan"
+                                                                                %}selected{% endif %}>Tajikistan
+                                                                        </option>
+                                                                        <option value="Tanzania, United Republic of" {%
+                                                                                if
+                                                                                user_profile.nationality=="Tanzania, United Republic of"
+                                                                                %}selected{% endif %}>Tanzania, United
+                                                                                Republic of</option>
+                                                                        <option value="Thailand" {% if
+                                                                                user_profile.nationality=="Thailand"
+                                                                                %}selected{% endif %}>Thailand</option>
+                                                                        <option value="Timor-Leste" {% if
+                                                                                user_profile.nationality=="Timor-Leste"
+                                                                                %}selected{% endif %}>Timor-Leste
+                                                                        </option>
+                                                                        <option value="Togo" {% if
+                                                                                user_profile.nationality=="Togo"
+                                                                                %}selected{% endif %}>Togo</option>
+                                                                        <option value="Tokelau" {% if
+                                                                                user_profile.nationality=="Tokelau"
+                                                                                %}selected{% endif %}>Tokelau</option>
+                                                                        <option value="Tonga" {% if
+                                                                                user_profile.nationality=="Tonga"
+                                                                                %}selected{% endif %}>Tonga</option>
+                                                                        <option value="Trinidad and Tobago" {% if
+                                                                                user_profile.nationality=="Trinidad and Tobago"
+                                                                                %}selected{% endif %}>Trinidad and
+                                                                                Tobago</option>
+                                                                        <option value="Tunisia" {% if
+                                                                                user_profile.nationality=="Tunisia"
+                                                                                %}selected{% endif %}>Tunisia</option>
+                                                                        <option value="Turkey" {% if
+                                                                                user_profile.nationality=="Turkey"
+                                                                                %}selected{% endif %}>Turkey</option>
+                                                                        <option value="Turkmenistan" {% if
+                                                                                user_profile.nationality=="Turkmenistan"
+                                                                                %}selected{% endif %}>Turkmenistan
+                                                                        </option>
+                                                                        <option value="Turks and Caicos Islands" {% if
+                                                                                user_profile.nationality=="Turks and Caicos Islands"
+                                                                                %}selected{% endif %}>Turks and Caicos
+                                                                                Islands</option>
+                                                                        <option value="Tuvalu" {% if
+                                                                                user_profile.nationality=="Tuvalu"
+                                                                                %}selected{% endif %}>Tuvalu</option>
+                                                                        <option value="Uganda" {% if
+                                                                                user_profile.nationality=="Uganda"
+                                                                                %}selected{% endif %}>Uganda</option>
+                                                                        <option value="Ukraine" {% if
+                                                                                user_profile.nationality=="Ukraine"
+                                                                                %}selected{% endif %}>Ukraine</option>
+                                                                        <option value="United Arab Emirates" {% if
+                                                                                user_profile.nationality=="United Arab Emirates"
+                                                                                %}selected{% endif %}>United Arab
+                                                                                Emirates</option>
+                                                                        <option value="United Kingdom" {% if
+                                                                                user_profile.nationality=="United Kingdom"
+                                                                                %}selected{% endif %}>United Kingdom
+                                                                        </option>
+                                                                        <option value="United States" {% if
+                                                                                user_profile.nationality=="United States"
+                                                                                %}selected{% endif %}>United States
+                                                                        </option>
+                                                                        <option value="United States Minor Outlying Islands"
+                                                                                {% if
+                                                                                user_profile.nationality=="United States Minor Outlying Islands"
+                                                                                %}selected{% endif %}>United States
+                                                                                Minor Outlying Islands</option>
+                                                                        <option value="Uruguay" {% if
+                                                                                user_profile.nationality=="Uruguay"
+                                                                                %}selected{% endif %}>Uruguay</option>
+                                                                        <option value="Uzbekistan" {% if
+                                                                                user_profile.nationality=="Uzbekistan"
+                                                                                %}selected{% endif %}>Uzbekistan
+                                                                        </option>
+                                                                        <option value="Vanuatu" {% if
+                                                                                user_profile.nationality=="Vanuatu"
+                                                                                %}selected{% endif %}>Vanuatu</option>
+                                                                        <option value="Venezuela" {% if
+                                                                                user_profile.nationality=="Venezuela"
+                                                                                %}selected{% endif %}>Venezuela</option>
+                                                                        <option value="Viet Nam" {% if
+                                                                                user_profile.nationality=="Viet Nam"
+                                                                                %}selected{% endif %}>Viet Nam</option>
+                                                                        <option value="Virgin Islands, British" {% if
+                                                                                user_profile.nationality=="Virgin Islands, British"
+                                                                                %}selected{% endif %}>Virgin Islands,
+                                                                                British</option>
+                                                                        <option value="Virgin Islands, U.s." {% if
+                                                                                user_profile.nationality=="Virgin Islands, U.s."
+                                                                                %}selected{% endif %}>Virgin Islands,
+                                                                                U.s.</option>
+                                                                        <option value="Wallis and Futuna" {% if
+                                                                                user_profile.nationality=="Wallis and Futuna"
+                                                                                %}selected{% endif %}>Wallis and Futuna
+                                                                        </option>
+                                                                        <option value="Western Sahara" {% if
+                                                                                user_profile.nationality=="Western Sahara"
+                                                                                %}selected{% endif %}>Western Sahara
+                                                                        </option>
+                                                                        <option value="Yemen" {% if
+                                                                                user_profile.nationality=="Yemen"
+                                                                                %}selected{% endif %}>Yemen</option>
+                                                                        <option value="Zambia" {% if
+                                                                                user_profile.nationality=="Zambia"
+                                                                                %}selected{% endif %}>Zambia</option>
+                                                                        <option value="Zimbabwe" {% if
+                                                                                user_profile.nationality=="Zimbabwe"
+                                                                                %}selected{% endif %}>Zimbabwe</option>
+
+                                                                </select>
+                                                        </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                        <label for="emailAddress" class="col-sm-2 col-form-label">Email
+                                                                Address</label>
+                                                        <div class="col-sm-10">
+                                                                <input type="email" class="form-control"
+                                                                        id="emailAddress" name="email_address"
+                                                                        value="{{ user_profile.email_address }}"
+                                                                        disabled required>
+                                                        </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                        <label for="phoneNumber" class="col-sm-2 col-form-label">Phone
+                                                                Number</label>
+                                                        <div class="col-sm-10">
+                                                                <input type="tel" class="form-control" id="phoneNumber"
+                                                                        name="phone_number"
+                                                                        value="{{ user_profile.phone_number }}" disabled
+                                                                        required>
+                                                        </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                        <label for="workAddress" class="col-sm-2 col-form-label">Work
+                                                                Address</label>
+                                                        <div class="col-sm-10">
+                                                                <input type="text" class="form-control" id="workAddress"
+                                                                        name="work_address"
+                                                                        value="{{ user_profile.work_address }}" disabled
+                                                                        required>
+                                                        </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                        <label for="specialty"
+                                                                class="col-sm-2 col-form-label">Specialty</label>
+                                                        <div class="col-sm-10">
+                                                                <select class="form-control" id="specialty"
+                                                                        name="specialty" disabled>
+                                                                        <option value="" disabled>Specialty</option>
+                                                                        <option value="Cardiology" {% if
+                                                                                user_profile.specialty=='Cardiology'
+                                                                                %}selected{% endif %}>Cardiology
+                                                                        </option>
+                                                                        <option value="Orthopedics" {% if
+                                                                                user_profile.specialty=='Orthopedics'
+                                                                                %}selected{% endif %}>Orthopedics
+                                                                        </option>
+                                                                        <option value="Dermatology" {% if
+                                                                                user_profile.specialty=='Dermatology'
+                                                                                %}selected{% endif %}>Dermatology
+                                                                        </option>
+                                                                        <option value="Obstetrics and Gynecology (OB/GYN)"
+                                                                                {% if
+                                                                                user_profile.specialty=='Obstetrics and Gynecology (OB/GYN)'
+                                                                                %}selected{% endif %}>
+                                                                                Obstetrics & Gynecology
+                                                                        </option>
+                                                                        <option value="Psychiatry" {% if
+                                                                                user_profile.specialty=='Psychiatry'
+                                                                                %}selected{% endif %}>Psychiatry
+                                                                        </option>
+                                                                        <option value="Neurology" {% if
+                                                                                user_profile.specialty=='Neurology'
+                                                                                %}selected{% endif %}>Neurology</option>
+                                                                        <option value="Emergency" {% if
+                                                                                user_profile.specialty=='Emergency'
+                                                                                %}selected{% endif %}>Emergency</option>
                                                                 </select>
                                                         </div>
                                                 </div>
@@ -507,52 +1116,8 @@
                                                         <div class="col-sm-10">
                                                                 <input type="text" class="form-control"
                                                                         id="licenseNumber" name="license_number"
+                                                                        value="{{ user_profile.license_number }}"
                                                                         disabled required>
-                                                        </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                        <label for="emailAddress" class="col-sm-2 col-form-label">Email
-                                                                Address</label>
-                                                        <div class="col-sm-10">
-                                                                <input type="email" class="form-control"
-                                                                        id="emailAddress" name="email_address" disabled
-                                                                        required>
-                                                        </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                        <label for="phoneNumber" class="col-sm-2 col-form-label">Phone
-                                                                Number</label>
-                                                        <div class="col-sm-10">
-                                                                <input type="tel" class="form-control" id="phoneNumber"
-                                                                        name="phone_number" disabled required>
-                                                        </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                        <label for="workAddress" class="col-sm-2 col-form-label">Work
-                                                                Address</label>
-                                                        <div class="col-sm-10">
-                                                                <input type="text" class="form-control" id="workAddress"
-                                                                        name="work_address" disabled required>
-                                                        </div>
-                                                </div>
-                                                <div class="row mb-3">
-                                                        <label for="specialty"
-                                                                class="col-sm-2 col-form-label">Specialty</label>
-                                                        <div class="col-sm-10">
-                                                                <select class="form-control" id="specialty"
-                                                                        name="specialty" disabled>
-                                                                        <option value="" disabled selected>Specialty
-                                                                        </option>
-                                                                        <option value="Cardiology">Cardiology</option>
-                                                                        <option value="Orthopedics">Orthopedics</option>
-                                                                        <option value="Dermatology">Dermatology</option>
-                                                                        <option
-                                                                                value="Obstetrics and Gynecology (OB/GYN)">
-                                                                                Obstetrics & Gynecology</option>
-                                                                        <option value="Psychiatry">Psychiatry</option>
-                                                                        <option value="Neurology">Neurology</option>
-                                                                        <option value="Emergency">Emergency</option>
-                                                                </select>
                                                         </div>
                                                 </div>
                                                 <div>
