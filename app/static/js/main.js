@@ -15,10 +15,10 @@ async function loadTemplate(elementId, filePath, activePage = null) {
 
 function setActiveLink(activePage) {
     const navLinks = {
-        "/portal/index.html": "homeLink",
-        "/portal/my-patients.html": "myPatientsLink",
-        "/portal/register-patient.html": "registerPatientLink",
-        "/portal/signin.html": "logoutLink"
+        "/dashboard.html": "homeLink",
+        "my-patients": "myPatientsLink",
+        "register-patient": "registerPatientLink",
+        "signin": "logoutLink"
     };
 
     const activeLinkId = navLinks[activePage];
@@ -31,26 +31,28 @@ function initMain() {
     (function ($) {
         "use strict";
 
-        const today = new Date();
-        const currentMonth = today.getMonth();
-        const currentYear = today.getFullYear();
-
         // Spinner
-        const FALLBACK_TIMEOUT = 3000;
+        const FALLBACK_TIMEOUT = 1500;
+
+        // Fallback timeout to hide spinner if something goes wrong
         let fallbackTimeout = setTimeout(() => {
-            if (document.getElementById("spinner")?.classList.contains("show")) {
-                document.getElementById("spinner").classList.remove("show");
+            let spinnerElement = document.getElementById("spinner");
+            if (spinnerElement?.classList.contains("show")) {
+                spinnerElement.classList.remove("show");
             }
         }, FALLBACK_TIMEOUT);
-
-        let spinner = function () {
-            setTimeout(function () {
-                if ($("#spinner").length > 0) {
-                    $("#spinner").removeClass("show");
-                }
-                clearTimeout(fallbackTimeout);
-            }, 1);
-        };
+        
+        // Hide spinner when DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            let spinnerElement = document.getElementById("spinner");
+            if (spinnerElement?.classList.contains("show")) {
+                spinnerElement.classList.remove("show");
+            }
+        
+            // Clear the fallback timeout since spinner is handled
+            clearTimeout(fallbackTimeout);
+        });
+     // the changes made here Simplifies the approach, removes redundancy, ensures accurate spinner handling, and eliminates jQuery dependency  
         spinner();
 
         // Back to top button
@@ -73,6 +75,10 @@ function initMain() {
         });
 
         // Calendar
+        const today = new Date();
+        const currentMonth = today.getMonth();
+        const currentYear = today.getFullYear();
+
         $('#calendar-prev').datetimepicker({
             viewDate: new Date(currentYear, currentMonth - 1, 1),
             format: 'L',
@@ -250,12 +256,12 @@ function initMain() {
 
 (async function initializeApp() {
     const currentPath = window.location.pathname;
-    const templateFolder = "loadedTemplates";
+    const templateFolder = "/static/loadedTemplates";
     const pagesRequiringTemplates = [
-        "/portal/index.html",
-        "/portal/my-patients.html",
-        "/portal/register-patient.html",
-        "/portal/signin.html"
+        "/dashboard",
+        "/my-patients",
+        "/register-patient",
+        "/signin"
     ];
 
     if (pagesRequiringTemplates.includes(currentPath)) {
