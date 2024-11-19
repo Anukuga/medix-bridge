@@ -3,33 +3,29 @@
 
 <head>
     <meta charset="utf-8">
-    <title>DarkPan - Bootstrap 5 Admin Template</title>
+    <title>Signup | MedixBridge</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ url_for('static', filename='img/favicon.ico') }}" rel="icon">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 </head>
 
 <body>
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner"
-            class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -44,29 +40,43 @@
                     <div class="bg-secondary shadowed-layout rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <a href="../mediBase/index.html" class="">
-                                <img src="img/logo.png" alt="mediBase logo" style="margin-left: -5%;">
+                                <img src="img/logo.png" alt="MedixBridge logo" style="margin-left: -5%;">
                             </a>
                             <h3>Portal</h3>
                         </div>
-                        <form action="<?php htmlspecialchars($_SERVER[" PHP_SELF"]) ?>
+                        <form action="/signup" method="POST">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingText" placeholder="John Doe"
-                                    name="name" required>
-                                <label for="floatingText">Name</label>
+                                <input type="text" class="form-control" id="floatingText" placeholder=""
+                                    name="first_name" required>
+                                <label for="floatingText">First Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingText" placeholder="jhondoe"
-                                    name="username" required>
-                                <label for="floatingText">Username</label>
+                                <input type="text" class="form-control" id="floatingText" placeholder=""
+                                    name="last_name" required>
+                                <label for="floatingText">Last Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="date" class="form-control" id="floatingText" name="birth_date" required>
+                                <label for="floatingText">Birthdate</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput"
-                                    placeholder="name@example.com" name="email" required>
+                                    placeholder="name@example.com" name="email_address" required>
                                 <label for="floatingInput">Email address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control" id="speciality" name="speciality">
-                                    <option value="" disabled selected>Speciality</option>
+                                <input type="text" class="form-control" id="floatingText" placeholder=""
+                                    name="phone_number" required>
+                                <label for="floatingText">Phone Number</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingText" placeholder=""
+                                    name="work_address" required>
+                                <label for="floatingText">Work Address</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control" id="speciality" name="specialty">
+                                    <option value="" disabled selected>Specialty</option>
                                     <option value="Cardiology">Cardiology</option>
                                     <option value="Orthopedics">Orthopedics</option>
                                     <option value="Dermatology">Dermatology</option>
@@ -76,17 +86,13 @@
                                     <option value="Emergency">Emergency</option>
                                 </select>
                             </div>
-                            <div class="form-floating mb-3">
-                                <input type="date" class="form-control" id="floatingText" name="birth_date" required>
-                                <label for="floatingText">Birthdate</label>
-                            </div>
                             <div class="form-floating mb-4">
                                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
                                     name="password" required>
                                 <label for="floatingPassword">Password</label>
                             </div>
                             <div class="mb-4">
-                                <input type="checkbox" class="form-check-input" id="toggle-password">
+                                <input type="checkbox" class="form-check-input" id="toggle-password" onclick="togglePasswordVisibility()">
                                 <label class="form-check-label" for="toggle-password">Show Password</label>
                             </div>
                             <div id="password-requirements" class="mb-4">
@@ -108,7 +114,7 @@
                             </div>
                             <button type="submit" id="signupButton" class="btn btn-primary py-3 w-100 mb-4">Sign
                                 Up</button>
-                            <p class="text-center mb-0">Already have an Account? <a href="signin.php">Sign In</a></p>
+                            <p class="text-center mb-0">Already have an Account? <a href="/signin">Sign In</a></p>
                         </form>
                     </div>
                 </div>
@@ -120,13 +126,46 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/loadTemplates.js"></script>
-    <script src="js/main.js"></script>
+    <!-- Main Javascript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- Show Password Script -->
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById("floatingPassword");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
+    <script>
+        // Select the password input field and requirement elements
+        const passwordField = document.getElementById("floatingPassword");
+        const minLength = document.getElementById("min-length");
+        const lowercase = document.getElementById("lowercase");
+        const uppercase = document.getElementById("uppercase");
+        const number = document.getElementById("number");
+        const specialChar = document.getElementById("special-char");
+    
+        // Add an input event listener to the password field
+        passwordField.addEventListener("input", () => {
+            const value = passwordField.value;
+    
+            // Validate each requirement and update colors
+            minLength.style.color = value.length >= 8 ? "green" : "red";
+            lowercase.style.color = /[a-z]/.test(value) ? "green" : "red";
+            uppercase.style.color = /[A-Z]/.test(value) ? "green" : "red";
+            number.style.color = /\d/.test(value) ? "green" : "red";
+            specialChar.style.color = /[!@#$%^&*(),.?":{}|<>]/.test(value) ? "green" : "red";
+        });
+    </script>
+    
 </body>
 
 </html>
+<!-- TODO: Setup Keywords in HTML head -->
+
+<!-- FIXME: Fix the color highlighting for the password requirements --> 

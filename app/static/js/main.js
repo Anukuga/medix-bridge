@@ -52,8 +52,6 @@ function initMain() {
             // Clear the fallback timeout since spinner is handled
             clearTimeout(fallbackTimeout);
         });
-     // the changes made here Simplifies the approach, removes redundancy, ensures accurate spinner handling, and eliminates jQuery dependency  
-        spinner();
 
         // Back to top button
         $(window).scroll(function () {
