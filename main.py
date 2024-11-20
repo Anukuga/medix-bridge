@@ -17,6 +17,7 @@ app.config["MYSQL_UNIX_SOCKET"] = "/Applications/XAMPP/xamppfiles/var/mysql/mysq
 
 mysql = MySQL(app)
 
+
 # TODO: Add redirect for /login to signin
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
@@ -164,9 +165,17 @@ def my_profile():
                 WHERE id = %s
                 """,
                 (
-                    first_name, last_name, birth_date, gender, email_address,
-                    phone_number, work_address, specialty, nationality,
-                    license_number, user_id,
+                    first_name,
+                    last_name,
+                    birth_date,
+                    gender,
+                    email_address,
+                    phone_number,
+                    work_address,
+                    specialty,
+                    nationality,
+                    license_number,
+                    user_id,
                 ),
             )
             mysql.connection.commit()
@@ -201,28 +210,110 @@ def my_profile():
     return render_template("my-profile.html", user_profile=user_profile)
 
 
-@app.route("/register-patient")
+@app.route("/register-patient", methods=["GET", "POST"])
 def register_patient():
     if "logged_in" not in session or not session["logged_in"]:
-        flash("Please log in to access your patients.", "warning")
+        flash("Please log in to register a patient.", "warning")
         return redirect(url_for("signin"))
 
-    user_id = session["user_id"]
-
-    # Query the database to fetch the user's patients
+    # Fetch doctor's details using the PRIMARY_KEY `id` from doctors_db
+    user_id = session[
+        "user_id"
+    ]  # Assuming `user_id` is stored in the session upon login
     cur = mysql.connection.cursor(cursorclass=DictCursor)
     cur.execute(
         """
-        SELECT first_name, last_name, email_address, phone_number, work_address, specialty, birth_date 
-        FROM doctors_db WHERE id = %s
+        SELECT id, first_name, last_name, specialty 
+        FROM doctors_db 
+        WHERE id = %s
         """,
         (user_id,),
     )
-    patients = cur.fetchall()
+    doctor = cur.fetchone()
     cur.close()
 
-    # Render the my-patients page with the patients data
-    return render_template("register-patient.html", patients=patients)
+    if not doctor:
+        flash("Doctor's details could not be found.", "danger")
+        return redirect(url_for("dashboard"))
+
+    if request.method == "POST":
+        # Retrieve form data
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        birth_date = request.form.get("birth_date")
+        gender = request.form.get("gender")
+        nationality = request.form.get("nationality")
+        health_insurance_number = request.form.get("health_insurance_number")
+        email_address = request.form.get("email")
+        phone_number = request.form.get("phone_number")
+        address = request.form.get("address")
+        emergency_contact_name = request.form.get("emergency_contact_name")
+        emergency_contact_number = request.form.get("emergency_contact_number")
+        height = request.form.get("height")
+        weight = request.form.get("weight")
+        blood_group = request.form.get("blood_group")
+        genotype = request.form.get("genotype")
+        allergies = request.form.get("allergies")
+        chronic_diseases = request.form.get("chronic_diseases")
+        disabilities = request.form.get("disabilities")
+        vaccines = request.form.get("vaccines")
+        medications = request.form.get("medications")
+        doctors_note = request.form.get("doctors_note")
+
+        # Insert patient data into the database along with the doctor_id
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute(
+                """
+                INSERT INTO patients_db (
+                    doctor_id, first_name, last_name, birth_date, gender, nationality, health_insurance_number,
+                    email_address, phone_number, address, emergency_contact_name, emergency_contact_number,
+                    height, weight, blood_group, genotype, allergies, chronic_diseases, disabilities,
+                    vaccines, medications, doctors_note
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """,
+                (
+                    doctor["id"],
+                    first_name,
+                    last_name,
+                    birth_date,
+                    gender,
+                    nationality,
+                    health_insurance_number,
+                    email_address,
+                    phone_number,
+                    address,
+                    emergency_contact_name,
+                    emergency_contact_number,
+                    height,
+                    weight,
+                    blood_group,
+                    genotype,
+                    allergies,
+                    chronic_diseases,
+                    disabilities,
+                    vaccines,
+                    medications,
+                    doctors_note,
+                ),
+            )
+            mysql.connection.commit()
+            flash("Patient registered successfully!", "success")
+        except Exception as e:
+            mysql.connection.rollback()
+            flash(f"An error occurred: {e}", "danger")
+        finally:
+            cur.close()
+
+        return redirect(url_for("register_patient"))
+
+    # Render the registration form with doctor's details
+    return render_template(
+        "register-patient.html",
+        doctor_first_name=doctor["first_name"],
+        doctor_last_name=doctor["last_name"],
+        doctor_specialty=doctor["specialty"],
+    )
 
 
 if __name__ == "__main__":
