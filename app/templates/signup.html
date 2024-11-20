@@ -92,7 +92,8 @@
                                 <label for="floatingPassword">Password</label>
                             </div>
                             <div class="mb-4">
-                                <input type="checkbox" class="form-check-input" id="toggle-password" onclick="togglePasswordVisibility()">
+                                <input type="checkbox" class="form-check-input" id="toggle-password"
+                                    onclick="togglePasswordVisibility()">
                                 <label class="form-check-label" for="toggle-password">Show Password</label>
                             </div>
                             <div id="password-requirements" class="mb-4">
@@ -149,11 +150,11 @@
         const uppercase = document.getElementById("uppercase");
         const number = document.getElementById("number");
         const specialChar = document.getElementById("special-char");
-    
+
         // Add an input event listener to the password field
         passwordField.addEventListener("input", () => {
             const value = passwordField.value;
-    
+
             // Validate each requirement and update colors
             minLength.style.color = value.length >= 8 ? "green" : "red";
             lowercase.style.color = /[a-z]/.test(value) ? "green" : "red";
@@ -162,10 +163,10 @@
             specialChar.style.color = /[!@#$%^&*(),.?":{}|<>]/.test(value) ? "green" : "red";
         });
     </script>
-    
+
 </body>
 
 </html>
 <!-- TODO: Setup Keywords in HTML head -->
 
-<!-- FIXME: Fix the color highlighting for the password requirements --> 
+<!-- FIXME: Fix the color highlighting for the password requirements -->

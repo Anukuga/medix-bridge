@@ -41,14 +41,14 @@ function initMain() {
                 spinnerElement.classList.remove("show");
             }
         }, FALLBACK_TIMEOUT);
-        
+
         // Hide spinner when DOM is fully loaded
         document.addEventListener("DOMContentLoaded", () => {
             let spinnerElement = document.getElementById("spinner");
             if (spinnerElement?.classList.contains("show")) {
                 spinnerElement.classList.remove("show");
             }
-        
+
             // Clear the fallback timeout since spinner is handled
             clearTimeout(fallbackTimeout);
         });
@@ -250,6 +250,13 @@ function initMain() {
     }
 
     passwordInput?.addEventListener("input", checkPasswordStrength);
+
+    // Get Current Year
+    const currentYearElement = document.getElementById("currentYear");
+    if (currentYearElement) {
+        const currentYear = new Date().getFullYear();
+        currentYearElement.textContent = currentYear;
+    }
 }
 
 (async function initializeApp() {

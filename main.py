@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__, static_folder="app/static", template_folder="app/templates")
-app.secret_key = 'your_secret_key'
+app.secret_key = "your_secret_key"
 
 # MySQL Configuration
 app.config["MYSQL_HOST"] = "localhost"
@@ -17,6 +17,7 @@ app.config["MYSQL_UNIX_SOCKET"] = "/Applications/XAMPP/xamppfiles/var/mysql/mysq
 
 mysql = MySQL(app)
 
+# TODO: Add redirect for /login to signin
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
     if request.method == "POST":
@@ -26,7 +27,9 @@ def signin():
 
         # Query the database for user
         cur = mysql.connection.cursor(cursorclass=DictCursor)
-        cur.execute("SELECT * FROM doctors_db WHERE email_address = %s", (email_address,))
+        cur.execute(
+            "SELECT * FROM doctors_db WHERE email_address = %s", (email_address,)
+        )
         user = cur.fetchone()
         cur.close()
 
@@ -36,7 +39,9 @@ def signin():
             session["logged_in"] = True
             session["user_id"] = user["id"]
             flash("Logged in successfully!", "success")
-            return redirect(url_for("dashboard"))  # Replace 'dashboard' with your actual route
+            return redirect(
+                url_for("dashboard")
+            )  # Replace 'dashboard' with your actual route
 
         flash("Invalid email or password.", "danger")
         return redirect(url_for("signin"))
@@ -45,6 +50,7 @@ def signin():
     return render_template("signin.html")
 
 
+# TODO: Add redirect for /register to signup
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
@@ -97,20 +103,126 @@ def dashboard():
         return redirect(url_for("signin"))
 
     user_id = session["user_id"]
-    
+
     # Query the database to fetch the doctor's information
     cur = mysql.connection.cursor(cursorclass=DictCursor)
-    cur.execute("SELECT last_name FROM doctors_db WHERE id = %s", (user_id,))
+    cur.execute(
+        """
+        SELECT first_name, last_name, specialty 
+        FROM doctors_db 
+        WHERE id = %s
+    """,
+        (user_id,),
+    )
     doctor = cur.fetchone()
     cur.close()
-    
+
     # Check if doctor data is retrieved successfully
     if not doctor:
         flash("User not found.", "danger")
         return redirect(url_for("signin"))
 
-    # Render the dashboard template with the doctor's last name
-    return render_template("dashboard.html", doctor_last_name=doctor["last_name"])
+    # Render the dashboard template with the doctor's data
+    return render_template(
+        "dashboard.html",
+        doctor_first_name=doctor["first_name"],
+        doctor_last_name=doctor["last_name"],
+        doctor_specialty=doctor["specialty"],
+    )
+
+
+@app.route("/my-profile", methods=["GET", "POST"])
+def my_profile():
+    if "logged_in" not in session or not session["logged_in"]:
+        flash("Please log in to access your profile.", "warning")
+        return redirect(url_for("signin"))
+
+    user_id = session["user_id"]
+
+    if request.method == "POST":
+        # Get updated form data from the request
+        first_name = request.form.get("first_name")
+        last_name = request.form.get("last_name")
+        birth_date = request.form.get("birth_date")
+        gender = request.form.get("gender")
+        email_address = request.form.get("email_address")
+        phone_number = request.form.get("phone_number")
+        work_address = request.form.get("work_address")
+        specialty = request.form.get("specialty")
+        nationality = request.form.get("nationality")
+        license_number = request.form.get("license_number")
+
+        # Update the user's data in the database
+        try:
+            cur = mysql.connection.cursor()
+            cur.execute(
+                """
+                UPDATE doctors_db
+                SET first_name = %s, last_name = %s, birth_date = %s, gender = %s, 
+                    email_address = %s, phone_number = %s, work_address = %s, 
+                    specialty = %s, nationality = %s, license_number = %s
+                WHERE id = %s
+                """,
+                (
+                    first_name, last_name, birth_date, gender, email_address,
+                    phone_number, work_address, specialty, nationality,
+                    license_number, user_id,
+                ),
+            )
+            mysql.connection.commit()
+        except Exception as e:
+            mysql.connection.rollback()
+            raise e
+        finally:
+            cur.close()
+
+        # Display a success message
+        flash("Profile updated successfully!", "success")
+        return redirect(url_for("my_profile"))
+
+    # Query the database to fetch the user's current profile data
+    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    cur.execute(
+        """
+        SELECT first_name, last_name, birth_date, gender, email_address, 
+               phone_number, work_address, specialty, nationality, license_number
+        FROM doctors_db WHERE id = %s
+        """,
+        (user_id,),
+    )
+    user_profile = cur.fetchone()
+    cur.close()
+
+    if not user_profile:
+        flash("User profile not found.", "danger")
+        return redirect(url_for("dashboard"))
+
+    # Render the my-profile page with user profile data
+    return render_template("my-profile.html", user_profile=user_profile)
+
+
+@app.route("/register-patient")
+def register_patient():
+    if "logged_in" not in session or not session["logged_in"]:
+        flash("Please log in to access your patients.", "warning")
+        return redirect(url_for("signin"))
+
+    user_id = session["user_id"]
+
+    # Query the database to fetch the user's patients
+    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    cur.execute(
+        """
+        SELECT first_name, last_name, email_address, phone_number, work_address, specialty, birth_date 
+        FROM doctors_db WHERE id = %s
+        """,
+        (user_id,),
+    )
+    patients = cur.fetchall()
+    cur.close()
+
+    # Render the my-patients page with the patients data
+    return render_template("register-patient.html", patients=patients)
 
 
 if __name__ == "__main__":
