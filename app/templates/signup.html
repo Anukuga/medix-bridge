@@ -46,36 +46,48 @@
                         </div>
                         <form action="/signup" method="POST">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingText" placeholder=""
-                                    name="first_name" required>
+                                <input type="text" class="form-control" id="floatingText" placeholder="" name="first_name" required>
                                 <label for="floatingText">First Name</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingText" placeholder=""
-                                    name="last_name" required>
+                                <input type="text" class="form-control" id="floatingText" placeholder="" name="last_name" required>
                                 <label for="floatingText">Last Name</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control" id="floatingGender" name="gender" required>
+                                    <option value="" disabled selected>Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <label for="floatingGender">Gender</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="floatingText" placeholder="" name="license_number" required>
+                                <label for="floatingText">License Number</label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="date" class="form-control" id="floatingText" name="birth_date" required>
                                 <label for="floatingText">Birthdate</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput"
-                                    placeholder="name@example.com" name="email_address" required>
-                                <label for="floatingInput">Email address</label>
+                                <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email_address" required>
+                                <label for="floatingInput">Email Address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingText" placeholder=""
-                                    name="phone_number" required>
-                                <label for="floatingText">Phone Number</label>
+                                <input type="text" class="form-control" id="floatingText" placeholder="" name="phone_number">
+                                <label for="floatingText">Phone Number (Optional)</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="floatingText" placeholder=""
-                                    name="work_address" required>
+                                <input type="text" class="form-control" id="floatingText" placeholder="" name="work_address" required>
                                 <label for="floatingText">Work Address</label>
                             </div>
                             <div class="form-floating mb-3">
-                                <select class="form-control" id="speciality" name="specialty">
+                                <input type="text" class="form-control" id="floatingText" placeholder="" name="nationality" required>
+                                <label for="floatingText">Nationality</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <select class="form-control" id="speciality" name="specialty" required>
                                     <option value="" disabled selected>Specialty</option>
                                     <option value="Cardiology">Cardiology</option>
                                     <option value="Orthopedics">Orthopedics</option>
@@ -87,13 +99,11 @@
                                 </select>
                             </div>
                             <div class="form-floating mb-4">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                                    name="password" required>
+                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
                                 <label for="floatingPassword">Password</label>
                             </div>
                             <div class="mb-4">
-                                <input type="checkbox" class="form-check-input" id="toggle-password"
-                                    onclick="togglePasswordVisibility()">
+                                <input type="checkbox" class="form-check-input" id="toggle-password" onclick="togglePasswordVisibility()">
                                 <label class="form-check-label" for="toggle-password">Show Password</label>
                             </div>
                             <div id="password-requirements" class="mb-4">
@@ -107,19 +117,17 @@
                             <div class="d-flex align-items-center justify-content-between mb-4">
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
-                                    <label class="form-check-label" for="exampleCheck1">I accept the <a href="#">terms
-                                            and conditions</a></label>
+                                    <label class="form-check-label" for="exampleCheck1">I accept the <a href="#">terms and conditions</a></label>
                                 </div>
                             </div>
-                            <div class="d-flex align-items-center mb-4">
-                            </div>
-                            <button type="submit" id="signupButton" class="btn btn-primary py-3 w-100 mb-4">Sign
-                                Up</button>
+                            <button type="submit" id="signupButton" class="btn btn-primary py-3 w-100 mb-4">Sign Up</button>
                             <p class="text-center mb-0">Already have an Account? <a href="/signin">Sign In</a></p>
                         </form>
                     </div>
                 </div>
             </div>
+        </div>
+        
         </div>
         <!-- Sign Up End -->
     </div>
