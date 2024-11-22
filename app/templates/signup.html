@@ -47,11 +47,11 @@
                         <form action="/signup" method="POST">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingText" placeholder="" name="first_name" required>
-                                <label for="floatingText">First Name</label>
+                                <label for="floatingText">First Name <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingText" placeholder="" name="last_name" required>
-                                <label for="floatingText">Last Name</label>
+                                <label for="floatingText">Last Name <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-control" id="floatingGender" name="gender" required>
@@ -60,19 +60,19 @@
                                     <option value="Female">Female</option>
                                     <option value="Other">Other</option>
                                 </select>
-                                <label for="floatingGender">Gender</label>
+                                <label for="floatingGender">Gender <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingText" placeholder="" name="license_number" required>
-                                <label for="floatingText">License Number</label>
+                                <label for="floatingText">License Number <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="date" class="form-control" id="floatingText" name="birth_date" required>
-                                <label for="floatingText">Birthdate</label>
+                                <label for="floatingText">Birthdate <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email_address" required>
-                                <label for="floatingInput">Email Address</label>
+                                <label for="floatingInput">Email Address <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingText" placeholder="" name="phone_number">
@@ -80,11 +80,11 @@
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingText" placeholder="" name="work_address" required>
-                                <label for="floatingText">Work Address</label>
+                                <label for="floatingText">Work Address <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="floatingText" placeholder="" name="nationality" required>
-                                <label for="floatingText">Nationality</label>
+                                <label for="floatingText">Nationality <span class="text-danger">*</span></label>
                             </div>
                             <div class="form-floating mb-3">
                                 <select class="form-control" id="speciality" name="specialty" required>
@@ -100,7 +100,7 @@
                             </div>
                             <div class="form-floating mb-4">
                                 <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
-                                <label for="floatingPassword">Password</label>
+                                <label for="floatingPassword">Password <span class="text-danger">*</span></label>
                             </div>
                             <div class="mb-4">
                                 <input type="checkbox" class="form-check-input" id="toggle-password" onclick="togglePasswordVisibility()">

@@ -104,33 +104,27 @@
                                         <h2 class="mb-4">Your Profile Details</h2>
                                         <form action="/my-profile" method="POST">
                                                 <div class="row mb-3">
-                                                        <label for="firstName" class="col-sm-2 col-form-label">First
-                                                                Name</label>
+                                                        <label for="firstName" class="col-sm-2 col-form-label">
+                                                            First Name <span class="text-danger">*</span>
+                                                        </label>
                                                         <div class="col-sm-10">
-                                                                <input type="text" class="form-control" id="firstName"
-                                                                        name="first_name"
-                                                                        value="{{ user_profile.first_name }}" disabled
-                                                                        required>
+                                                            <input type="text" class="form-control" id="firstName" name="first_name" value="{{ user_profile.first_name }}" disabled required>
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                        <label for="lastName" class="col-sm-2 col-form-label">Last
-                                                                Name</label>
+                                                        <label for="lastName" class="col-sm-2 col-form-label">
+                                                            Last Name <span class="text-danger">*</span>
+                                                        </label>
                                                         <div class="col-sm-10">
-                                                                <input type="text" class="form-control" id="lastName"
-                                                                        name="last_name"
-                                                                        value="{{ user_profile.last_name }}" disabled
-                                                                        required>
+                                                            <input type="text" class="form-control" id="lastName" name="last_name" value="{{ user_profile.last_name }}" disabled required>
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                        <label for="birthDate" class="col-sm-2 col-form-label">Date of
-                                                                Birth</label>
+                                                        <label for="birthDate" class="col-sm-2 col-form-label">
+                                                            Date of Birth <span class="text-danger">*</span>
+                                                        </label>
                                                         <div class="col-sm-10">
-                                                                <input type="date" class="form-control" id="birthDate"
-                                                                        name="birth_date"
-                                                                        value="{{ user_profile.birth_date }}" disabled
-                                                                        required>
+                                                            <input type="date" class="form-control" id="birthDate" name="birth_date" value="{{ user_profile.birth_date }}" disabled required>
                                                         </div>
                                                 </div>
                                                 <fieldset class="row mb-3">
@@ -143,7 +137,7 @@
                                                                                 user_profile.gender=='male' %}checked{%
                                                                                 endif %} disabled>
                                                                         <label class="form-check-label"
-                                                                                for="genderMale">Male</label>
+                                                                                for="genderMale">Male <span class="text-danger">*</span></label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                         <input class="form-check-input" type="radio"
@@ -152,13 +146,13 @@
                                                                                 user_profile.gender=='female'
                                                                                 %}checked{% endif %} disabled>
                                                                         <label class="form-check-label"
-                                                                                for="genderFemale">Female</label>
+                                                                                for="genderFemale">Female <span class="text-danger">*</span></label>
                                                                 </div>
                                                         </div>
                                                 </fieldset>
                                                 <div class="row mb-3">
                                                         <label for="nationality"
-                                                                class="col-sm-2 col-form-label">Nationality</label>
+                                                                class="col-sm-2 col-form-label">Nationality <span class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
                                                                 <!-- Country Names -->
                                                                 <select class="form-select" id="nationality"
@@ -1044,7 +1038,7 @@
                                                 </div>
                                                 <div class="row mb-3">
                                                         <label for="emailAddress" class="col-sm-2 col-form-label">Email
-                                                                Address</label>
+                                                                Address <span class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
                                                                 <input type="email" class="form-control"
                                                                         id="emailAddress" name="email_address"
@@ -1064,7 +1058,7 @@
                                                 </div>
                                                 <div class="row mb-3">
                                                         <label for="workAddress" class="col-sm-2 col-form-label">Work
-                                                                Address</label>
+                                                                Address <span class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
                                                                 <input type="text" class="form-control" id="workAddress"
                                                                         name="work_address"
@@ -1073,9 +1067,9 @@
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                        <label for="specialty" class="col-sm-2 col-form-label">Specialty</label>
+                                                        <label for="specialty" class="col-sm-2 col-form-label">Specialty <span class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
-                                                            <select class="form-select" id="specialty" name="specialty" disabled>
+                                                            <select class="form-select" id="specialty" name="specialty" disabled required>
                                                                 <option value="" disabled>Specialty</option>
                                                                 <option value="Cardiology" {% if user_profile.specialty == 'Cardiology' %}selected{% endif %}>Cardiology</option>
                                                                 <option value="Orthopedics" {% if user_profile.specialty == 'Orthopedics' %}selected{% endif %}>Orthopedics</option>
@@ -1091,7 +1085,7 @@
                                                 </div>
                                                 <div class="row mb-3">
                                                         <label for="licenseNumber"
-                                                                class="col-sm-2 col-form-label">License No.</label>
+                                                                class="col-sm-2 col-form-label">License No. <span class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
                                                                 <input type="text" class="form-control"
                                                                         id="licenseNumber" name="license_number"
@@ -1117,19 +1111,19 @@
                                                 <hr>
                                                 <h4 class="mb-4">Update Password</h4>
                                                 <div class="row mb-3">
-                                                    <label for="oldPassword" class="col-sm-2 col-form-label">Old Password</label>
+                                                    <label for="oldPassword" class="col-sm-2 col-form-label">Old Password <span class="text-danger">*</span></label>
                                                     <div class="col-sm-10">
                                                         <input type="password" class="form-control" id="oldPassword" name="old_password" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <label for="newPassword" class="col-sm-2 col-form-label">New Password</label>
+                                                    <label for="newPassword" class="col-sm-2 col-form-label">New Password <span class="text-danger">*</span></label>
                                                     <div class="col-sm-10">
                                                         <input type="password" class="form-control" id="newPassword" name="new_password" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
+                                                    <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm Password <span class="text-danger">*</span></label>
                                                     <div class="col-sm-10">
                                                         <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
                                                     </div>

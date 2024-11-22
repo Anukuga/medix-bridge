@@ -98,19 +98,19 @@
                     <h2 class="mb-4">Register New Patient</h2>
                     <form action="register-patient" method="post">
                         <div class="row mb-3">
-                            <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                            <label for="firstName" class="col-sm-2 col-form-label">First Name <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="firstName" name="first_name" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                            <label for="lastName" class="col-sm-2 col-form-label">Last Name <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="lastName" name="last_name" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="birthDate" class="col-sm-2 col-form-label">Date of Birth</label>
+                            <label for="birthDate" class="col-sm-2 col-form-label">Date of Birth <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="date" class="form-control" id="birthDate" name="birth_date" required>
                             </div>
@@ -135,7 +135,7 @@
                             </div>
                         </fieldset>
                         <div class="row mb-3">
-                            <label for="nationality" class="col-sm-2 col-form-label">Nationality</label>
+                            <label for="nationality" class="col-sm-2 col-form-label">Nationality <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <!-- Country Names -->
                                 <select class="form-select" id="nationality" name="nationality" required>
@@ -406,14 +406,14 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="healthInsuranceNumber" class="col-sm-2 col-form-label">Health Insurance No.</label>
+                            <label for="healthInsuranceNumber" class="col-sm-2 col-form-label">Health Insurance No. <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="healthInsuranceNumber" name="health_insurance_number"
                                     required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="emailAddress" class="col-sm-2 col-form-label">Email Address</label>
+                            <label for="emailAddress" class="col-sm-2 col-form-label">Email Address <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control" id="emailAddress" name="email" required>
                             </div>
@@ -425,7 +425,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="address" class="col-sm-2 col-form-label">Resident Address</label>
+                            <label for="address" class="col-sm-2 col-form-label">Resident Address <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
