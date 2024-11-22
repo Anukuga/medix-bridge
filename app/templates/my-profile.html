@@ -1073,42 +1073,21 @@
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                        <label for="specialty"
-                                                                class="col-sm-2 col-form-label">Specialty</label>
+                                                        <label for="specialty" class="col-sm-2 col-form-label">Specialty</label>
                                                         <div class="col-sm-10">
-                                                                <select class="form-control" id="specialty"
-                                                                        name="specialty" disabled>
-                                                                        <option value="" disabled>Specialty</option>
-                                                                        <option value="Cardiology" {% if
-                                                                                user_profile.specialty=='Cardiology'
-                                                                                %}selected{% endif %}>Cardiology
-                                                                        </option>
-                                                                        <option value="Orthopedics" {% if
-                                                                                user_profile.specialty=='Orthopedics'
-                                                                                %}selected{% endif %}>Orthopedics
-                                                                        </option>
-                                                                        <option value="Dermatology" {% if
-                                                                                user_profile.specialty=='Dermatology'
-                                                                                %}selected{% endif %}>Dermatology
-                                                                        </option>
-                                                                        <option value="Obstetrics and Gynecology (OB/GYN)"
-                                                                                {% if
-                                                                                user_profile.specialty=='Obstetrics and Gynecology (OB/GYN)'
-                                                                                %}selected{% endif %}>
-                                                                                Obstetrics & Gynecology
-                                                                        </option>
-                                                                        <option value="Psychiatry" {% if
-                                                                                user_profile.specialty=='Psychiatry'
-                                                                                %}selected{% endif %}>Psychiatry
-                                                                        </option>
-                                                                        <option value="Neurology" {% if
-                                                                                user_profile.specialty=='Neurology'
-                                                                                %}selected{% endif %}>Neurology</option>
-                                                                        <option value="Emergency" {% if
-                                                                                user_profile.specialty=='Emergency'
-                                                                                %}selected{% endif %}>Emergency</option>
-                                                                </select>
+                                                            <select class="form-select" id="specialty" name="specialty" disabled>
+                                                                <option value="" disabled>Specialty</option>
+                                                                <option value="Cardiology" {% if user_profile.specialty == 'Cardiology' %}selected{% endif %}>Cardiology</option>
+                                                                <option value="Orthopedics" {% if user_profile.specialty == 'Orthopedics' %}selected{% endif %}>Orthopedics</option>
+                                                                <option value="Dermatology" {% if user_profile.specialty == 'Dermatology' %}selected{% endif %}>Dermatology</option>
+                                                                <option value="Obstetrics and Gynecology (OB/GYN)" {% if user_profile.specialty == 'Obstetrics and Gynecology (OB/GYN)' %}selected{% endif %}>Obstetrics & Gynecology</option>
+                                                                <option value="Psychiatry" {% if user_profile.specialty == 'Psychiatry' %}selected{% endif %}>Psychiatry</option>
+                                                                <option value="Neurology" {% if user_profile.specialty == 'Neurology' %}selected{% endif %}>Neurology</option>
+                                                                <option value="Emergency" {% if user_profile.specialty == 'Emergency' %}selected{% endif %}>Emergency</option>
+                                                            </select>
                                                         </div>
+                                                    </div>
+                                                    
                                                 </div>
                                                 <div class="row mb-3">
                                                         <label for="licenseNumber"
