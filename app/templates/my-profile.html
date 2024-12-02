@@ -103,6 +103,26 @@
                                 <div class="bg-secondary rounded-top p-4">
                                         <h2 class="mb-4">Your Profile Details</h2>
                                         <form action="/my-profile" method="POST">
+                                                <div class="row mb-4">
+                                                        <label for="profilePicture" class="col-sm-2 col-form-label">Profile Picture</label>
+                                                        <div class="col-sm-10 text-center">
+                                                            <div class="position-relative" style="width: 150px; height: 150px; margin: auto;">
+                                                                <!-- Circular Preview -->
+                                                                <img id="profilePreview" 
+                                                                     src="{{ user_profile.profile_picture or url_for('static', filename='img/default-profile.png') }}" 
+                                                                     alt="Profile Picture" 
+                                                                     class="rounded-circle img-fluid" 
+                                                                     style="width: 150px; height: 150px; object-fit: cover;">
+                                                    
+                                                                <!-- Hover Edit Icon -->
+                                                                <div class="position-absolute top-50 start-50 translate-middle" style="display: none;" id="editIcon">
+                                                                    <i class="fa fa-pencil text-white bg-primary rounded-circle p-2"></i>
+                                                                </div>
+                                                            </div>
+                                                            <!-- File Input -->
+                                                            <input type="file" id="profilePicture" name="profile_picture" accept="image/*" style="display: none;">
+                                                        </div>
+                                                    </div>
                                                 <div class="row mb-3">
                                                         <label for="firstName" class="col-sm-2 col-form-label">
                                                             First Name <span class="text-danger">*</span>
@@ -1105,6 +1125,45 @@
                                                 </div>
                                         </form>
                                         <form action="/my-profile" method="POST">
+                                                <div class="mb-3 text-center">
+                                                        <!-- Circular Profile Picture Preview -->
+                                                        <div class="position-relative" style="width: 150px; height: 150px; margin: auto;">
+                                                            <img
+                                                                id="profilePreview"
+                                                                src="{{ user_profile.profile_picture if user_profile.profile_picture else 'static/default-user.png' }}"
+                                                                alt="Profile Picture"
+                                                                class="rounded-circle"
+                                                                style="width: 100%; height: 100%; object-fit: cover; cursor: pointer;"
+                                                            >
+                                                            <!-- Edit Icon (Shown on Hover) -->
+                                                            <div
+                                                                id="editIcon"
+                                                                class="position-absolute"
+                                                                style="
+                                                                    display: none;
+                                                                    bottom: 5px;
+                                                                    right: 5px;
+                                                                    background-color: rgba(0, 0, 0, 0.7);
+                                                                    border-radius: 50%;
+                                                                    padding: 5px;
+                                                                "
+                                                            >
+                                                                <i class="fa fa-pencil text-white"></i>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                        <!-- Hidden File Input for Upload -->
+                                                        <input
+                                                            type="file"
+                                                            id="profilePicture"
+                                                            name="profile_picture"
+                                                            accept="image/*"
+                                                            class="form-control mt-2"
+                                                            style="display: none;"
+                                                        >
+                                                        <small class="text-muted">Click the picture to update your profile picture.</small>
+                                                    </div>
+                                                    
                                                 <!-- Existing profile fields here -->
                                             
                                                 <!-- Update Password Section -->
@@ -1168,25 +1227,56 @@
                 <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
         </div>
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-                document.querySelector('form').addEventListener('submit', function (event) {
-                    const oldPassword = document.getElementById('oldPassword').value;
-                    const newPassword = document.getElementById('newPassword').value;
-                    const confirmPassword = document.getElementById('confirmPassword').value;
-            
-                    if (!oldPassword || !newPassword || !confirmPassword) {
-                        event.preventDefault();
-                        window.alert('You must input all three fields!');
-                    } else if (newPassword !== confirmPassword) {
-                        event.preventDefault();
-                        window.alert('New Password and Confirm Password do not match!');
-                    }
-                });
-            </script>
-            
+       <!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Form Validation and Profile Picture Script -->
+<script>
+    // Form Validation Script
+    document.querySelector('form').addEventListener('submit', function (event) {
+        const oldPassword = document.getElementById('oldPassword').value;
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (!oldPassword || !newPassword || !confirmPassword) {
+            event.preventDefault();
+            window.alert('You must input all three fields!');
+        } else if (newPassword !== confirmPassword) {
+            event.preventDefault();
+            window.alert('New Password and Confirm Password do not match!');
+        }
+    });
+
+    // Profile Picture Script
+    const profilePreview = document.getElementById("profilePreview");
+    const editIcon = document.getElementById("editIcon");
+    const profilePictureInput = document.getElementById("profilePicture");
+
+    profilePreview.addEventListener("mouseover", () => {
+        editIcon.style.display = "block";
+    });
+
+    profilePreview.addEventListener("mouseout", () => {
+        editIcon.style.display = "none";
+    });
+
+    profilePreview.addEventListener("click", () => {
+        profilePictureInput.click();
+    });
+
+    profilePictureInput.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                profilePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
 
         <!-- Template Javascript -->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>

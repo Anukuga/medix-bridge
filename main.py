@@ -141,7 +141,34 @@ def my_profile():
     user_id = session["user_id"]
 
     if request.method == "POST":
-        # Get updated form data from the request
+        # Check if a profile picture is uploaded
+        if "profile_picture" in request.files:
+            profile_picture = request.files["profile_picture"]
+            if profile_picture.filename != "":
+                # Save the uploaded file
+                filepath = f"static/uploads/{profile_picture.filename}"
+                profile_picture.save(filepath)
+
+                # Update the profile picture in the database
+                try:
+                    cur = mysql.connection.cursor()
+                    cur.execute(
+                        """
+                        UPDATE doctors_db
+                        SET profile_picture = %s
+                        WHERE id = %s
+                        """,
+                        (filepath, user_id),
+                    )
+                    mysql.connection.commit()
+                    flash("Profile picture updated successfully!", "success")
+                except Exception as e:
+                    mysql.connection.rollback()
+                    flash(f"An error occurred: {e}", "danger")
+                finally:
+                    cur.close()
+
+        # Handle other profile fields (similar to your existing code)
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         birth_date = request.form.get("birth_date")
@@ -153,7 +180,6 @@ def my_profile():
         nationality = request.form.get("nationality")
         license_number = request.form.get("license_number")
 
-        # Update the user's data in the database
         try:
             cur = mysql.connection.cursor()
             cur.execute(
@@ -179,14 +205,13 @@ def my_profile():
                 ),
             )
             mysql.connection.commit()
+            flash("Profile updated successfully!", "success")
         except Exception as e:
             mysql.connection.rollback()
-            raise e
+            flash(f"An error occurred: {e}", "danger")
         finally:
             cur.close()
 
-        # Display a success message
-        flash("Profile updated successfully!", "success")
         return redirect(url_for("my_profile"))
 
     # Query the database to fetch the user's current profile data
@@ -194,7 +219,8 @@ def my_profile():
     cur.execute(
         """
         SELECT first_name, last_name, birth_date, gender, email_address, 
-               phone_number, work_address, specialty, nationality, license_number
+               phone_number, work_address, specialty, nationality, license_number,
+               profile_picture
         FROM doctors_db WHERE id = %s
         """,
         (user_id,),
@@ -208,6 +234,7 @@ def my_profile():
 
     # Render the my-profile page with user profile data
     return render_template("my-profile.html", user_profile=user_profile)
+
 
 
 @app.route("/register-patient", methods=["GET", "POST"])
@@ -310,6 +337,173 @@ def register_patient():
     # Render the registration form with doctor's details
     return render_template(
         "register-patient.html",
+        doctor_first_name=doctor["first_name"],
+        doctor_last_name=doctor["last_name"],
+        doctor_specialty=doctor["specialty"],
+    )
+
+
+@app.route("/my-patients", methods=["GET"])
+def my_patients():
+    if "logged_in" not in session or not session["logged_in"]:
+        flash("Please log in to view your patients.", "warning")
+        return redirect(url_for("signin"))
+
+    # Fetch the doctor's ID from the session
+    user_id = session[
+        "user_id"
+    ]  # Assuming `user_id` is stored in the session after login
+
+    # Query to retrieve patients associated with the logged-in doctor
+    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    cur.execute(
+        """
+        SELECT 
+            patients_db.id AS patient_id,
+            patients_db.first_name,
+            patients_db.last_name,
+            patients_db.birth_date,
+            patients_db.gender,
+            patients_db.email_address,
+            patients_db.health_insurance_number
+        FROM 
+            patients_db
+        WHERE 
+            patients_db.doctor_id = %s
+        """,
+        (user_id,),
+    )
+    patients = cur.fetchall()
+    cur.close()
+
+    # Calculate the total number of patients
+    total_patients = len(patients)
+
+    # Fetch doctor details for the header
+    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    cur.execute(
+        """
+        SELECT first_name, last_name, specialty 
+        FROM doctors_db 
+        WHERE id = %s
+        """,
+        (user_id,),
+    )
+    doctor = cur.fetchone()
+    cur.close()
+
+    if not doctor:
+        flash("Unable to fetch doctor information.", "danger")
+        return redirect(url_for("dashboard"))
+
+    # Render the my-patients.html template
+    return render_template(
+        "my-patients.html",
+        doctor_first_name=doctor["first_name"],
+        doctor_last_name=doctor["last_name"],
+        doctor_specialty=doctor["specialty"],
+        total_patients=total_patients,
+        patients=patients,
+    )
+
+
+@app.route("/edit-patient/<int:patient_id>", methods=["GET", "POST"])
+def edit_patient(patient_id):
+    if "logged_in" not in session or not session["logged_in"]:
+        flash("Please log in to edit a patient's details.", "warning")
+        return redirect(url_for("signin"))
+
+    # Fetch the logged-in doctor's details
+    doctor_id = session[
+        "user_id"
+    ]  # Assuming the logged-in doctor's ID is stored in the session
+    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    cur.execute(
+        """
+        SELECT first_name, last_name, specialty
+        FROM doctors_db
+        WHERE id = %s
+        """,
+        (doctor_id,),
+    )
+    doctor = cur.fetchone()
+
+    if not doctor:
+        flash("Doctor details could not be retrieved.", "danger")
+        return redirect(url_for("signin"))
+
+    # Handle POST request for updating the patient's data
+    if request.method == "POST":
+        try:
+            data = request.form
+            cur.execute(
+                """
+                UPDATE patients_db
+                SET first_name = %s, last_name = %s, birth_date = %s, gender = %s, 
+                    nationality = %s, health_insurance_number = %s, email_address = %s, 
+                    phone_number = %s, address = %s, emergency_contact_name = %s, 
+                    emergency_contact_number = %s, height = %s, weight = %s, blood_group = %s, 
+                    genotype = %s, allergies = %s, chronic_diseases = %s, disabilities = %s, 
+                    vaccines = %s, medications = %s, doctors_note = %s
+                WHERE id = %s AND doctor_id = %s
+                """,
+                (
+                    data["first_name"],
+                    data["last_name"],
+                    data["birth_date"],
+                    data["gender"],
+                    data["nationality"],
+                    data["health_insurance_number"],
+                    data["email"],
+                    data["phone_number"],
+                    data["address"],
+                    data["emergency_contact_name"],
+                    data["emergency_contact_number"],
+                    data["height"],
+                    data["weight"],
+                    data["blood_group"],
+                    data["genotype"],
+                    data["allergies"],
+                    data["chronic_diseases"],
+                    data["disabilities"],
+                    data["vaccines"],
+                    data["medications"],
+                    data["doctors_note"],
+                    patient_id,
+                    doctor_id,
+                ),
+            )
+            mysql.connection.commit()
+            flash("Patient details updated successfully!", "success")
+            return redirect(url_for("my_patients"))
+        except Exception as e:
+            flash(
+                "An error occurred while updating the patient's details. Please try again.",
+                "danger",
+            )
+            return redirect(url_for("edit_patient", patient_id=patient_id))
+
+    # Handle GET request for fetching patient data
+    cur.execute(
+        """
+        SELECT * FROM patients_db
+        WHERE id = %s AND doctor_id = %s
+        """,
+        (patient_id, doctor_id),
+    )
+    patient = cur.fetchone()
+    cur.close()
+
+    if not patient:
+        flash(
+            "Patient not found or you do not have access to edit this patient.",
+            "warning",
+        )
+        return redirect(url_for("my_patients"))
+
+    return render_template(
+        "edit-patient.html",
+        patient=patient,
         doctor_first_name=doctor["first_name"],
         doctor_last_name=doctor["last_name"],
         doctor_specialty=doctor["specialty"],
