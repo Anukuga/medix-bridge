@@ -3,11 +3,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Edit Patient Profile | MedixBridge</title>
+    <title>mediBase Portal - Edit Patient #{{ patient_id }}</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="MedixBridge, EHR, Healthcare" name="keywords">
-    <meta content="MedixBridge is a project on Information Systems in Healthcare by Anusuya Kugavarathan"
-        name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
 
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -45,7 +44,7 @@
                             class="fa fa-house me-2"></i>Dashboard</a>
                     <a href="my-patients" class="nav-item nav-link" id="myPatientsLink"><i
                             class="fa fa-hospital-user me-2"></i>My Patients</a>
-                    <a href="register-patient" class="nav-item nav-link" id="registerPatientLink"><i
+                    <a href="register-patient" class="nav-item nav-link active" id="registerPatientLink"><i
                             class="fa fa-user-plus me-2"></i>Register Patient</a>
                     <a href="logout" class="nav-item nav-link" id="logoutLink"><i
                             class="fa fa-right-from-bracket me-2"></i>Log out</a>
@@ -74,8 +73,7 @@
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <!-- Doctor's Information -->
                             <div class="mb-2">
-                                <p class="mb-0 fw-bold dropdown-item">Dr. {{
-                                    doctor_first_name }} {{ doctor_last_name }}
+                                <p class="mb-0 fw-bold dropdown-item">Dr. {{ doctor_first_name }} {{ doctor_last_name }}
                                 </p>
                                 <p class="mb-0 dropdown-item">{{ doctor_specialty }}</p>
                             </div>
@@ -85,8 +83,7 @@
 
                             <!-- Action Links -->
                             <a href="my-profile" class="dropdown-item" data-popup-target="doctorInfoPopup"><i
-                                    class="fa fa-user-doctor me-3"></i>My
-                                Profile</a>
+                                    class="fa fa-user-doctor me-3"></i>My Profile</a>
                             <a href="logout" class="dropdown-item"><i class="fa fa-right-from-bracket me-3"></i>Log
                                 Out</a>
                         </div>
@@ -95,27 +92,33 @@
             </nav>
             <!-- Navbar End -->
 
-            <!-- Doctor Information -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-secondary rounded-top p-4">
-                    <h2 class="mb-4">Your Profile Details</h2>
-                    <form action="/edit-patient/{{ patient.id }}" method="POST">
+            <!-- Register New Patient Start -->
+            <div class="container-fluid pt-4 px-4" id="registerNewPatient">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <div class="d-flex justify-content-between">
+                        <h2 class="mb-4">Edit Patient</h2>
+                        <span>Patient ID: {{ patient_id }}</span>
+                    </div>
+                    <form action="{{ url_for('edit_patient', patient_id=patient_id) }}" method="POST">
                         <div class="row mb-3">
-                            <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+                            <label for="firstName" class="col-sm-2 col-form-label">First Name <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="firstName" name="first_name"
                                     value="{{ patient.first_name }}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+                            <label for="lastName" class="col-sm-2 col-form-label">Last Name <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="lastName" name="last_name"
                                     value="{{ patient.last_name }}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="birthDate" class="col-sm-2 col-form-label">Date of Birth</label>
+                            <label for="birthDate" class="col-sm-2 col-form-label">Date of Birth <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="date" class="form-control" id="birthDate" name="birth_date"
                                     value="{{ patient.birth_date }}" required>
@@ -127,122 +130,127 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="gender" id="genderMale"
                                         value="male" {% if patient.gender=='male' %}checked{% endif %}>
-                                    <label class="form-check-label" for="genderMale">Male</label>
+                                    <label class="form-check-label" for="genderMale">
+                                        Male
+                                    </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="gender" id="genderFemale"
                                         value="female" {% if patient.gender=='female' %}checked{% endif %}>
-                                    <label class="form-check-label" for="genderFemale">Female</label>
+                                    <label class="form-check-label" for="genderFemale">
+                                        Female
+                                    </label>
                                 </div>
                             </div>
                         </fieldset>
                         <div class="row mb-3">
-                            <label for="nationality" class="col-sm-2 col-form-label">Nationality</label>
+                            <label for="nationality" class="col-sm-2 col-form-label">Nationality <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <!-- Country Names -->
-                                <select class="form-select" id="nationality" name="nationality" required disabled>
+                                <select class="form-select" id="nationality" name="nationality" required>
                                     <option value="" {% if patient.nationality=="" %}selected{% endif %} disabled>
                                         Select
                                         Country
                                     </option>
-                                    <option value="Afghanistan" {% if patient.nationality=="Afghanistan"
-                                        %}selected{% endif %}>Afghanistan
+                                    <option value="Afghanistan" {% if patient.nationality=="Afghanistan" %}selected{%
+                                        endif %}>Afghanistan
                                     </option>
                                     <option value="Aland Islands" {% if patient.nationality=="Aland Islands"
                                         %}selected{% endif %}>Aland Islands
                                     </option>
-                                    <option value="Albania" {% if patient.nationality=="Albania" %}selected{% endif
-                                        %}>Albania</option>
-                                    <option value="Algeria" {% if patient.nationality=="Algeria" %}selected{% endif
-                                        %}>Algeria</option>
+                                    <option value="Albania" {% if patient.nationality=="Albania" %}selected{% endif %}>
+                                        Albania</option>
+                                    <option value="Algeria" {% if patient.nationality=="Algeria" %}selected{% endif %}>
+                                        Algeria</option>
                                     <option value="American Samoa" {% if patient.nationality=="American Samoa"
                                         %}selected{% endif %}>American Samoa
                                     </option>
-                                    <option value="Andorra" {% if patient.nationality=="Andorra" %}selected{% endif
-                                        %}>Andorra</option>
-                                    <option value="Angola" {% if patient.nationality=="Angola" %}selected{% endif
-                                        %}>Angola</option>
-                                    <option value="Anguilla" {% if patient.nationality=="Anguilla" %}selected{%
-                                        endif %}>Anguilla</option>
+                                    <option value="Andorra" {% if patient.nationality=="Andorra" %}selected{% endif %}>
+                                        Andorra</option>
+                                    <option value="Angola" {% if patient.nationality=="Angola" %}selected{% endif %}>
+                                        Angola</option>
+                                    <option value="Anguilla" {% if patient.nationality=="Anguilla" %}selected{% endif
+                                        %}>Anguilla</option>
                                     <option value="Antarctica" {% if patient.nationality=="Antarctica" %}selected{%
                                         endif %}>Antarctica
                                     </option>
-                                    <option value="Antigua and Barbuda" {% if
-                                        patient.nationality=="Antigua and Barbuda" %}selected{% endif %}>Antigua
+                                    <option value="Antigua and Barbuda" {% if patient.nationality=="Antigua and Barbuda"
+                                        %}selected{% endif %}>Antigua
                                         and
                                         Barbuda</option>
-                                    <option value="Argentina" {% if patient.nationality=="Argentina" %}selected{%
-                                        endif %}>Argentina</option>
-                                    <option value="Armenia" {% if patient.nationality=="Armenia" %}selected{% endif
-                                        %}>Armenia</option>
+                                    <option value="Argentina" {% if patient.nationality=="Argentina" %}selected{% endif
+                                        %}>Argentina</option>
+                                    <option value="Armenia" {% if patient.nationality=="Armenia" %}selected{% endif %}>
+                                        Armenia</option>
                                     <option value="Aruba" {% if patient.nationality=="Aruba" %}selected{% endif %}>
                                         Aruba</option>
-                                    <option value="Australia" {% if patient.nationality=="Australia" %}selected{%
-                                        endif %}>Australia</option>
-                                    <option value="Austria" {% if patient.nationality=="Austria" %}selected{% endif
-                                        %}>Austria</option>
+                                    <option value="Australia" {% if patient.nationality=="Australia" %}selected{% endif
+                                        %}>Australia</option>
+                                    <option value="Austria" {% if patient.nationality=="Austria" %}selected{% endif %}>
+                                        Austria</option>
                                     <option value="Azerbaijan" {% if patient.nationality=="Azerbaijan" %}selected{%
                                         endif %}>Azerbaijan
                                     </option>
-                                    <option value="Bahamas" {% if patient.nationality=="Bahamas" %}selected{% endif
-                                        %}>Bahamas</option>
-                                    <option value="Bahrain" {% if patient.nationality=="Bahrain" %}selected{% endif
-                                        %}>Bahrain</option>
+                                    <option value="Bahamas" {% if patient.nationality=="Bahamas" %}selected{% endif %}>
+                                        Bahamas</option>
+                                    <option value="Bahrain" {% if patient.nationality=="Bahrain" %}selected{% endif %}>
+                                        Bahrain</option>
                                     <option value="Bangladesh" {% if patient.nationality=="Bangladesh" %}selected{%
                                         endif %}>Bangladesh
                                     </option>
-                                    <option value="Barbados" {% if patient.nationality=="Barbados" %}selected{%
-                                        endif %}>Barbados</option>
-                                    <option value="Belarus" {% if patient.nationality=="Belarus" %}selected{% endif
-                                        %}>Belarus</option>
-                                    <option value="Belgium" {% if patient.nationality=="Belgium" %}selected{% endif
-                                        %}>Belgium</option>
-                                    <option value="Belize" {% if patient.nationality=="Belize" %}selected{% endif
-                                        %}>Belize</option>
+                                    <option value="Barbados" {% if patient.nationality=="Barbados" %}selected{% endif
+                                        %}>Barbados</option>
+                                    <option value="Belarus" {% if patient.nationality=="Belarus" %}selected{% endif %}>
+                                        Belarus</option>
+                                    <option value="Belgium" {% if patient.nationality=="Belgium" %}selected{% endif %}>
+                                        Belgium</option>
+                                    <option value="Belize" {% if patient.nationality=="Belize" %}selected{% endif %}>
+                                        Belize</option>
                                     <option value="Benin" {% if patient.nationality=="Benin" %}selected{% endif %}>
                                         Benin</option>
-                                    <option value="Bermuda" {% if patient.nationality=="Bermuda" %}selected{% endif
-                                        %}>Bermuda</option>
-                                    <option value="Bhutan" {% if patient.nationality=="Bhutan" %}selected{% endif
-                                        %}>Bhutan</option>
-                                    <option value="Bolivia" {% if patient.nationality=="Bolivia" %}selected{% endif
-                                        %}>Bolivia</option>
+                                    <option value="Bermuda" {% if patient.nationality=="Bermuda" %}selected{% endif %}>
+                                        Bermuda</option>
+                                    <option value="Bhutan" {% if patient.nationality=="Bhutan" %}selected{% endif %}>
+                                        Bhutan</option>
+                                    <option value="Bolivia" {% if patient.nationality=="Bolivia" %}selected{% endif %}>
+                                        Bolivia</option>
                                     <option value="Bonaire, Sint Eustatius and Saba" {% if
-                                        patient.nationality=="Bonaire, Sint Eustatius and Saba" %}selected{% endif
-                                        %}>Bonaire, Sint
+                                        patient.nationality=="Bonaire, Sint Eustatius and Saba" %}selected{% endif %}>
+                                        Bonaire, Sint
                                         Eustatius and Saba</option>
                                     <option value="Bosnia and Herzegovina" {% if
                                         patient.nationality=="Bosnia and Herzegovina" %}selected{% endif %}>Bosnia
                                         and
                                         Herzegovina</option>
-                                    <option value="Botswana" {% if patient.nationality=="Botswana" %}selected{%
-                                        endif %}>Botswana</option>
+                                    <option value="Botswana" {% if patient.nationality=="Botswana" %}selected{% endif
+                                        %}>Botswana</option>
                                     <option value="Bouvet Island" {% if patient.nationality=="Bouvet Island"
                                         %}selected{% endif %}>Bouvet Island
                                     </option>
-                                    <option value="Brazil" {% if patient.nationality=="Brazil" %}selected{% endif
-                                        %}>Brazil</option>
+                                    <option value="Brazil" {% if patient.nationality=="Brazil" %}selected{% endif %}>
+                                        Brazil</option>
                                     <option value="British Indian Ocean Territory" {% if
-                                        patient.nationality=="British Indian Ocean Territory" %}selected{% endif
-                                        %}>British Indian
+                                        patient.nationality=="British Indian Ocean Territory" %}selected{% endif %}>
+                                        British Indian
                                         Ocean Territory</option>
-                                    <option value="Brunei Darussalam" {% if
-                                        patient.nationality=="Brunei Darussalam" %}selected{% endif %}>Brunei
+                                    <option value="Brunei Darussalam" {% if patient.nationality=="Brunei Darussalam"
+                                        %}selected{% endif %}>Brunei
                                         Darussalam
                                     </option>
-                                    <option value="Bulgaria" {% if patient.nationality=="Bulgaria" %}selected{%
-                                        endif %}>Bulgaria</option>
-                                    <option value="Burkina Faso" {% if patient.nationality=="Burkina Faso"
-                                        %}selected{% endif %}>Burkina Faso
+                                    <option value="Bulgaria" {% if patient.nationality=="Bulgaria" %}selected{% endif
+                                        %}>Bulgaria</option>
+                                    <option value="Burkina Faso" {% if patient.nationality=="Burkina Faso" %}selected{%
+                                        endif %}>Burkina Faso
                                     </option>
-                                    <option value="Burundi" {% if patient.nationality=="Burundi" %}selected{% endif
-                                        %}>Burundi</option>
-                                    <option value="Cambodia" {% if patient.nationality=="Cambodia" %}selected{%
-                                        endif %}>Cambodia</option>
-                                    <option value="Cameroon" {% if patient.nationality=="Cameroon" %}selected{%
-                                        endif %}>Cameroon</option>
-                                    <option value="Canada" {% if patient.nationality=="Canada" %}selected{% endif
-                                        %}>Canada</option>
+                                    <option value="Burundi" {% if patient.nationality=="Burundi" %}selected{% endif %}>
+                                        Burundi</option>
+                                    <option value="Cambodia" {% if patient.nationality=="Cambodia" %}selected{% endif
+                                        %}>Cambodia</option>
+                                    <option value="Cameroon" {% if patient.nationality=="Cameroon" %}selected{% endif
+                                        %}>Cameroon</option>
+                                    <option value="Canada" {% if patient.nationality=="Canada" %}selected{% endif %}>
+                                        Canada</option>
                                     <option value="Cape Verde" {% if patient.nationality=="Cape Verde" %}selected{%
                                         endif %}>Cape Verde
                                     </option>
@@ -266,18 +274,18 @@
                                         patient.nationality=="Cocos (Keeling) Islands" %}selected{% endif %}>Cocos
                                         (Keeling)
                                         Islands</option>
-                                    <option value="Colombia" {% if patient.nationality=="Colombia" %}selected{%
-                                        endif %}>Colombia</option>
-                                    <option value="Comoros" {% if patient.nationality=="Comoros" %}selected{% endif
-                                        %}>Comoros</option>
+                                    <option value="Colombia" {% if patient.nationality=="Colombia" %}selected{% endif
+                                        %}>Colombia</option>
+                                    <option value="Comoros" {% if patient.nationality=="Comoros" %}selected{% endif %}>
+                                        Comoros</option>
                                     <option value="Congo" {% if patient.nationality=="Congo" %}selected{% endif %}>
                                         Congo</option>
                                     <option value="Congo, Democratic Republic of the Congo" {% if
                                         patient.nationality=="Congo, Democratic Republic of the Congo" %}selected{%
                                         endif %}>Congo, Democratic
                                         Republic of the Congo</option>
-                                    <option value="Cook Islands" {% if patient.nationality=="Cook Islands"
-                                        %}selected{% endif %}>Cook Islands
+                                    <option value="Cook Islands" {% if patient.nationality=="Cook Islands" %}selected{%
+                                        endif %}>Cook Islands
                                     </option>
                                     <option value="Costa Rica" {% if patient.nationality=="Costa Rica" %}selected{%
                                         endif %}>Costa Rica
@@ -285,44 +293,44 @@
                                     <option value="Cote D'Ivoire" {% if patient.nationality=="Cote D'Ivoire"
                                         %}selected{% endif %}>Cote D'Ivoire
                                     </option>
-                                    <option value="Croatia" {% if patient.nationality=="Croatia" %}selected{% endif
-                                        %}>Croatia</option>
+                                    <option value="Croatia" {% if patient.nationality=="Croatia" %}selected{% endif %}>
+                                        Croatia</option>
                                     <option value="Cuba" {% if patient.nationality=="Cuba" %}selected{% endif %}>
                                         Cuba</option>
-                                    <option value="Curacao" {% if patient.nationality=="Curacao" %}selected{% endif
-                                        %}>Curacao</option>
-                                    <option value="Cyprus" {% if patient.nationality=="Cyprus" %}selected{% endif
-                                        %}>Cyprus</option>
+                                    <option value="Curacao" {% if patient.nationality=="Curacao" %}selected{% endif %}>
+                                        Curacao</option>
+                                    <option value="Cyprus" {% if patient.nationality=="Cyprus" %}selected{% endif %}>
+                                        Cyprus</option>
                                     <option value="Czech Republic" {% if patient.nationality=="Czech Republic"
                                         %}selected{% endif %}>Czech Republic
                                     </option>
-                                    <option value="Denmark" {% if patient.nationality=="Denmark" %}selected{% endif
-                                        %}>Denmark</option>
-                                    <option value="Djibouti" {% if patient.nationality=="Djibouti" %}selected{%
-                                        endif %}>Djibouti</option>
-                                    <option value="Dominica" {% if patient.nationality=="Dominica" %}selected{%
-                                        endif %}>Dominica</option>
-                                    <option value="Dominican Republic" {% if
-                                        patient.nationality=="Dominican Republic" %}selected{% endif %}>Dominican
+                                    <option value="Denmark" {% if patient.nationality=="Denmark" %}selected{% endif %}>
+                                        Denmark</option>
+                                    <option value="Djibouti" {% if patient.nationality=="Djibouti" %}selected{% endif
+                                        %}>Djibouti</option>
+                                    <option value="Dominica" {% if patient.nationality=="Dominica" %}selected{% endif
+                                        %}>Dominica</option>
+                                    <option value="Dominican Republic" {% if patient.nationality=="Dominican Republic"
+                                        %}selected{% endif %}>Dominican
                                         Republic
                                     </option>
-                                    <option value="Ecuador" {% if patient.nationality=="Ecuador" %}selected{% endif
-                                        %}>Ecuador</option>
+                                    <option value="Ecuador" {% if patient.nationality=="Ecuador" %}selected{% endif %}>
+                                        Ecuador</option>
                                     <option value="Egypt" {% if patient.nationality=="Egypt" %}selected{% endif %}>
                                         Egypt</option>
-                                    <option value="El Salvador" {% if patient.nationality=="El Salvador"
-                                        %}selected{% endif %}>El Salvador
+                                    <option value="El Salvador" {% if patient.nationality=="El Salvador" %}selected{%
+                                        endif %}>El Salvador
                                     </option>
-                                    <option value="Equatorial Guinea" {% if
-                                        patient.nationality=="Equatorial Guinea" %}selected{% endif %}>Equatorial
+                                    <option value="Equatorial Guinea" {% if patient.nationality=="Equatorial Guinea"
+                                        %}selected{% endif %}>Equatorial
                                         Guinea
                                     </option>
-                                    <option value="Eritrea" {% if patient.nationality=="Eritrea" %}selected{% endif
-                                        %}>Eritrea</option>
-                                    <option value="Estonia" {% if patient.nationality=="Estonia" %}selected{% endif
-                                        %}>Estonia</option>
-                                    <option value="Ethiopia" {% if patient.nationality=="Ethiopia" %}selected{%
-                                        endif %}>Ethiopia</option>
+                                    <option value="Eritrea" {% if patient.nationality=="Eritrea" %}selected{% endif %}>
+                                        Eritrea</option>
+                                    <option value="Estonia" {% if patient.nationality=="Estonia" %}selected{% endif %}>
+                                        Estonia</option>
+                                    <option value="Ethiopia" {% if patient.nationality=="Ethiopia" %}selected{% endif
+                                        %}>Ethiopia</option>
                                     <option value="Falkland Islands (Malvinas)" {% if
                                         patient.nationality=="Falkland Islands (Malvinas)" %}selected{% endif %}>
                                         Falkland Islands
@@ -332,10 +340,10 @@
                                     </option>
                                     <option value="Fiji" {% if patient.nationality=="Fiji" %}selected{% endif %}>
                                         Fiji</option>
-                                    <option value="Finland" {% if patient.nationality=="Finland" %}selected{% endif
-                                        %}>Finland</option>
-                                    <option value="France" {% if patient.nationality=="France" %}selected{% endif
-                                        %}>France</option>
+                                    <option value="Finland" {% if patient.nationality=="Finland" %}selected{% endif %}>
+                                        Finland</option>
+                                    <option value="France" {% if patient.nationality=="France" %}selected{% endif %}>
+                                        France</option>
                                     <option value="French Guiana" {% if patient.nationality=="French Guiana"
                                         %}selected{% endif %}>French Guiana
                                     </option>
@@ -348,115 +356,115 @@
                                         Territories</option>
                                     <option value="Gabon" {% if patient.nationality=="Gabon" %}selected{% endif %}>
                                         Gabon</option>
-                                    <option value="Gambia" {% if patient.nationality=="Gambia" %}selected{% endif
-                                        %}>Gambia</option>
-                                    <option value="Georgia" {% if patient.nationality=="Georgia" %}selected{% endif
-                                        %}>Georgia</option>
-                                    <option value="Germany" {% if patient.nationality=="Germany" %}selected{% endif
-                                        %}>Germany</option>
+                                    <option value="Gambia" {% if patient.nationality=="Gambia" %}selected{% endif %}>
+                                        Gambia</option>
+                                    <option value="Georgia" {% if patient.nationality=="Georgia" %}selected{% endif %}>
+                                        Georgia</option>
+                                    <option value="Germany" {% if patient.nationality=="Germany" %}selected{% endif %}>
+                                        Germany</option>
                                     <option value="Ghana" {% if patient.nationality=="Ghana" %}selected{% endif %}>
                                         Ghana</option>
-                                    <option value="Gibraltar" {% if patient.nationality=="Gibraltar" %}selected{%
-                                        endif %}>Gibraltar</option>
-                                    <option value="Greece" {% if patient.nationality=="Greece" %}selected{% endif
-                                        %}>Greece</option>
-                                    <option value="Greenland" {% if patient.nationality=="Greenland" %}selected{%
-                                        endif %}>Greenland</option>
-                                    <option value="Grenada" {% if patient.nationality=="Grenada" %}selected{% endif
-                                        %}>Grenada</option>
+                                    <option value="Gibraltar" {% if patient.nationality=="Gibraltar" %}selected{% endif
+                                        %}>Gibraltar</option>
+                                    <option value="Greece" {% if patient.nationality=="Greece" %}selected{% endif %}>
+                                        Greece</option>
+                                    <option value="Greenland" {% if patient.nationality=="Greenland" %}selected{% endif
+                                        %}>Greenland</option>
+                                    <option value="Grenada" {% if patient.nationality=="Grenada" %}selected{% endif %}>
+                                        Grenada</option>
                                     <option value="Guadeloupe" {% if patient.nationality=="Guadeloupe" %}selected{%
                                         endif %}>Guadeloupe
                                     </option>
                                     <option value="Guam" {% if patient.nationality=="Guam" %}selected{% endif %}>
                                         Guam</option>
-                                    <option value="Guatemala" {% if patient.nationality=="Guatemala" %}selected{%
-                                        endif %}>Guatemala</option>
-                                    <option value="Guernsey" {% if patient.nationality=="Guernsey" %}selected{%
-                                        endif %}>Guernsey</option>
-                                    <option value="Guinea" {% if patient.nationality=="Guinea" %}selected{% endif
-                                        %}>Guinea</option>
+                                    <option value="Guatemala" {% if patient.nationality=="Guatemala" %}selected{% endif
+                                        %}>Guatemala</option>
+                                    <option value="Guernsey" {% if patient.nationality=="Guernsey" %}selected{% endif
+                                        %}>Guernsey</option>
+                                    <option value="Guinea" {% if patient.nationality=="Guinea" %}selected{% endif %}>
+                                        Guinea</option>
                                     <option value="Guinea-Bissau" {% if patient.nationality=="Guinea-Bissau"
                                         %}selected{% endif %}>Guinea-Bissau
                                     </option>
-                                    <option value="Guyana" {% if patient.nationality=="Guyana" %}selected{% endif
-                                        %}>Guyana</option>
+                                    <option value="Guyana" {% if patient.nationality=="Guyana" %}selected{% endif %}>
+                                        Guyana</option>
                                     <option value="Haiti" {% if patient.nationality=="Haiti" %}selected{% endif %}>
                                         Haiti</option>
                                     <option value="Heard Island and Mcdonald Islands" {% if
-                                        patient.nationality=="Heard Island and Mcdonald Islands" %}selected{% endif
-                                        %}>Heard Island and
+                                        patient.nationality=="Heard Island and Mcdonald Islands" %}selected{% endif %}>
+                                        Heard Island and
                                         Mcdonald Islands</option>
                                     <option value="Holy See (Vatican City State)" {% if
                                         patient.nationality=="Holy See (Vatican City State)" %}selected{% endif %}>
                                         Holy See (Vatican
                                         City State)</option>
-                                    <option value="Honduras" {% if patient.nationality=="Honduras" %}selected{%
-                                        endif %}>Honduras</option>
-                                    <option value="Hong Kong" {% if patient.nationality=="Hong Kong" %}selected{%
-                                        endif %}>Hong Kong</option>
-                                    <option value="Hungary" {% if patient.nationality=="Hungary" %}selected{% endif
-                                        %}>Hungary</option>
-                                    <option value="Iceland" {% if patient.nationality=="Iceland" %}selected{% endif
-                                        %}>Iceland</option>
+                                    <option value="Honduras" {% if patient.nationality=="Honduras" %}selected{% endif
+                                        %}>Honduras</option>
+                                    <option value="Hong Kong" {% if patient.nationality=="Hong Kong" %}selected{% endif
+                                        %}>Hong Kong</option>
+                                    <option value="Hungary" {% if patient.nationality=="Hungary" %}selected{% endif %}>
+                                        Hungary</option>
+                                    <option value="Iceland" {% if patient.nationality=="Iceland" %}selected{% endif %}>
+                                        Iceland</option>
                                     <option value="India" {% if patient.nationality=="India" %}selected{% endif %}>
                                         India</option>
-                                    <option value="Indonesia" {% if patient.nationality=="Indonesia" %}selected{%
-                                        endif %}>Indonesia</option>
+                                    <option value="Indonesia" {% if patient.nationality=="Indonesia" %}selected{% endif
+                                        %}>Indonesia</option>
                                     <option value="Iran, Islamic Republic of" {% if
                                         patient.nationality=="Iran, Islamic Republic of" %}selected{% endif %}>
                                         Iran, Islamic
                                         Republic of</option>
                                     <option value="Iraq" {% if patient.nationality=="Iraq" %}selected{% endif %}>
                                         Iraq</option>
-                                    <option value="Ireland" {% if patient.nationality=="Ireland" %}selected{% endif
-                                        %}>Ireland</option>
-                                    <option value="Isle of Man" {% if patient.nationality=="Isle of Man"
-                                        %}selected{% endif %}>Isle of Man
+                                    <option value="Ireland" {% if patient.nationality=="Ireland" %}selected{% endif %}>
+                                        Ireland</option>
+                                    <option value="Isle of Man" {% if patient.nationality=="Isle of Man" %}selected{%
+                                        endif %}>Isle of Man
                                     </option>
                                     <option value="Italy" {% if patient.nationality=="Italy" %}selected{% endif %}>
                                         Italy</option>
-                                    <option value="Jamaica" {% if patient.nationality=="Jamaica" %}selected{% endif
-                                        %}>Jamaica</option>
+                                    <option value="Jamaica" {% if patient.nationality=="Jamaica" %}selected{% endif %}>
+                                        Jamaica</option>
                                     <option value="Japan" {% if patient.nationality=="Japan" %}selected{% endif %}>
                                         Japan</option>
-                                    <option value="Jersey" {% if patient.nationality=="Jersey" %}selected{% endif
-                                        %}>Jersey</option>
-                                    <option value="Jordan" {% if patient.nationality=="Jordan" %}selected{% endif
-                                        %}>Jordan</option>
+                                    <option value="Jersey" {% if patient.nationality=="Jersey" %}selected{% endif %}>
+                                        Jersey</option>
+                                    <option value="Jordan" {% if patient.nationality=="Jordan" %}selected{% endif %}>
+                                        Jordan</option>
                                     <option value="Kazakhstan" {% if patient.nationality=="Kazakhstan" %}selected{%
                                         endif %}>Kazakhstan
                                     </option>
                                     <option value="Kenya" {% if patient.nationality=="Kenya" %}selected{% endif %}>
                                         Kenya</option>
-                                    <option value="Kiribati" {% if patient.nationality=="Kiribati" %}selected{%
-                                        endif %}>Kiribati</option>
+                                    <option value="Kiribati" {% if patient.nationality=="Kiribati" %}selected{% endif
+                                        %}>Kiribati</option>
                                     <option value="Korea, Democratic People's Republic of" {% if
-                                        patient.nationality=="Korea, Democratic People's Republic of" %}selected{%
-                                        endif %}>Korea, Democratic
+                                        patient.nationality=="Korea, Democratic People's Republic of" %}selected{% endif
+                                        %}>Korea, Democratic
                                         People's Republic of</option>
-                                    <option value="Korea, Republic of" {% if
-                                        patient.nationality=="Korea, Republic of" %}selected{% endif %}>Korea,
+                                    <option value="Korea, Republic of" {% if patient.nationality=="Korea, Republic of"
+                                        %}selected{% endif %}>Korea,
                                         Republic of
                                     </option>
-                                    <option value="Kosovo" {% if patient.nationality=="Kosovo" %}selected{% endif
-                                        %}>Kosovo</option>
-                                    <option value="Kuwait" {% if patient.nationality=="Kuwait" %}selected{% endif
-                                        %}>Kuwait</option>
+                                    <option value="Kosovo" {% if patient.nationality=="Kosovo" %}selected{% endif %}>
+                                        Kosovo</option>
+                                    <option value="Kuwait" {% if patient.nationality=="Kuwait" %}selected{% endif %}>
+                                        Kuwait</option>
                                     <option value="Kyrgyzstan" {% if patient.nationality=="Kyrgyzstan" %}selected{%
                                         endif %}>Kyrgyzstan
                                     </option>
                                     <option value="Lao People's Democratic Republic" {% if
-                                        patient.nationality=="Lao People's Democratic Republic" %}selected{% endif
-                                        %}>Lao People's
+                                        patient.nationality=="Lao People's Democratic Republic" %}selected{% endif %}>
+                                        Lao People's
                                         Democratic Republic</option>
-                                    <option value="Latvia" {% if patient.nationality=="Latvia" %}selected{% endif
-                                        %}>Latvia</option>
-                                    <option value="Lebanon" {% if patient.nationality=="Lebanon" %}selected{% endif
-                                        %}>Lebanon</option>
-                                    <option value="Lesotho" {% if patient.nationality=="Lesotho" %}selected{% endif
-                                        %}>Lesotho</option>
-                                    <option value="Liberia" {% if patient.nationality=="Liberia" %}selected{% endif
-                                        %}>Liberia</option>
+                                    <option value="Latvia" {% if patient.nationality=="Latvia" %}selected{% endif %}>
+                                        Latvia</option>
+                                    <option value="Lebanon" {% if patient.nationality=="Lebanon" %}selected{% endif %}>
+                                        Lebanon</option>
+                                    <option value="Lesotho" {% if patient.nationality=="Lesotho" %}selected{% endif %}>
+                                        Lesotho</option>
+                                    <option value="Liberia" {% if patient.nationality=="Liberia" %}selected{% endif %}>
+                                        Liberia</option>
                                     <option value="Libyan Arab Jamahiriya" {% if
                                         patient.nationality=="Libyan Arab Jamahiriya" %}selected{% endif %}>Libyan
                                         Arab
@@ -464,26 +472,26 @@
                                     <option value="Liechtenstein" {% if patient.nationality=="Liechtenstein"
                                         %}selected{% endif %}>Liechtenstein
                                     </option>
-                                    <option value="Lithuania" {% if patient.nationality=="Lithuania" %}selected{%
-                                        endif %}>Lithuania</option>
+                                    <option value="Lithuania" {% if patient.nationality=="Lithuania" %}selected{% endif
+                                        %}>Lithuania</option>
                                     <option value="Luxembourg" {% if patient.nationality=="Luxembourg" %}selected{%
                                         endif %}>Luxembourg
                                     </option>
                                     <option value="Macao" {% if patient.nationality=="Macao" %}selected{% endif %}>
                                         Macao</option>
                                     <option value="Macedonia, the Former Yugoslav Republic of" {% if
-                                        patient.nationality=="Macedonia, the Former Yugoslav Republic of"
-                                        %}selected{% endif %}>Macedonia, the
+                                        patient.nationality=="Macedonia, the Former Yugoslav Republic of" %}selected{%
+                                        endif %}>Macedonia, the
                                         Former Yugoslav Republic of</option>
                                     <option value="Madagascar" {% if patient.nationality=="Madagascar" %}selected{%
                                         endif %}>Madagascar
                                     </option>
-                                    <option value="Malawi" {% if patient.nationality=="Malawi" %}selected{% endif
-                                        %}>Malawi</option>
-                                    <option value="Malaysia" {% if patient.nationality=="Malaysia" %}selected{%
-                                        endif %}>Malaysia</option>
-                                    <option value="Maldives" {% if patient.nationality=="Maldives" %}selected{%
-                                        endif %}>Maldives</option>
+                                    <option value="Malawi" {% if patient.nationality=="Malawi" %}selected{% endif %}>
+                                        Malawi</option>
+                                    <option value="Malaysia" {% if patient.nationality=="Malaysia" %}selected{% endif
+                                        %}>Malaysia</option>
+                                    <option value="Maldives" {% if patient.nationality=="Maldives" %}selected{% endif
+                                        %}>Maldives</option>
                                     <option value="Mali" {% if patient.nationality=="Mali" %}selected{% endif %}>
                                         Mali</option>
                                     <option value="Malta" {% if patient.nationality=="Malta" %}selected{% endif %}>
@@ -497,45 +505,45 @@
                                     <option value="Mauritania" {% if patient.nationality=="Mauritania" %}selected{%
                                         endif %}>Mauritania
                                     </option>
-                                    <option value="Mauritius" {% if patient.nationality=="Mauritius" %}selected{%
-                                        endif %}>Mauritius</option>
-                                    <option value="Mayotte" {% if patient.nationality=="Mayotte" %}selected{% endif
-                                        %}>Mayotte</option>
-                                    <option value="Mexico" {% if patient.nationality=="Mexico" %}selected{% endif
-                                        %}>Mexico</option>
+                                    <option value="Mauritius" {% if patient.nationality=="Mauritius" %}selected{% endif
+                                        %}>Mauritius</option>
+                                    <option value="Mayotte" {% if patient.nationality=="Mayotte" %}selected{% endif %}>
+                                        Mayotte</option>
+                                    <option value="Mexico" {% if patient.nationality=="Mexico" %}selected{% endif %}>
+                                        Mexico</option>
                                     <option value="Micronesia, Federated States of" {% if
-                                        patient.nationality=="Micronesia, Federated States of" %}selected{% endif
-                                        %}>Micronesia,
+                                        patient.nationality=="Micronesia, Federated States of" %}selected{% endif %}>
+                                        Micronesia,
                                         Federated States of</option>
                                     <option value="Moldova, Republic of" {% if
                                         patient.nationality=="Moldova, Republic of" %}selected{% endif %}>Moldova,
                                         Republic
                                         of</option>
-                                    <option value="Monaco" {% if patient.nationality=="Monaco" %}selected{% endif
-                                        %}>Monaco</option>
-                                    <option value="Mongolia" {% if patient.nationality=="Mongolia" %}selected{%
-                                        endif %}>Mongolia</option>
+                                    <option value="Monaco" {% if patient.nationality=="Monaco" %}selected{% endif %}>
+                                        Monaco</option>
+                                    <option value="Mongolia" {% if patient.nationality=="Mongolia" %}selected{% endif
+                                        %}>Mongolia</option>
                                     <option value="Montenegro" {% if patient.nationality=="Montenegro" %}selected{%
                                         endif %}>Montenegro
                                     </option>
                                     <option value="Montserrat" {% if patient.nationality=="Montserrat" %}selected{%
                                         endif %}>Montserrat
                                     </option>
-                                    <option value="Morocco" {% if patient.nationality=="Morocco" %}selected{% endif
-                                        %}>Morocco</option>
+                                    <option value="Morocco" {% if patient.nationality=="Morocco" %}selected{% endif %}>
+                                        Morocco</option>
                                     <option value="Mozambique" {% if patient.nationality=="Mozambique" %}selected{%
                                         endif %}>Mozambique
                                     </option>
-                                    <option value="Myanmar" {% if patient.nationality=="Myanmar" %}selected{% endif
-                                        %}>Myanmar</option>
-                                    <option value="Namibia" {% if patient.nationality=="Namibia" %}selected{% endif
-                                        %}>Namibia</option>
+                                    <option value="Myanmar" {% if patient.nationality=="Myanmar" %}selected{% endif %}>
+                                        Myanmar</option>
+                                    <option value="Namibia" {% if patient.nationality=="Namibia" %}selected{% endif %}>
+                                        Namibia</option>
                                     <option value="Nauru" {% if patient.nationality=="Nauru" %}selected{% endif %}>
                                         Nauru</option>
                                     <option value="Nepal" {% if patient.nationality=="Nepal" %}selected{% endif %}>
                                         Nepal</option>
-                                    <option value="Netherlands" {% if patient.nationality=="Netherlands"
-                                        %}selected{% endif %}>Netherlands
+                                    <option value="Netherlands" {% if patient.nationality=="Netherlands" %}selected{%
+                                        endif %}>Netherlands
                                     </option>
                                     <option value="Netherlands Antilles" {% if
                                         patient.nationality=="Netherlands Antilles" %}selected{% endif %}>
@@ -544,15 +552,15 @@
                                     <option value="New Caledonia" {% if patient.nationality=="New Caledonia"
                                         %}selected{% endif %}>New Caledonia
                                     </option>
-                                    <option value="New Zealand" {% if patient.nationality=="New Zealand"
-                                        %}selected{% endif %}>New Zealand
+                                    <option value="New Zealand" {% if patient.nationality=="New Zealand" %}selected{%
+                                        endif %}>New Zealand
                                     </option>
-                                    <option value="Nicaragua" {% if patient.nationality=="Nicaragua" %}selected{%
-                                        endif %}>Nicaragua</option>
+                                    <option value="Nicaragua" {% if patient.nationality=="Nicaragua" %}selected{% endif
+                                        %}>Nicaragua</option>
                                     <option value="Niger" {% if patient.nationality=="Niger" %}selected{% endif %}>
                                         Niger</option>
-                                    <option value="Nigeria" {% if patient.nationality=="Nigeria" %}selected{% endif
-                                        %}>Nigeria</option>
+                                    <option value="Nigeria" {% if patient.nationality=="Nigeria" %}selected{% endif %}>
+                                        Nigeria</option>
                                     <option value="Niue" {% if patient.nationality=="Niue" %}selected{% endif %}>
                                         Niue</option>
                                     <option value="Norfolk Island" {% if patient.nationality=="Norfolk Island"
@@ -562,72 +570,72 @@
                                         patient.nationality=="Northern Mariana Islands" %}selected{% endif %}>
                                         Northern Mariana
                                         Islands</option>
-                                    <option value="Norway" {% if patient.nationality=="Norway" %}selected{% endif
-                                        %}>Norway</option>
+                                    <option value="Norway" {% if patient.nationality=="Norway" %}selected{% endif %}>
+                                        Norway</option>
                                     <option value="Oman" {% if patient.nationality=="Oman" %}selected{% endif %}>
                                         Oman</option>
-                                    <option value="Pakistan" {% if patient.nationality=="Pakistan" %}selected{%
-                                        endif %}>Pakistan</option>
+                                    <option value="Pakistan" {% if patient.nationality=="Pakistan" %}selected{% endif
+                                        %}>Pakistan</option>
                                     <option value="Palau" {% if patient.nationality=="Palau" %}selected{% endif %}>
                                         Palau</option>
-                                    <option value="Palestine" {% if patient.nationality=="Palestine" %}selected{%
-                                        endif %}>Palestine</option>
-                                    <option value="Panama" {% if patient.nationality=="Panama" %}selected{% endif
-                                        %}>Panama</option>
+                                    <option value="Palestine" {% if patient.nationality=="Palestine" %}selected{% endif
+                                        %}>Palestine</option>
+                                    <option value="Panama" {% if patient.nationality=="Panama" %}selected{% endif %}>
+                                        Panama</option>
                                     <option value="Papua New Guinea" {% if patient.nationality=="Papua New Guinea"
                                         %}selected{% endif %}>Papua New Guinea
                                     </option>
-                                    <option value="Paraguay" {% if patient.nationality=="Paraguay" %}selected{%
-                                        endif %}>Paraguay</option>
+                                    <option value="Paraguay" {% if patient.nationality=="Paraguay" %}selected{% endif
+                                        %}>Paraguay</option>
                                     <option value="Peru" {% if patient.nationality=="Peru" %}selected{% endif %}>
                                         Peru</option>
-                                    <option value="Philippines" {% if patient.nationality=="Philippines"
-                                        %}selected{% endif %}>Philippines
+                                    <option value="Philippines" {% if patient.nationality=="Philippines" %}selected{%
+                                        endif %}>Philippines
                                     </option>
-                                    <option value="Pitcairn" {% if patient.nationality=="Pitcairn" %}selected{%
-                                        endif %}>Pitcairn</option>
-                                    <option value="Poland" {% if patient.nationality=="Poland" %}selected{% endif
-                                        %}>Poland</option>
-                                    <option value="Portugal" {% if patient.nationality=="Portugal" %}selected{%
-                                        endif %}>Portugal</option>
-                                    <option value="Puerto Rico" {% if patient.nationality=="Puerto Rico"
-                                        %}selected{% endif %}>Puerto Rico
+                                    <option value="Pitcairn" {% if patient.nationality=="Pitcairn" %}selected{% endif
+                                        %}>Pitcairn</option>
+                                    <option value="Poland" {% if patient.nationality=="Poland" %}selected{% endif %}>
+                                        Poland</option>
+                                    <option value="Portugal" {% if patient.nationality=="Portugal" %}selected{% endif
+                                        %}>Portugal</option>
+                                    <option value="Puerto Rico" {% if patient.nationality=="Puerto Rico" %}selected{%
+                                        endif %}>Puerto Rico
                                     </option>
                                     <option value="Qatar" {% if patient.nationality=="Qatar" %}selected{% endif %}>
                                         Qatar</option>
-                                    <option value="Reunion" {% if patient.nationality=="Reunion" %}selected{% endif
-                                        %}>Reunion</option>
-                                    <option value="Romania" {% if patient.nationality=="Romania" %}selected{% endif
-                                        %}>Romania</option>
-                                    <option value="Russian Federation" {% if
-                                        patient.nationality=="Russian Federation" %}selected{% endif %}>Russian
+                                    <option value="Reunion" {% if patient.nationality=="Reunion" %}selected{% endif %}>
+                                        Reunion</option>
+                                    <option value="Romania" {% if patient.nationality=="Romania" %}selected{% endif %}>
+                                        Romania</option>
+                                    <option value="Russian Federation" {% if patient.nationality=="Russian Federation"
+                                        %}selected{% endif %}>Russian
                                         Federation
                                     </option>
-                                    <option value="Rwanda" {% if patient.nationality=="Rwanda" %}selected{% endif
-                                        %}>Rwanda</option>
+                                    <option value="Rwanda" {% if patient.nationality=="Rwanda" %}selected{% endif %}>
+                                        Rwanda</option>
                                     <option value="Saint Barthelemy" {% if patient.nationality=="Saint Barthelemy"
                                         %}selected{% endif %}>Saint Barthelemy
                                     </option>
-                                    <option value="Saint Helena" {% if patient.nationality=="Saint Helena"
-                                        %}selected{% endif %}>Saint Helena
+                                    <option value="Saint Helena" {% if patient.nationality=="Saint Helena" %}selected{%
+                                        endif %}>Saint Helena
                                     </option>
                                     <option value="Saint Kitts and Nevis" {% if
                                         patient.nationality=="Saint Kitts and Nevis" %}selected{% endif %}>Saint
                                         Kitts and
                                         Nevis</option>
-                                    <option value="Saint Lucia" {% if patient.nationality=="Saint Lucia"
-                                        %}selected{% endif %}>Saint Lucia
+                                    <option value="Saint Lucia" {% if patient.nationality=="Saint Lucia" %}selected{%
+                                        endif %}>Saint Lucia
                                     </option>
-                                    <option value="Saint Martin" {% if patient.nationality=="Saint Martin"
-                                        %}selected{% endif %}>Saint Martin
+                                    <option value="Saint Martin" {% if patient.nationality=="Saint Martin" %}selected{%
+                                        endif %}>Saint Martin
                                     </option>
                                     <option value="Saint Pierre and Miquelon" {% if
                                         patient.nationality=="Saint Pierre and Miquelon" %}selected{% endif %}>
                                         Saint Pierre and
                                         Miquelon</option>
                                     <option value="Saint Vincent and the Grenadines" {% if
-                                        patient.nationality=="Saint Vincent and the Grenadines" %}selected{% endif
-                                        %}>Saint Vincent and
+                                        patient.nationality=="Saint Vincent and the Grenadines" %}selected{% endif %}>
+                                        Saint Vincent and
                                         the Grenadines</option>
                                     <option value="Samoa" {% if patient.nationality=="Samoa" %}selected{% endif %}>
                                         Samoa</option>
@@ -638,13 +646,13 @@
                                         patient.nationality=="Sao Tome and Principe" %}selected{% endif %}>Sao Tome
                                         and
                                         Principe</option>
-                                    <option value="Saudi Arabia" {% if patient.nationality=="Saudi Arabia"
-                                        %}selected{% endif %}>Saudi Arabia
+                                    <option value="Saudi Arabia" {% if patient.nationality=="Saudi Arabia" %}selected{%
+                                        endif %}>Saudi Arabia
                                     </option>
-                                    <option value="Senegal" {% if patient.nationality=="Senegal" %}selected{% endif
-                                        %}>Senegal</option>
-                                    <option value="Serbia" {% if patient.nationality=="Serbia" %}selected{% endif
-                                        %}>Serbia</option>
+                                    <option value="Senegal" {% if patient.nationality=="Senegal" %}selected{% endif %}>
+                                        Senegal</option>
+                                    <option value="Serbia" {% if patient.nationality=="Serbia" %}selected{% endif %}>
+                                        Serbia</option>
                                     <option value="Serbia and Montenegro" {% if
                                         patient.nationality=="Serbia and Montenegro" %}selected{% endif %}>Serbia
                                         and
@@ -652,51 +660,51 @@
                                     <option value="Seychelles" {% if patient.nationality=="Seychelles" %}selected{%
                                         endif %}>Seychelles
                                     </option>
-                                    <option value="Sierra Leone" {% if patient.nationality=="Sierra Leone"
-                                        %}selected{% endif %}>Sierra Leone
+                                    <option value="Sierra Leone" {% if patient.nationality=="Sierra Leone" %}selected{%
+                                        endif %}>Sierra Leone
                                     </option>
-                                    <option value="Singapore" {% if patient.nationality=="Singapore" %}selected{%
-                                        endif %}>Singapore</option>
-                                    <option value="Sint Maarten" {% if patient.nationality=="Sint Maarten"
-                                        %}selected{% endif %}>Sint Maarten
+                                    <option value="Singapore" {% if patient.nationality=="Singapore" %}selected{% endif
+                                        %}>Singapore</option>
+                                    <option value="Sint Maarten" {% if patient.nationality=="Sint Maarten" %}selected{%
+                                        endif %}>Sint Maarten
                                     </option>
-                                    <option value="Slovakia" {% if patient.nationality=="Slovakia" %}selected{%
-                                        endif %}>Slovakia</option>
-                                    <option value="Slovenia" {% if patient.nationality=="Slovenia" %}selected{%
-                                        endif %}>Slovenia</option>
+                                    <option value="Slovakia" {% if patient.nationality=="Slovakia" %}selected{% endif
+                                        %}>Slovakia</option>
+                                    <option value="Slovenia" {% if patient.nationality=="Slovenia" %}selected{% endif
+                                        %}>Slovenia</option>
                                     <option value="Solomon Islands" {% if patient.nationality=="Solomon Islands"
                                         %}selected{% endif %}>Solomon Islands
                                     </option>
-                                    <option value="Somalia" {% if patient.nationality=="Somalia" %}selected{% endif
-                                        %}>Somalia</option>
-                                    <option value="South Africa" {% if patient.nationality=="South Africa"
-                                        %}selected{% endif %}>South Africa
+                                    <option value="Somalia" {% if patient.nationality=="Somalia" %}selected{% endif %}>
+                                        Somalia</option>
+                                    <option value="South Africa" {% if patient.nationality=="South Africa" %}selected{%
+                                        endif %}>South Africa
                                     </option>
                                     <option value="South Georgia and the South Sandwich Islands" {% if
-                                        patient.nationality=="South Georgia and the South Sandwich Islands"
-                                        %}selected{% endif %}>South Georgia and
+                                        patient.nationality=="South Georgia and the South Sandwich Islands" %}selected{%
+                                        endif %}>South Georgia and
                                         the South Sandwich Islands</option>
-                                    <option value="South Sudan" {% if patient.nationality=="South Sudan"
-                                        %}selected{% endif %}>South Sudan
+                                    <option value="South Sudan" {% if patient.nationality=="South Sudan" %}selected{%
+                                        endif %}>South Sudan
                                     </option>
                                     <option value="Spain" {% if patient.nationality=="Spain" %}selected{% endif %}>
                                         Spain</option>
-                                    <option value="Sri Lanka" {% if patient.nationality=="Sri Lanka" %}selected{%
-                                        endif %}>Sri Lanka</option>
+                                    <option value="Sri Lanka" {% if patient.nationality=="Sri Lanka" %}selected{% endif
+                                        %}>Sri Lanka</option>
                                     <option value="Sudan" {% if patient.nationality=="Sudan" %}selected{% endif %}>
                                         Sudan</option>
-                                    <option value="Suriname" {% if patient.nationality=="Suriname" %}selected{%
-                                        endif %}>Suriname</option>
+                                    <option value="Suriname" {% if patient.nationality=="Suriname" %}selected{% endif
+                                        %}>Suriname</option>
                                     <option value="Svalbard and Jan Mayen" {% if
                                         patient.nationality=="Svalbard and Jan Mayen" %}selected{% endif %}>
                                         Svalbard and Jan
                                         Mayen</option>
-                                    <option value="Swaziland" {% if patient.nationality=="Swaziland" %}selected{%
-                                        endif %}>Swaziland</option>
-                                    <option value="Sweden" {% if patient.nationality=="Sweden" %}selected{% endif
-                                        %}>Sweden</option>
-                                    <option value="Switzerland" {% if patient.nationality=="Switzerland"
-                                        %}selected{% endif %}>Switzerland
+                                    <option value="Swaziland" {% if patient.nationality=="Swaziland" %}selected{% endif
+                                        %}>Swaziland</option>
+                                    <option value="Sweden" {% if patient.nationality=="Sweden" %}selected{% endif %}>
+                                        Sweden</option>
+                                    <option value="Switzerland" {% if patient.nationality=="Switzerland" %}selected{%
+                                        endif %}>Switzerland
                                     </option>
                                     <option value="Syrian Arab Republic" {% if
                                         patient.nationality=="Syrian Arab Republic" %}selected{% endif %}>Syrian
@@ -713,38 +721,38 @@
                                         patient.nationality=="Tanzania, United Republic of" %}selected{% endif %}>
                                         Tanzania, United
                                         Republic of</option>
-                                    <option value="Thailand" {% if patient.nationality=="Thailand" %}selected{%
-                                        endif %}>Thailand</option>
-                                    <option value="Timor-Leste" {% if patient.nationality=="Timor-Leste"
-                                        %}selected{% endif %}>Timor-Leste
+                                    <option value="Thailand" {% if patient.nationality=="Thailand" %}selected{% endif
+                                        %}>Thailand</option>
+                                    <option value="Timor-Leste" {% if patient.nationality=="Timor-Leste" %}selected{%
+                                        endif %}>Timor-Leste
                                     </option>
                                     <option value="Togo" {% if patient.nationality=="Togo" %}selected{% endif %}>
                                         Togo</option>
-                                    <option value="Tokelau" {% if patient.nationality=="Tokelau" %}selected{% endif
-                                        %}>Tokelau</option>
+                                    <option value="Tokelau" {% if patient.nationality=="Tokelau" %}selected{% endif %}>
+                                        Tokelau</option>
                                     <option value="Tonga" {% if patient.nationality=="Tonga" %}selected{% endif %}>
                                         Tonga</option>
-                                    <option value="Trinidad and Tobago" {% if
-                                        patient.nationality=="Trinidad and Tobago" %}selected{% endif %}>Trinidad
+                                    <option value="Trinidad and Tobago" {% if patient.nationality=="Trinidad and Tobago"
+                                        %}selected{% endif %}>Trinidad
                                         and
                                         Tobago</option>
-                                    <option value="Tunisia" {% if patient.nationality=="Tunisia" %}selected{% endif
-                                        %}>Tunisia</option>
-                                    <option value="Turkey" {% if patient.nationality=="Turkey" %}selected{% endif
-                                        %}>Turkey</option>
-                                    <option value="Turkmenistan" {% if patient.nationality=="Turkmenistan"
-                                        %}selected{% endif %}>Turkmenistan
+                                    <option value="Tunisia" {% if patient.nationality=="Tunisia" %}selected{% endif %}>
+                                        Tunisia</option>
+                                    <option value="Turkey" {% if patient.nationality=="Turkey" %}selected{% endif %}>
+                                        Turkey</option>
+                                    <option value="Turkmenistan" {% if patient.nationality=="Turkmenistan" %}selected{%
+                                        endif %}>Turkmenistan
                                     </option>
                                     <option value="Turks and Caicos Islands" {% if
                                         patient.nationality=="Turks and Caicos Islands" %}selected{% endif %}>Turks
                                         and Caicos
                                         Islands</option>
-                                    <option value="Tuvalu" {% if patient.nationality=="Tuvalu" %}selected{% endif
-                                        %}>Tuvalu</option>
-                                    <option value="Uganda" {% if patient.nationality=="Uganda" %}selected{% endif
-                                        %}>Uganda</option>
-                                    <option value="Ukraine" {% if patient.nationality=="Ukraine" %}selected{% endif
-                                        %}>Ukraine</option>
+                                    <option value="Tuvalu" {% if patient.nationality=="Tuvalu" %}selected{% endif %}>
+                                        Tuvalu</option>
+                                    <option value="Uganda" {% if patient.nationality=="Uganda" %}selected{% endif %}>
+                                        Uganda</option>
+                                    <option value="Ukraine" {% if patient.nationality=="Ukraine" %}selected{% endif %}>
+                                        Ukraine</option>
                                     <option value="United Arab Emirates" {% if
                                         patient.nationality=="United Arab Emirates" %}selected{% endif %}>United
                                         Arab
@@ -756,20 +764,20 @@
                                         %}selected{% endif %}>United States
                                     </option>
                                     <option value="United States Minor Outlying Islands" {% if
-                                        patient.nationality=="United States Minor Outlying Islands" %}selected{%
-                                        endif %}>United States
+                                        patient.nationality=="United States Minor Outlying Islands" %}selected{% endif
+                                        %}>United States
                                         Minor Outlying Islands</option>
-                                    <option value="Uruguay" {% if patient.nationality=="Uruguay" %}selected{% endif
-                                        %}>Uruguay</option>
+                                    <option value="Uruguay" {% if patient.nationality=="Uruguay" %}selected{% endif %}>
+                                        Uruguay</option>
                                     <option value="Uzbekistan" {% if patient.nationality=="Uzbekistan" %}selected{%
                                         endif %}>Uzbekistan
                                     </option>
-                                    <option value="Vanuatu" {% if patient.nationality=="Vanuatu" %}selected{% endif
-                                        %}>Vanuatu</option>
-                                    <option value="Venezuela" {% if patient.nationality=="Venezuela" %}selected{%
-                                        endif %}>Venezuela</option>
-                                    <option value="Viet Nam" {% if patient.nationality=="Viet Nam" %}selected{%
-                                        endif %}>Viet Nam</option>
+                                    <option value="Vanuatu" {% if patient.nationality=="Vanuatu" %}selected{% endif %}>
+                                        Vanuatu</option>
+                                    <option value="Venezuela" {% if patient.nationality=="Venezuela" %}selected{% endif
+                                        %}>Venezuela</option>
+                                    <option value="Viet Nam" {% if patient.nationality=="Viet Nam" %}selected{% endif
+                                        %}>Viet Nam</option>
                                     <option value="Virgin Islands, British" {% if
                                         patient.nationality=="Virgin Islands, British" %}selected{% endif %}>Virgin
                                         Islands,
@@ -778,8 +786,8 @@
                                         patient.nationality=="Virgin Islands, U.s." %}selected{% endif %}>Virgin
                                         Islands,
                                         U.s.</option>
-                                    <option value="Wallis and Futuna" {% if
-                                        patient.nationality=="Wallis and Futuna" %}selected{% endif %}>Wallis and
+                                    <option value="Wallis and Futuna" {% if patient.nationality=="Wallis and Futuna"
+                                        %}selected{% endif %}>Wallis and
                                         Futuna
                                     </option>
                                     <option value="Western Sahara" {% if patient.nationality=="Western Sahara"
@@ -787,111 +795,167 @@
                                     </option>
                                     <option value="Yemen" {% if patient.nationality=="Yemen" %}selected{% endif %}>
                                         Yemen</option>
-                                    <option value="Zambia" {% if patient.nationality=="Zambia" %}selected{% endif
-                                        %}>Zambia</option>
-                                    <option value="Zimbabwe" {% if patient.nationality=="Zimbabwe" %}selected{%
-                                        endif %}>Zimbabwe</option>
+                                    <option value="Zambia" {% if patient.nationality=="Zambia" %}selected{% endif %}>
+                                        Zambia</option>
+                                    <option value="Zimbabwe" {% if patient.nationality=="Zimbabwe" %}selected{% endif
+                                        %}>Zimbabwe</option>
                                 </select>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="emailAddress" class="col-sm-2 col-form-label">Email
-                                Address</label>
+                            <label for="healthInsuranceNumber" class="col-sm-2 col-form-label">Health Insurance No.
+                                <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <input type="email" class="form-control" id="emailAddress" name="email_address"
-                                    value="{{ patient.email_address }}" disabled required>
+                                <input type="text" class="form-control" id="healthInsuranceNumber"
+                                    name="health_insurance_number" value="{{ patient.health_insurance_number }}"
+                                    required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="phoneNumber" class="col-sm-2 col-form-label">Phone
-                                Number</label>
+                            <label for="emailAddress" class="col-sm-2 col-form-label">Email Address <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <input type="tel" class="form-control" id="phoneNumber" name="phone_number"
-                                    value="{{ patient.phone_number }}" disabled>
+                                <input type="email" class="form-control" id="emailAddress" name="email" value="{{
+                                    patient.email_address }}" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="workAddress" class="col-sm-2 col-form-label">Work
-                                Address</label>
+                            <label for="phoneNumber" class="col-sm-2 col-form-label">Phone No.</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="workAddress" name="work_address"
-                                    value="{{ patient.work_address }}" disabled required>
+                                <input type="tel" class="form-control" id="phoneNumber" name="phone_number" value="{{
+                                    patient.phone_number }}">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="specialty" class="col-sm-2 col-form-label">Specialty</label>
+                            <label for="address" class="col-sm-2 col-form-label">Resident Address <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <select class="form-select" id="specialty" name="specialty" disabled>
-                                    <option value="" disabled>Specialty</option>
-                                    <option value="Cardiology" {% if patient.specialty=='Cardiology' %}selected{%
-                                        endif %}>Cardiology</option>
-                                    <option value="Orthopedics" {% if patient.specialty=='Orthopedics' %}selected{%
-                                        endif %}>Orthopedics</option>
-                                    <option value="Dermatology" {% if patient.specialty=='Dermatology' %}selected{%
-                                        endif %}>Dermatology</option>
-                                    <option value="Obstetrics and Gynecology (OB/GYN)" {% if
-                                        patient.specialty=='Obstetrics and Gynecology (OB/GYN)' %}selected{% endif
-                                        %}>Obstetrics & Gynecology</option>
-                                    <option value="Psychiatry" {% if patient.specialty=='Psychiatry' %}selected{%
-                                        endif %}>Psychiatry</option>
-                                    <option value="Neurology" {% if patient.specialty=='Neurology' %}selected{%
-                                        endif %}>Neurology</option>
-                                    <option value="Emergency" {% if patient.specialty=='Emergency' %}selected{%
-                                        endif %}>Emergency</option>
-                                </select>
+                                <input type="text" class="form-control" id="address" name="address" value="{{
+                                    patient.address }}" required>
                             </div>
                         </div>
-
+                        <div class="row mb-3">
+                            <label for="emergencyContactName" class="col-sm-2 col-form-label">Emergency Contact
+                                Name</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="emergencyContactName"
+                                    name="emergency_contact_name" value="{{ patient.emergency_contact_name }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="emergencyContactNumber" class="col-sm-2 col-form-label">Emergency Contact
+                                No.</label>
+                            <div class="col-sm-10">
+                                <input type="tel" class="form-control" id="emergencyContactNumber"
+                                    name="emergency_contact_number" value="{{ patient.emergency_contact_number }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="height" class="col-sm-2 col-form-label">Height (cm)</label>
+                            <div class="col-sm-10">
+                                <input type="number" step="0.01" class="form-control" id="height" name="height" value="{{
+                                    patient.height }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="weight" class="col-sm-2 col-form-label">Weight (kg)</label>
+                            <div class="col-sm-10">
+                                <input type="number" step="0.01" class="form-control" id="weight" name="weight" value="{{
+                                    patient.weight }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="bloodGroup" class="col-sm-2 col-form-label">Blood Group</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="bloodGroup" name="blood_group" value="{{
+                                    patient.blood_group }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="genotype" class="col-sm-2 col-form-label">Genotype</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="genotype" name="genotype" value="{{
+                                    patient.genotype }}">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="allergies" class="col-sm-2 col-form-label">Allergies</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control" id="allergies"
+                                    name="allergies">{{ patient.allergies }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="chronicDiseases" class="col-sm-2 col-form-label">Chronic Diseases</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control" id="chronicDiseases"
+                                    name="chronic_diseases">{{ patient.chronic_diseases }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="disabilities" class="col-sm-2 col-form-label">Disabilities</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control" id="disabilities"
+                                    name="disabilities">{{ patient.disabilities }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="vaccines" class="col-sm-2 col-form-label">Vaccines</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control" id="vaccines"
+                                    name="vaccines">{{ patient.vaccines }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="medications" class="col-sm-2 col-form-label">Medications</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control" id="medications"
+                                    name="medications">{{ patient.medications }}</textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="doctorsNote" class="col-sm-2 col-form-label">Doctor's Note</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control" id="doctorsNote"
+                                    name="doctors_note">{{ patient.doctors_note }}</textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Patient</button>
+                    </form>
                 </div>
-                <div class="row mb-3">
-                    <label for="licenseNumber" class="col-sm-2 col-form-label">License No.</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="licenseNumber" name="license_number"
-                            value="{{ patient.license_number }}" disabled required>
-                    </div>
-                </div>
-                <div>
-                    <button type="button" class="btn btn-primary" id="editProfileBtn">
-                        <i class="fa fa-edit me-2"></i>Edit Profile
-                    </button>
-                    <button type="submit" class="btn btn-primary" id="saveChangesBtn" style="display: none;">
-                        <i class="fa fa-save me-2"></i>Update Patient Profile
-                    </button>
-                </div>
-                </form>
             </div>
-        </div>
-        <!-- Doctor Information End -->
+            <!-- Register New Patient End -->
 
-        <!-- Footer Start -->
-        <div class="container-fluid pt-4 px-4">
-            <div class="bg-secondary rounded-top p-4">
-                <div class="row">
-                    <div class="col-12 col-sm-6 text-center text-sm-start">
-                        &copy; <span id="currentYear"></span> <a href="#">MedixBridge</a>, All Rights Reserved.
-                    </div>
-                    <div class="col-12 col-sm-6 text-center text-sm-end">
-                        Designed by <a href="https://github.com/Anukuga">Anukuga&reg;</a>
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-secondary rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start">
+                            &copy; <span id="currentYear"></span> <a href="#">MedixBridge</a>, All Rights Reserved.
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            Designed by <a href="https://github.com/Anukuga">Anukuga&reg;</a>
+                        </div>
                     </div>
                 </div>
             </div>
+            <!-- Footer End -->
         </div>
-        <!-- Footer End -->
-    </div>
-    <!-- Content End -->
+        <!-- Content End -->
 
 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Template Javascript -->
+    <!-- Main Javascript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/edit-doctor-profile.js') }}"></script>
 </body>
 
 </html>
+
+<!-- TODO: Implement Edit button to activate edit mode and update button to save changes -->
