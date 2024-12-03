@@ -236,7 +236,6 @@ def my_profile():
     return render_template("my-profile.html", user_profile=user_profile)
 
 
-
 @app.route("/register-patient", methods=["GET", "POST"])
 def register_patient():
     if "logged_in" not in session or not session["logged_in"]:
@@ -414,9 +413,7 @@ def edit_patient(patient_id):
         return redirect(url_for("signin"))
 
     # Fetch the logged-in doctor's details
-    doctor_id = session[
-        "user_id"
-    ]  # Assuming the logged-in doctor's ID is stored in the session
+    doctor_id = session["user_id"]
     cur = mysql.connection.cursor(cursorclass=DictCursor)
     cur.execute(
         """
@@ -436,6 +433,37 @@ def edit_patient(patient_id):
     if request.method == "POST":
         try:
             data = request.form
+            print("Form Data:", data)  # Debugging
+
+            # Prepare data with defaults
+            first_name = data.get("first_name", "")
+            last_name = data.get("last_name", "")
+            birth_date = data.get("birth_date", None)
+            gender = data.get("gender", "")
+            nationality = data.get("nationality", "")
+            health_insurance_number = data.get("health_insurance_number", "")
+            email_address = data.get("email", "")
+            phone_number = data.get("phone_number", "")
+            address = data.get("address", "")
+            emergency_contact_name = data.get("emergency_contact_name", "")
+            emergency_contact_number = data.get("emergency_contact_number", "")
+            height = data.get("height", None)
+            weight = data.get("weight", None)
+            blood_group = data.get("blood_group", "")
+            genotype = data.get("genotype", "")
+            allergies = data.get("allergies", "")
+            chronic_diseases = data.get("chronic_diseases", "")
+            disabilities = data.get("disabilities", "")
+            vaccines = data.get("vaccines", "")
+            medications = data.get("medications", "")
+            doctors_note = data.get("doctors_note", "")
+
+            # Convert height and weight to proper numeric types
+            height = float(height) if height else None
+            weight = float(weight) if weight else None
+
+            # Create a new cursor
+            cur = mysql.connection.cursor()
             cur.execute(
                 """
                 UPDATE patients_db
@@ -448,40 +476,43 @@ def edit_patient(patient_id):
                 WHERE id = %s AND doctor_id = %s
                 """,
                 (
-                    data["first_name"],
-                    data["last_name"],
-                    data["birth_date"],
-                    data["gender"],
-                    data["nationality"],
-                    data["health_insurance_number"],
-                    data["email"],
-                    data["phone_number"],
-                    data["address"],
-                    data["emergency_contact_name"],
-                    data["emergency_contact_number"],
-                    data["height"],
-                    data["weight"],
-                    data["blood_group"],
-                    data["genotype"],
-                    data["allergies"],
-                    data["chronic_diseases"],
-                    data["disabilities"],
-                    data["vaccines"],
-                    data["medications"],
-                    data["doctors_note"],
+                    first_name,
+                    last_name,
+                    birth_date,
+                    gender,
+                    nationality,
+                    health_insurance_number,
+                    email_address,
+                    phone_number,
+                    address,
+                    emergency_contact_name,
+                    emergency_contact_number,
+                    height,
+                    weight,
+                    blood_group,
+                    genotype,
+                    allergies,
+                    chronic_diseases,
+                    disabilities,
+                    vaccines,
+                    medications,
+                    doctors_note,
                     patient_id,
                     doctor_id,
                 ),
             )
             mysql.connection.commit()
             flash("Patient details updated successfully!", "success")
-            return redirect(url_for("my_patients"))
+            return redirect(url_for("edit_patient", patient_id=patient_id))
         except Exception as e:
+            # Log the exception details
+            print(f"Exception occurred: {e}")
             flash(
-                "An error occurred while updating the patient's details. Please try again.",
-                "danger",
+                f"An error occurred while updating the patient's details: {e}", "danger"
             )
             return redirect(url_for("edit_patient", patient_id=patient_id))
+        finally:
+            cur.close()
 
     # Handle GET request for fetching patient data
     cur.execute(
@@ -504,6 +535,7 @@ def edit_patient(patient_id):
     return render_template(
         "edit-patient.html",
         patient=patient,
+        patient_id=patient_id,
         doctor_first_name=doctor["first_name"],
         doctor_last_name=doctor["last_name"],
         doctor_specialty=doctor["specialty"],
@@ -511,4 +543,7 @@ def edit_patient(patient_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=True)
+    # NOTE: Change to    app.run(debug=True)    when running locally
+    # ssh -L 5000:localhost:5000 remote-laptop-username@remote-laptop-ip
+    # http://localhost:5001/ or http://remote-laptop-ip:5000/ in your browser
