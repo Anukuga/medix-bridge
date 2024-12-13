@@ -141,34 +141,7 @@ def my_profile():
     user_id = session["user_id"]
 
     if request.method == "POST":
-        # Check if a profile picture is uploaded
-        if "profile_picture" in request.files:
-            profile_picture = request.files["profile_picture"]
-            if profile_picture.filename != "":
-                # Save the uploaded file
-                filepath = f"static/uploads/{profile_picture.filename}"
-                profile_picture.save(filepath)
-
-                # Update the profile picture in the database
-                try:
-                    cur = mysql.connection.cursor()
-                    cur.execute(
-                        """
-                        UPDATE doctors_db
-                        SET profile_picture = %s
-                        WHERE id = %s
-                        """,
-                        (filepath, user_id),
-                    )
-                    mysql.connection.commit()
-                    flash("Profile picture updated successfully!", "success")
-                except Exception as e:
-                    mysql.connection.rollback()
-                    flash(f"An error occurred: {e}", "danger")
-                finally:
-                    cur.close()
-
-        # Handle other profile fields (similar to your existing code)
+        # Get updated form data from the request
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
         birth_date = request.form.get("birth_date")
@@ -180,6 +153,7 @@ def my_profile():
         nationality = request.form.get("nationality")
         license_number = request.form.get("license_number")
 
+        # Update the user's data in the database
         try:
             cur = mysql.connection.cursor()
             cur.execute(
@@ -205,13 +179,14 @@ def my_profile():
                 ),
             )
             mysql.connection.commit()
-            flash("Profile updated successfully!", "success")
         except Exception as e:
             mysql.connection.rollback()
-            flash(f"An error occurred: {e}", "danger")
+            raise e
         finally:
             cur.close()
 
+        # Display a success message
+        flash("Profile updated successfully!", "success")
         return redirect(url_for("my_profile"))
 
     # Query the database to fetch the user's current profile data
@@ -219,8 +194,7 @@ def my_profile():
     cur.execute(
         """
         SELECT first_name, last_name, birth_date, gender, email_address, 
-               phone_number, work_address, specialty, nationality, license_number,
-               profile_picture
+               phone_number, work_address, specialty, nationality, license_number
         FROM doctors_db WHERE id = %s
         """,
         (user_id,),
