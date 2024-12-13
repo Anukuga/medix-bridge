@@ -210,6 +210,60 @@ def my_profile():
     return render_template("my-profile.html", user_profile=user_profile)
 
 
+@app.route("/update-password", methods=["POST"])
+def update_password():
+    if "logged_in" not in session or not session["logged_in"]:
+        flash("Please log in to update your password.", "warning")
+        return redirect(url_for("signin"))
+
+    # Fetch the logged-in user's ID
+    user_id = session["user_id"]
+
+    # Retrieve form data
+    old_password = request.form.get("old_password")
+    new_password = request.form.get("new_password")
+    confirm_password = request.form.get("confirm_password")
+
+    # Check if new password and confirm password match
+    if new_password != confirm_password:
+        flash("New password and confirm password do not match.", "danger")
+        return redirect(url_for("my_profile"))
+
+    try:
+        # Fetch user's current password hash from the database
+        cur = mysql.connection.cursor(cursorclass=DictCursor)
+        cur.execute("SELECT password FROM doctors_db WHERE id = %s", (user_id,))
+        user = cur.fetchone()
+        cur.close()
+
+        if not user:
+            flash("User not found.", "danger")
+            return redirect(url_for("signin"))
+
+        # Verify the old password
+        if not check_password_hash(user["password"], old_password):
+            return {"error": "Incorrect old password"}, 400
+
+        # Hash the new password
+        hashed_password = generate_password_hash(new_password)
+
+        # Update the password in the database
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "UPDATE doctors_db SET password = %s WHERE id = %s",
+            (hashed_password, user_id),
+        )
+        mysql.connection.commit()
+        cur.close()
+
+        flash("Password updated successfully!", "success")
+        return redirect(url_for("my_profile"))
+
+    except Exception as e:
+        flash(f"An error occurred: {e}", "danger")
+        return redirect(url_for("my_profile"))
+
+
 @app.route("/register-patient", methods=["GET", "POST"])
 def register_patient():
     if "logged_in" not in session or not session["logged_in"]:
