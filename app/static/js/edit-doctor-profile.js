@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const editButton = document.getElementById("editProfileBtn");
     const saveButton = document.getElementById("saveChangesBtn");
-    const formFields = document.querySelectorAll("input, select");
+    const formFields = document.querySelectorAll("input:not([type='password']), select");
 
     // Function to toggle form field states
     function toggleFields(editable) {
