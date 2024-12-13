@@ -1187,9 +1187,9 @@
                                 </div>
 
                                 <div class="bg-secondary rounded-top p-4 mt-4">
-                                        <form action="/my-profile" method="POST">
+                                        <form action="/update-password" method="POST" id="updatePasswordForm">
                                                 <!-- Update Password Section -->
-                                                <h4 class="mb-4">Update Password</h4>
+                                                <h4 class="mb-4">Update Your Password</h4>
                                                 <div class="row mb-3">
                                                         <label for="oldPassword" class="col-sm-2 col-form-label">Old
                                                                 Password
@@ -1210,25 +1210,18 @@
                                                 </div>
                                                 <div class="row mb-3">
                                                         <label for="confirmPassword"
-                                                                class="col-sm-2 col-form-label">Confirm
-                                                                Password <span class="text-danger">*</span></label>
+                                                                class="col-sm-2 col-form-label">Retype New Password
+                                                                <span class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
                                                                 <input type="password" class="form-control"
                                                                         id="confirmPassword" name="confirm_password"
                                                                         required>
+                                                                <span id="passwordError" style="display: none;" class="mt-2"></span>
                                                         </div>
                                                 </div>
                                                 <div>
                                                         <button type="submit" class="btn btn-primary">Update
                                                                 Password</button>
-                                                </div>
-
-                                                <!-- Save Changes Button -->
-                                                <div>
-                                                        <button type="submit" class="btn btn-primary"
-                                                                id="saveChangesBtn" style="display: none;">
-                                                                <i class="fa fa-save me-2"></i>Save Changes
-                                                        </button>
                                                 </div>
                                         </form>
                                 </div>
@@ -1267,6 +1260,7 @@
         <!-- Template Javascript -->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
         <script src="{{ url_for('static', filename='js/edit-doctor-profile.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/update-password.js') }}"></script>
 </body>
 
 </html>
