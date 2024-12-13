@@ -405,7 +405,7 @@ def my_patients():
         patients=patients,
     )
 
-
+# TODO: Be able to accept null values for height and weight
 @app.route("/edit-patient/<int:patient_id>", methods=["GET", "POST"])
 def edit_patient(patient_id):
     if "logged_in" not in session or not session["logged_in"]:
