@@ -23,10 +23,10 @@
         <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
         <style>
                 .button-group-top {
-                    margin-bottom: 10px;
-                    text-align: right;
+                        margin-bottom: 10px;
+                        text-align: right;
                 }
-            </style>
+        </style>
 </head>
 
 <body>
@@ -82,9 +82,11 @@
                                                         <!-- Doctor's Information -->
                                                         <div class="mb-2">
                                                                 <p class="mb-0 fw-bold dropdown-item">Dr. {{
-                                                                        user_profile.first_name }} {{ user_profile.last_name }}
+                                                                        user_profile.first_name }} {{
+                                                                        user_profile.last_name }}
                                                                 </p>
-                                                                <p class="mb-0 dropdown-item">{{ user_profile.specialty }}</p>
+                                                                <p class="mb-0 dropdown-item">{{ user_profile.specialty
+                                                                        }}</p>
                                                         </div>
 
                                                         <!-- Divider -->
@@ -108,59 +110,77 @@
                         <div class="container-fluid pt-4 px-4">
                                 <div class="bg-secondary rounded-top p-4">
                                         <h2 class="mb-4">Your Profile Details</h2>
-                                        <div class="button-group-top text-end">
-                                                <button type="button" class="btn btn-primary" id="editProfileBtnTop">
-                                                    <i class="fa fa-edit me-2"></i>Edit Profile
-                                                </button>
-                                                <button type="submit" class="btn btn-primary" id="saveChangesBtnTop" style="display: none;">
-                                                    <i class="fa fa-save me-2"></i>Save Changes
-                                                </button>
-                                            </div>
-                                            
+
+
 
                                         <form action="/my-profile" method="POST">
                                                 <div class="row mb-4">
-                                                        <label for="profilePicture" class="col-sm-2 col-form-label">Profile Picture</label>
+                                                        <label for="profilePicture"
+                                                                class="col-sm-2 col-form-label">Profile Picture</label>
                                                         <div class="col-sm-10 text-center">
-                                                            <div class="position-relative" style="width: 150px; height: 150px; margin: auto;">
-                                                                <!-- Circular Preview -->
-                                                                <img id="profilePreview" 
-                                                                     src="{{ user_profile.profile_picture or url_for('static', filename='img/default-profile.png') }}" 
-                                                                     alt="Profile Picture" 
-                                                                     class="rounded-circle img-fluid" 
-                                                                     style="width: 150px; height: 150px; object-fit: cover;">
-                                                    
-                                                                <!-- Hover Edit Icon -->
-                                                                <div class="position-absolute top-50 start-50 translate-middle" style="display: none;" id="editIcon">
-                                                                    <i class="fa fa-pencil text-white bg-primary rounded-circle p-2"></i>
+                                                                <div class="position-relative"
+                                                                        style="width: 150px; height: 150px; margin: auto;">
+                                                                        <!-- Circular Preview -->
+                                                                        <img id="profilePreview"
+                                                                                src="{{ user_profile.profile_picture or url_for('static', filename='img/default-profile.png') }}"
+                                                                                alt="Profile Picture"
+                                                                                class="rounded-circle img-fluid"
+                                                                                style="width: 150px; height: 150px; object-fit: cover;">
+
+                                                                        <!-- Hover Edit Icon -->
+                                                                        <div class="position-absolute top-50 start-50 translate-middle"
+                                                                                style="display: none;" id="editIcon">
+                                                                                <i
+                                                                                        class="fa fa-pencil text-white bg-primary rounded-circle p-2"></i>
+                                                                        </div>
                                                                 </div>
-                                                            </div>
-                                                            <!-- File Input -->
-                                                            <input type="file" id="profilePicture" name="profile_picture" accept="image/*" style="display: none;">
+                                                                <!-- File Input -->
+                                                                <input type="file" id="profilePicture"
+                                                                        name="profile_picture" accept="image/*"
+                                                                        style="display: none;">
                                                         </div>
-                                                    </div>
+                                                </div>
+                                                <div class="button-group-top text-end">
+                                                        <button type="button" class="btn btn-primary"
+                                                                id="editProfileBtnTop">
+                                                                <i class="fa fa-edit me-2"></i>Edit Profile
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="saveChangesBtnTop" style="display: none;">
+                                                                <i class="fa fa-save me-2"></i>Save Changes
+                                                        </button>
+                                                </div>
                                                 <div class="row mb-3">
                                                         <label for="firstName" class="col-sm-2 col-form-label">
-                                                            First Name <span class="text-danger">*</span>
+                                                                First Name <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="firstName" name="first_name" value="{{ user_profile.first_name }}" disabled required>
+                                                                <input type="text" class="form-control" id="firstName"
+                                                                        name="first_name"
+                                                                        value="{{ user_profile.first_name }}" disabled
+                                                                        required>
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
                                                         <label for="lastName" class="col-sm-2 col-form-label">
-                                                            Last Name <span class="text-danger">*</span>
+                                                                Last Name <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" id="lastName" name="last_name" value="{{ user_profile.last_name }}" disabled required>
+                                                                <input type="text" class="form-control" id="lastName"
+                                                                        name="last_name"
+                                                                        value="{{ user_profile.last_name }}" disabled
+                                                                        required>
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
                                                         <label for="birthDate" class="col-sm-2 col-form-label">
-                                                            Date of Birth <span class="text-danger">*</span>
+                                                                Date of Birth <span class="text-danger">*</span>
                                                         </label>
                                                         <div class="col-sm-10">
-                                                            <input type="date" class="form-control" id="birthDate" name="birth_date" value="{{ user_profile.birth_date }}" disabled required>
+                                                                <input type="date" class="form-control" id="birthDate"
+                                                                        name="birth_date"
+                                                                        value="{{ user_profile.birth_date }}" disabled
+                                                                        required>
                                                         </div>
                                                 </div>
                                                 <fieldset class="row mb-3">
@@ -173,7 +193,8 @@
                                                                                 user_profile.gender=='male' %}checked{%
                                                                                 endif %} disabled>
                                                                         <label class="form-check-label"
-                                                                                for="genderMale">Male <span class="text-danger">*</span></label>
+                                                                                for="genderMale">Male <span
+                                                                                        class="text-danger">*</span></label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                         <input class="form-check-input" type="radio"
@@ -182,13 +203,15 @@
                                                                                 user_profile.gender=='female'
                                                                                 %}checked{% endif %} disabled>
                                                                         <label class="form-check-label"
-                                                                                for="genderFemale">Female <span class="text-danger">*</span></label>
+                                                                                for="genderFemale">Female <span
+                                                                                        class="text-danger">*</span></label>
                                                                 </div>
                                                         </div>
                                                 </fieldset>
                                                 <div class="row mb-3">
                                                         <label for="nationality"
-                                                                class="col-sm-2 col-form-label">Nationality <span class="text-danger">*</span></label>
+                                                                class="col-sm-2 col-form-label">Nationality <span
+                                                                        class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
                                                                 <!-- Country Names -->
                                                                 <select class="form-select" id="nationality"
@@ -1103,25 +1126,46 @@
                                                         </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                        <label for="specialty" class="col-sm-2 col-form-label">Specialty <span class="text-danger">*</span></label>
+                                                        <label for="specialty" class="col-sm-2 col-form-label">Specialty
+                                                                <span class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
-                                                            <select class="form-select" id="specialty" name="specialty" disabled required>
-                                                                <option value="" disabled>Specialty</option>
-                                                                <option value="Cardiology" {% if user_profile.specialty == 'Cardiology' %}selected{% endif %}>Cardiology</option>
-                                                                <option value="Orthopedics" {% if user_profile.specialty == 'Orthopedics' %}selected{% endif %}>Orthopedics</option>
-                                                                <option value="Dermatology" {% if user_profile.specialty == 'Dermatology' %}selected{% endif %}>Dermatology</option>
-                                                                <option value="Obstetrics and Gynecology (OB/GYN)" {% if user_profile.specialty == 'Obstetrics and Gynecology (OB/GYN)' %}selected{% endif %}>Obstetrics & Gynecology</option>
-                                                                <option value="Psychiatry" {% if user_profile.specialty == 'Psychiatry' %}selected{% endif %}>Psychiatry</option>
-                                                                <option value="Neurology" {% if user_profile.specialty == 'Neurology' %}selected{% endif %}>Neurology</option>
-                                                                <option value="Emergency" {% if user_profile.specialty == 'Emergency' %}selected{% endif %}>Emergency</option>
-                                                            </select>
+                                                                <select class="form-select" id="specialty"
+                                                                        name="specialty" disabled required>
+                                                                        <option value="" disabled>Specialty</option>
+                                                                        <option value="Cardiology" {% if
+                                                                                user_profile.specialty=='Cardiology'
+                                                                                %}selected{% endif %}>Cardiology
+                                                                        </option>
+                                                                        <option value="Orthopedics" {% if
+                                                                                user_profile.specialty=='Orthopedics'
+                                                                                %}selected{% endif %}>Orthopedics
+                                                                        </option>
+                                                                        <option value="Dermatology" {% if
+                                                                                user_profile.specialty=='Dermatology'
+                                                                                %}selected{% endif %}>Dermatology
+                                                                        </option>
+                                                                        <option value="Obstetrics and Gynecology (OB/GYN)"
+                                                                                {% if
+                                                                                user_profile.specialty=='Obstetrics and Gynecology (OB/GYN)'
+                                                                                %}selected{% endif %}>Obstetrics &
+                                                                                Gynecology</option>
+                                                                        <option value="Psychiatry" {% if
+                                                                                user_profile.specialty=='Psychiatry'
+                                                                                %}selected{% endif %}>Psychiatry
+                                                                        </option>
+                                                                        <option value="Neurology" {% if
+                                                                                user_profile.specialty=='Neurology'
+                                                                                %}selected{% endif %}>Neurology</option>
+                                                                        <option value="Emergency" {% if
+                                                                                user_profile.specialty=='Emergency'
+                                                                                %}selected{% endif %}>Emergency</option>
+                                                                </select>
                                                         </div>
-                                                    </div>
-                                                    
                                                 </div>
                                                 <div class="row mb-3">
                                                         <label for="licenseNumber"
-                                                                class="col-sm-2 col-form-label">License No. <span class="text-danger">*</span></label>
+                                                                class="col-sm-2 col-form-label">License No. <span
+                                                                        class="text-danger">*</span></label>
                                                         <div class="col-sm-10">
                                                                 <input type="text" class="form-control"
                                                                         id="licenseNumber" name="license_number"
@@ -1130,101 +1174,76 @@
                                                         </div>
                                                 </div>
                                                 <div class="button-group-top text-end">
-                                                        <button type="button" class="btn btn-primary" id="editProfileBtnTop">
-                                                            <i class="fa fa-edit me-2"></i>Edit Profile
+                                                        <button type="button" class="btn btn-primary"
+                                                                id="editProfileBtn">
+                                                                <i class="fa fa-edit me-2"></i>Edit Profile
                                                         </button>
-                                                        <button type="submit" class="btn btn-primary" id="saveChangesBtnTop" style="display: none;">
-                                                            <i class="fa fa-save me-2"></i>Save Changes
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="saveChangesBtn" style="display: none;">
+                                                                <i class="fa fa-save me-2"></i>Save Changes
                                                         </button>
-                                                    </div>
-                                                    
+                                                </div>
                                         </form>
+                                </div>
+
+                                <div class="bg-secondary rounded-top p-4 mt-4">
                                         <form action="/my-profile" method="POST">
-                                                <div class="mb-3 text-center">
-                                                        <!-- Circular Profile Picture Preview -->
-                                                        <div class="position-relative" style="width: 150px; height: 150px; margin: auto;">
-                                                            <img
-                                                                id="profilePreview"
-                                                                src="{{ user_profile.profile_picture if user_profile.profile_picture else 'static/default-user.png' }}"
-                                                                alt="Profile Picture"
-                                                                class="rounded-circle"
-                                                                style="width: 100%; height: 100%; object-fit: cover; cursor: pointer;"
-                                                            >
-                                                            <!-- Edit Icon (Shown on Hover) -->
-                                                            <div
-                                                                id="editIcon"
-                                                                class="position-absolute"
-                                                                style="
-                                                                    display: none;
-                                                                    bottom: 5px;
-                                                                    right: 5px;
-                                                                    background-color: rgba(0, 0, 0, 0.7);
-                                                                    border-radius: 50%;
-                                                                    padding: 5px;
-                                                                "
-                                                            >
-                                                                <i class="fa fa-pencil text-white"></i>
-                                                            </div>
-                                                        </div>
-                                                    
-                                                        <!-- Hidden File Input for Upload -->
-                                                        <input
-                                                            type="file"
-                                                            id="profilePicture"
-                                                            name="profile_picture"
-                                                            accept="image/*"
-                                                            class="form-control mt-2"
-                                                            style="display: none;"
-                                                        >
-                                                        <small class="text-muted">Click the picture to update your profile picture.</small>
-                                                    </div>
-                                                    
-                                                <!-- Existing profile fields here -->
-                                            
                                                 <!-- Update Password Section -->
-                                                <hr>
                                                 <h4 class="mb-4">Update Password</h4>
                                                 <div class="row mb-3">
-                                                    <label for="oldPassword" class="col-sm-2 col-form-label">Old Password <span class="text-danger">*</span></label>
-                                                    <div class="col-sm-10">
-                                                        <input type="password" class="form-control" id="oldPassword" name="old_password" required>
-                                                    </div>
+                                                        <label for="oldPassword" class="col-sm-2 col-form-label">Old
+                                                                Password
+                                                                <span class="text-danger">*</span></label>
+                                                        <div class="col-sm-10">
+                                                                <input type="password" class="form-control"
+                                                                        id="oldPassword" name="old_password" required>
+                                                        </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <label for="newPassword" class="col-sm-2 col-form-label">New Password <span class="text-danger">*</span></label>
-                                                    <div class="col-sm-10">
-                                                        <input type="password" class="form-control" id="newPassword" name="new_password" required>
-                                                    </div>
+                                                        <label for="newPassword" class="col-sm-2 col-form-label">New
+                                                                Password
+                                                                <span class="text-danger">*</span></label>
+                                                        <div class="col-sm-10">
+                                                                <input type="password" class="form-control"
+                                                                        id="newPassword" name="new_password" required>
+                                                        </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm Password <span class="text-danger">*</span></label>
-                                                    <div class="col-sm-10">
-                                                        <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
-                                                    </div>
+                                                        <label for="confirmPassword"
+                                                                class="col-sm-2 col-form-label">Confirm
+                                                                Password <span class="text-danger">*</span></label>
+                                                        <div class="col-sm-10">
+                                                                <input type="password" class="form-control"
+                                                                        id="confirmPassword" name="confirm_password"
+                                                                        required>
+                                                        </div>
                                                 </div>
                                                 <div>
-                                                    <button type="submit" class="btn btn-primary">Update Password</button>
+                                                        <button type="submit" class="btn btn-primary">Update
+                                                                Password</button>
                                                 </div>
-                                            
+
                                                 <!-- Save Changes Button -->
                                                 <div>
-                                                    <button type="submit" class="btn btn-primary" id="saveChangesBtn" style="display: none;">
-                                                        <i class="fa fa-save me-2"></i>Save Changes
-                                                    </button>
+                                                        <button type="submit" class="btn btn-primary"
+                                                                id="saveChangesBtn" style="display: none;">
+                                                                <i class="fa fa-save me-2"></i>Save Changes
+                                                        </button>
                                                 </div>
-                                            </form>
-                                            
+                                        </form>
                                 </div>
-                        </div>
-                        <!-- Doctor Information End -->
 
+
+
+                        </div>
                         <!-- Footer Start -->
                         <div class="container-fluid pt-4 px-4">
                                 <div class="bg-secondary rounded-top p-4">
                                         <div class="row">
                                                 <div class="col-12 col-sm-6 text-center text-sm-start">
                                                         &copy; <span id="currentYear"></span> <a
-                                                                href="#">MedixBridge</a>, All Rights Reserved.
+                                                                href="#">MedixBridge</a>, All
+                                                        Rights Reserved.
                                                 </div>
                                                 <div class="col-12 col-sm-6 text-center text-sm-end">
                                                         Designed by <a
@@ -1244,85 +1263,6 @@
 
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        
-        <!-- Form Validation and Profile Picture Script -->
-        <script>
-            // Form Validation Script
-            document.querySelector('form').addEventListener('submit', function (event) {
-                const oldPassword = document.getElementById('oldPassword')?.value;
-                const newPassword = document.getElementById('newPassword')?.value;
-                const confirmPassword = document.getElementById('confirmPassword')?.value;
-        
-                if (!oldPassword || !newPassword || !confirmPassword) {
-                    event.preventDefault();
-                    window.alert('You must input all three fields!');
-                } else if (newPassword !== confirmPassword) {
-                    event.preventDefault();
-                    window.alert('New Password and Confirm Password do not match!');
-                }
-            });
-        
-            // Profile Picture Script
-            const profilePreview = document.getElementById("profilePreview");
-            const editIcon = document.getElementById("editIcon");
-            const profilePictureInput = document.getElementById("profilePicture");
-        
-            if (profilePreview && editIcon && profilePictureInput) {
-                profilePreview.addEventListener("mouseover", () => {
-                    editIcon.style.display = "block";
-                });
-        
-                profilePreview.addEventListener("mouseout", () => {
-                    editIcon.style.display = "none";
-                });
-        
-                profilePreview.addEventListener("click", () => {
-                    profilePictureInput.click();
-                });
-        
-                profilePictureInput.addEventListener("change", (event) => {
-                    const file = event.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                            profilePreview.src = e.target.result;
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-            }
-        
-            // Edit and Save Buttons Sync Script
-            const editProfileBtn = document.getElementById('editProfileBtn');
-            const saveChangesBtn = document.getElementById('saveChangesBtn');
-            const editProfileBtnTop = document.getElementById('editProfileBtnTop');
-            const saveChangesBtnTop = document.getElementById('saveChangesBtnTop');
-        
-            function toggleEditSaveButtons(showEdit) {
-                if (editProfileBtn && saveChangesBtn && editProfileBtnTop && saveChangesBtnTop) {
-                    editProfileBtn.style.display = showEdit ? 'inline-block' : 'none';
-                    saveChangesBtn.style.display = showEdit ? 'none' : 'inline-block';
-                    editProfileBtnTop.style.display = showEdit ? 'inline-block' : 'none';
-                    saveChangesBtnTop.style.display = showEdit ? 'none' : 'inline-block';
-        
-                    // Enable or disable the form fields
-                    const formFields = document.querySelectorAll('input, select');
-                    formFields.forEach(field => {
-                        field.disabled = showEdit;
-                    });
-                }
-            }
-        
-            if (editProfileBtn && saveChangesBtn && editProfileBtnTop && saveChangesBtnTop) {
-                editProfileBtn.addEventListener('click', () => toggleEditSaveButtons(false));
-                editProfileBtnTop.addEventListener('click', () => toggleEditSaveButtons(false));
-                saveChangesBtn.addEventListener('click', () => toggleEditSaveButtons(true));
-                saveChangesBtnTop.addEventListener('click', () => toggleEditSaveButtons(true));
-            }
-        </script>
-        
-
-
 
         <!-- Template Javascript -->
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
