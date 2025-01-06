@@ -59,6 +59,9 @@ def signup():
         first_name = request.form["first_name"]
         last_name = request.form["last_name"]
         birth_date = request.form["birth_date"]
+        gender = request.form["gender"]
+        license_number = request.form["license_number"]
+        nationality = request.form["nationality"]
         email_address = request.form["email_address"]
         phone_number = request.form["phone_number"]
         work_address = request.form["work_address"]
@@ -72,17 +75,22 @@ def signup():
         cur = mysql.connection.cursor(cursorclass=DictCursor)
         cur.execute(
             """
-            INSERT INTO doctors_db (first_name, last_name, email_address, phone_number, work_address, specialty, birth_date, password)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO doctors_db 
+            (first_name, last_name, birth_date, gender, license_number, nationality, 
+            email_address, phone_number, work_address, specialty, password)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         """,
             (
                 first_name,
                 last_name,
+                birth_date,
+                gender,
+                license_number,
+                nationality,
                 email_address,
                 phone_number,
                 work_address,
                 specialty,
-                birth_date,
                 hashed_password,
             ),
         )
