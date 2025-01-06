@@ -77,7 +77,8 @@
                                                         data-bs-toggle="dropdown">
                                                         <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white"
                                                                 style="width: 40px; height: 40px;">
-                                                                {{ user_profile.first_name[0] }}{{ user_profile.last_name[0] }}
+                                                                {{ user_profile.first_name[0] }}{{
+                                                                user_profile.last_name[0] }}
                                                         </div>
                                                 </a>
                                                 <div
@@ -157,7 +158,8 @@
                                                         </div>
                                                 </div>
                                                 <fieldset class="row mb-3">
-                                                        <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+                                                        <legend class="col-form-label col-sm-2 pt-0">Gender <span
+                                                                        class="text-danger">*</span></legend>
                                                         <div class="col-sm-10">
                                                                 <div class="form-check">
                                                                         <input class="form-check-input" type="radio"
@@ -166,8 +168,8 @@
                                                                                 user_profile.gender=='male' %}checked{%
                                                                                 endif %} disabled>
                                                                         <label class="form-check-label"
-                                                                                for="genderMale">Male <span
-                                                                                        class="text-danger">*</span></label>
+                                                                                for="genderMale">Male
+                                                                        </label>
                                                                 </div>
                                                                 <div class="form-check">
                                                                         <input class="form-check-input" type="radio"
@@ -176,8 +178,8 @@
                                                                                 user_profile.gender=='female'
                                                                                 %}checked{% endif %} disabled>
                                                                         <label class="form-check-label"
-                                                                                for="genderFemale">Female <span
-                                                                                        class="text-danger">*</span></label>
+                                                                                for="genderFemale">Female
+                                                                        </label>
                                                                 </div>
                                                         </div>
                                                 </fieldset>
