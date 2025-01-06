@@ -570,6 +570,13 @@ def edit_patient(patient_id):
     )
 
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("You have been logged out.", "success")
+    return redirect(url_for("signin"))
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)
     # NOTE: Change to    app.run(debug=True)    when running locally
