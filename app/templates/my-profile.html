@@ -73,9 +73,12 @@
                                 </a>
                                 <div class="navbar-nav align-items-center ms-auto">
                                         <div class="nav-item dropdown">
-                                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                                        <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                                                <a href="#" class="nav-link dropdown-toggle d-flex align-items-center"
+                                                        data-bs-toggle="dropdown">
+                                                        <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white"
                                                                 style="width: 40px; height: 40px;">
+                                                                {{ user_profile.first_name[0] }}{{ user_profile.last_name[0] }}
+                                                        </div>
                                                 </a>
                                                 <div
                                                         class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
@@ -1186,7 +1189,8 @@
                                                                 <input type="password" class="form-control"
                                                                         id="confirmPassword" name="confirm_password"
                                                                         required>
-                                                                <span id="passwordError" style="display: none;" class="mt-2"></span>
+                                                                <span id="passwordError" style="display: none;"
+                                                                        class="mt-2"></span>
                                                         </div>
                                                 </div>
                                                 <div>

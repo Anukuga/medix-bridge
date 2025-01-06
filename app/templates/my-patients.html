@@ -66,9 +66,10 @@
                 </a>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
-                                style="width: 40px; height: 40px;">
+                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+                            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white" style="width: 40px; height: 40px;">
+                                {{ doctor_first_name[0] }}{{ doctor_last_name[0] }}
+                            </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <!-- Doctor's Information -->
@@ -126,7 +127,7 @@
                                     <th scope="col">Gender</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Health Insurance Number</th>
-                                    <th scope="col">Edit</th>
+                                    <th scope="col">View</th>
                                     <!-- Contains a button with the link to the patient's profile -->
                                     <th scope="col">Delete</th>
                                     <!-- Contains a button with the link to delete the patient -->
@@ -144,7 +145,7 @@
                                     <td>{{ patient.health_insurance_number }}</td>
                                     <td>
                                         <a href="/edit-patient/{{ patient.patient_id }}" class="btn btn-sm btn-primary">
-                                            <i class="fa fa-edit"></i> Edit
+                                            <i class="fa fa-eye"></i> View
                                         </a>
                                     </td>
                                     <td>
