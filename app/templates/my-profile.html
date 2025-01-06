@@ -114,37 +114,7 @@
 
 
                                         <form action="/my-profile" method="POST">
-                                                <div class="row mb-4">
-                                                        <label for="profilePicture"
-                                                                class="col-sm-2 col-form-label">Profile Picture</label>
-                                                        <div class="col-sm-10 text-center">
-                                                                <div class="position-relative"
-                                                                        style="width: 150px; height: 150px; margin: auto;">
-                                                                        <!-- Circular Preview -->
-                                                                        <img id="profilePreview"
-                                                                                src="{{ user_profile.profile_picture or url_for('static', filename='img/default-profile.png') }}"
-                                                                                alt="Profile Picture"
-                                                                                class="rounded-circle img-fluid"
-                                                                                style="width: 150px; height: 150px; object-fit: cover;">
-
-                                                                        <!-- Hover Edit Icon -->
-                                                                        <div class="position-absolute top-50 start-50 translate-middle"
-                                                                                style="display: none;" id="editIcon">
-                                                                                <i
-                                                                                        class="fa fa-pencil text-white bg-primary rounded-circle p-2"></i>
-                                                                        </div>
-                                                                </div>
-                                                                <!-- File Input -->
-                                                                <input type="file" id="profilePicture"
-                                                                        name="profile_picture" accept="image/*"
-                                                                        style="display: none;">
-                                                        </div>
-                                                </div>
                                                 <div class="button-group-top text-end">
-                                                        <button type="button" class="btn btn-primary"
-                                                                id="editProfileBtnTop">
-                                                                <i class="fa fa-edit me-2"></i>Edit Profile
-                                                        </button>
                                                         <button type="submit" class="btn btn-primary"
                                                                 id="saveChangesBtnTop" style="display: none;">
                                                                 <i class="fa fa-save me-2"></i>Save Changes
@@ -1173,7 +1143,7 @@
                                                                         disabled required>
                                                         </div>
                                                 </div>
-                                                <div class="button-group-top text-end">
+                                                <div class="button-group-top text-start">
                                                         <button type="button" class="btn btn-primary"
                                                                 id="editProfileBtn">
                                                                 <i class="fa fa-edit me-2"></i>Edit Profile
