@@ -148,10 +148,11 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/delete-patient/{{ patient.patient_id }}"
-                                            class="btn btn-sm btn-danger">
-                                            <i class="fa fa-trash"></i> Delete
-                                        </a>
+                                        <form class="delete-patient-form" action="{{ url_for('delete_patient', patient_id=patient.patient_id) }}" method="POST">
+                                            <button type="submit" class="btn btn-sm btn-danger delete-patient-btn">
+                                                <i class="fa fa-trash"></i> Delete
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -190,6 +191,7 @@
 
     <!-- Main Javascript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/delete_patient.js') }}"></script>
 </body>
 
 </html>

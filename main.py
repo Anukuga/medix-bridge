@@ -370,16 +370,14 @@ def register_patient():
     )
 
 
-@app.route("/my-patients", methods=["GET"])
+@app.route("/my-patients", methods=["GET", "POST"])
 def my_patients():
     if "logged_in" not in session or not session["logged_in"]:
         flash("Please log in to view your patients.", "warning")
         return redirect(url_for("signin"))
 
     # Fetch the doctor's ID from the session
-    user_id = session[
-        "user_id"
-    ]  # Assuming `user_id` is stored in the session after login
+    user_id = session["user_id"]
 
     # Query to retrieve patients associated with the logged-in doctor
     cur = mysql.connection.cursor(cursorclass=DictCursor)
@@ -432,6 +430,32 @@ def my_patients():
         total_patients=total_patients,
         patients=patients,
     )
+
+
+@app.route("/delete-patient/<int:patient_id>", methods=["POST"])
+def delete_patient(patient_id):
+    if "logged_in" not in session or not session["logged_in"]:
+        flash("Please log in to delete a patient.", "warning")
+        return redirect(url_for("signin"))
+
+    doctor_id = session["user_id"]
+
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute(
+            "DELETE FROM patients_db WHERE id = %s AND doctor_id = %s",
+            (patient_id, doctor_id),
+        )
+        mysql.connection.commit()
+        cur.close()
+
+        flash("Patient deleted successfully!", "success")
+    except Exception as e:
+        mysql.connection.rollback()
+        flash(f"An error occurred while deleting the patient: {e}", "danger")
+
+    return redirect(url_for("my_patients"))
+
 
 # TODO: Be able to accept null values for height and weight
 @app.route("/edit-patient/<int:patient_id>", methods=["GET", "POST"])
