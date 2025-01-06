@@ -715,6 +715,12 @@ progress {
     margin-top: var(--bs-gutter-y)
 }
 
+.row-no-padding>* {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
 .col {
     flex: 1 0 0%
 }
