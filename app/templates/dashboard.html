@@ -10,7 +10,7 @@
         name="description">
 
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="/" class="navbar-brand mx-4 mb-3">
-                    <img src="img/logo.png" alt="MedixBridge logo" style="margin-left: -5%;">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo" style="margin-left: -5%;" class="logo">
                 </a>
                 <div class="navbar-nav w-100">
                     <a href="dashboard" class="nav-item nav-link active" id="homeLink"><i
