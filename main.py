@@ -1,8 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    session,
+    flash,
+)
 from flask_mysqldb import MySQL
 from MySQLdb.cursors import DictCursor
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import base64
 
 app = Flask(__name__, static_folder="app/static", template_folder="app/templates")
 app.secret_key = "your_secret_key"
@@ -18,8 +26,8 @@ app.config["MYSQL_UNIX_SOCKET"] = "/Applications/XAMPP/xamppfiles/var/mysql/mysq
 mysql = MySQL(app)
 
 
-# TODO: Add redirect for /login to signin
 @app.route("/signin", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])
 def signin():
     if request.method == "POST":
         # Retrieve form data
@@ -51,8 +59,8 @@ def signin():
     return render_template("signin.html")
 
 
-# TODO: Add redirect for /register to signup
 @app.route("/signup", methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
         # Retrieve form data
@@ -105,6 +113,7 @@ def signup():
     return render_template("signup.html")
 
 
+@app.route("/")
 @app.route("/dashboard")
 def dashboard():
     if "logged_in" not in session or not session["logged_in"]:
@@ -465,15 +474,15 @@ def delete_patient(patient_id):
     return redirect(url_for("my_patients"))
 
 
-# TODO: Be able to accept null values for height and weight
 @app.route("/edit-patient/<int:patient_id>", methods=["GET", "POST"])
 def edit_patient(patient_id):
     if "logged_in" not in session or not session["logged_in"]:
         flash("Please log in to edit a patient's details.", "warning")
         return redirect(url_for("signin"))
 
+    doctor_id = session["user_id"]  # Retrieve logged-in doctor's ID
+
     # Fetch the logged-in doctor's details
-    doctor_id = session["user_id"]
     cur = mysql.connection.cursor(cursorclass=DictCursor)
     cur.execute(
         """
@@ -493,9 +502,16 @@ def edit_patient(patient_id):
     if request.method == "POST":
         try:
             data = request.form
-            print("Form Data:", data)  # Debugging
+            uploaded_file = request.files.get("file_upload")  # Get uploaded file
 
-            # Prepare data with defaults
+            # Convert file to BLOB (bytes) if a file was uploaded
+            file_blob = (
+                uploaded_file.read()
+                if uploaded_file and uploaded_file.filename
+                else None
+            )
+
+            # Prepare data
             first_name = data.get("first_name", "")
             last_name = data.get("last_name", "")
             birth_date = data.get("birth_date", None)
@@ -507,8 +523,8 @@ def edit_patient(patient_id):
             address = data.get("address", "")
             emergency_contact_name = data.get("emergency_contact_name", "")
             emergency_contact_number = data.get("emergency_contact_number", "")
-            height = data.get("height", None)
-            weight = data.get("weight", None)
+            height = float(data.get("height", 0)) if data.get("height") else None
+            weight = float(data.get("weight", 0)) if data.get("weight") else None
             blood_group = data.get("blood_group", "")
             genotype = data.get("genotype", "")
             allergies = data.get("allergies", "")
@@ -518,63 +534,98 @@ def edit_patient(patient_id):
             medications = data.get("medications", "")
             doctors_note = data.get("doctors_note", "")
 
-            # Convert height and weight to proper numeric types
-            height = float(height) if height else None
-            weight = float(weight) if weight else None
-
             # Create a new cursor
             cur = mysql.connection.cursor()
-            cur.execute(
-                """
-                UPDATE patients_db
-                SET first_name = %s, last_name = %s, birth_date = %s, gender = %s, 
-                    nationality = %s, health_insurance_number = %s, email_address = %s, 
-                    phone_number = %s, address = %s, emergency_contact_name = %s, 
-                    emergency_contact_number = %s, height = %s, weight = %s, blood_group = %s, 
-                    genotype = %s, allergies = %s, chronic_diseases = %s, disabilities = %s, 
-                    vaccines = %s, medications = %s, doctors_note = %s
-                WHERE id = %s AND doctor_id = %s
-                """,
-                (
-                    first_name,
-                    last_name,
-                    birth_date,
-                    gender,
-                    nationality,
-                    health_insurance_number,
-                    email_address,
-                    phone_number,
-                    address,
-                    emergency_contact_name,
-                    emergency_contact_number,
-                    height,
-                    weight,
-                    blood_group,
-                    genotype,
-                    allergies,
-                    chronic_diseases,
-                    disabilities,
-                    vaccines,
-                    medications,
-                    doctors_note,
-                    patient_id,
-                    doctor_id,
-                ),
-            )
+
+            # Update patient details
+            if file_blob:
+                cur.execute(
+                    """
+                    UPDATE patients_db
+                    SET first_name = %s, last_name = %s, birth_date = %s, gender = %s, 
+                        nationality = %s, health_insurance_number = %s, email_address = %s, 
+                        phone_number = %s, address = %s, emergency_contact_name = %s, 
+                        emergency_contact_number = %s, height = %s, weight = %s, blood_group = %s, 
+                        genotype = %s, allergies = %s, chronic_diseases = %s, disabilities = %s, 
+                        vaccines = %s, medications = %s, doctors_note = %s, file_upload = %s
+                    WHERE id = %s AND doctor_id = %s
+                    """,
+                    (
+                        first_name,
+                        last_name,
+                        birth_date,
+                        gender,
+                        nationality,
+                        health_insurance_number,
+                        email_address,
+                        phone_number,
+                        address,
+                        emergency_contact_name,
+                        emergency_contact_number,
+                        height,
+                        weight,
+                        blood_group,
+                        genotype,
+                        allergies,
+                        chronic_diseases,
+                        disabilities,
+                        vaccines,
+                        medications,
+                        doctors_note,
+                        file_blob,
+                        patient_id,
+                        doctor_id,
+                    ),
+                )
+            else:
+                cur.execute(
+                    """
+                    UPDATE patients_db
+                    SET first_name = %s, last_name = %s, birth_date = %s, gender = %s, 
+                        nationality = %s, health_insurance_number = %s, email_address = %s, 
+                        phone_number = %s, address = %s, emergency_contact_name = %s, 
+                        emergency_contact_number = %s, height = %s, weight = %s, blood_group = %s, 
+                        genotype = %s, allergies = %s, chronic_diseases = %s, disabilities = %s, 
+                        vaccines = %s, medications = %s, doctors_note = %s
+                    WHERE id = %s AND doctor_id = %s
+                    """,
+                    (
+                        first_name,
+                        last_name,
+                        birth_date,
+                        gender,
+                        nationality,
+                        health_insurance_number,
+                        email_address,
+                        phone_number,
+                        address,
+                        emergency_contact_name,
+                        emergency_contact_number,
+                        height,
+                        weight,
+                        blood_group,
+                        genotype,
+                        allergies,
+                        chronic_diseases,
+                        disabilities,
+                        vaccines,
+                        medications,
+                        doctors_note,
+                        patient_id,
+                        doctor_id,
+                    ),
+                )
+
             mysql.connection.commit()
             flash("Patient details updated successfully!", "success")
             return redirect(url_for("edit_patient", patient_id=patient_id))
         except Exception as e:
-            # Log the exception details
-            print(f"Exception occurred: {e}")
-            flash(
-                f"An error occurred while updating the patient's details: {e}", "danger"
-            )
+            flash(f"An error occurred: {e}", "danger")
             return redirect(url_for("edit_patient", patient_id=patient_id))
         finally:
             cur.close()
 
-    # Handle GET request for fetching patient data
+    # Handle GET request to fetch patient data
     cur.execute(
         """
         SELECT * FROM patients_db
@@ -585,17 +636,16 @@ def edit_patient(patient_id):
     patient = cur.fetchone()
     cur.close()
 
-    if not patient:
-        flash(
-            "Patient not found or you do not have access to edit this patient.",
-            "warning",
-        )
-        return redirect(url_for("my_patients"))
+    # Convert BLOB to Base64 for rendering in HTML
+    file_data = None
+    if patient["file_upload"]:
+        file_data = base64.b64encode(patient["file_upload"]).decode("utf-8")
 
     return render_template(
         "edit-patient.html",
         patient=patient,
         patient_id=patient_id,
+        file_data=file_data,  # Send encoded file to the frontend
         doctor_first_name=doctor["first_name"],
         doctor_last_name=doctor["last_name"],
         doctor_specialty=doctor["specialty"],
