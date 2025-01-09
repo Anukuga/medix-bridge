@@ -6,11 +6,14 @@ from flask import (
     url_for,
     session,
     flash,
+    send_file,
+    send_from_directory,
 )
 from flask_mysqldb import MySQL
 from MySQLdb.cursors import DictCursor
 from werkzeug.security import generate_password_hash, check_password_hash
 import base64
+import os
 
 app = Flask(__name__, static_folder="app/static", template_folder="app/templates")
 app.secret_key = "your_secret_key"
@@ -24,6 +27,19 @@ app.config["MYSQL_PORT"] = 3306
 app.config["MYSQL_UNIX_SOCKET"] = "/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock"
 
 mysql = MySQL(app)
+
+
+FRONTEND_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "./frontend")
+
+@app.route("/")
+def serve_index():
+    """Serve the index.html file as the root page"""
+    return send_file(os.path.join(FRONTEND_DIR, "index.html"))
+
+@app.route("/<path:filename>")
+def serve_static(filename):
+    """Serve static files from the frontend directory"""
+    return send_from_directory(FRONTEND_DIR, filename)
 
 
 @app.route("/signin", methods=["GET", "POST"])
@@ -113,7 +129,6 @@ def signup():
     return render_template("signup.html")
 
 
-@app.route("/")
 @app.route("/dashboard")
 def dashboard():
     if "logged_in" not in session or not session["logged_in"]:
