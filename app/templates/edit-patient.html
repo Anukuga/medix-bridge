@@ -37,7 +37,8 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="/" class="navbar-brand mx-4 mb-3">
-                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo" style="margin-left: -5%;" class="logo">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo"
+                        style="margin-left: -5%;" class="logo">
                 </a>
                 <div class="navbar-nav w-100">
                     <a href="/dashboard" class="nav-item nav-link" id="homeLink"><i
@@ -66,15 +67,18 @@
                 </a>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white" style="width: 40px; height: 40px;">
+                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center"
+                            data-bs-toggle="dropdown">
+                            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white"
+                                style="width: 40px; height: 40px;">
                                 {{ doctor_first_name[0] }}{{ doctor_last_name[0] }}
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <!-- Doctor's Information -->
                             <div class="mb-2">
-                                <p class="mb-0 fw-bold dropdown-item dropdown-subheader">Dr. {{ doctor_first_name }} {{ doctor_last_name }}
+                                <p class="mb-0 fw-bold dropdown-item dropdown-subheader">Dr. {{ doctor_first_name }} {{
+                                    doctor_last_name }}
                                 </p>
                                 <p class="mb-0 dropdown-item dropdown-subheader">{{ doctor_specialty }}</p>
                             </div>
@@ -100,7 +104,7 @@
                         <h2 class="mb-4">Edit Patient</h2>
                         <span>Patient ID: {{ patient_id }}</span>
                     </div>
-                    <form action="{{ url_for('edit_patient', patient_id=patient_id) }}" method="POST">
+                    <form action="{{ url_for('edit_patient', patient_id=patient_id) }}" method="POST" enctype="multipart/form-data">
                         <div class="row mb-3">
                             <label for="firstName" class="col-sm-2 col-form-label">First Name <span
                                     class="text-danger">*</span></label>
@@ -921,6 +925,22 @@
                                     name="doctors_note">{{ patient.doctors_note }}</textarea>
                             </div>
                         </div>
+                        <div class="row mb-3">
+                            <label for="fileUpload" class="col-sm-2 col-form-label">Upload File</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="fileUpload" name="file_upload">
+                            </div>
+                        </div>
+                        {% if file_data %}
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label">Uploaded File</label>
+                            <div class="col-sm-10">
+                                <a href="data:application/octet-stream;base64,{{ file_data }}" download="uploaded_file">
+                                    <button type="button" class="btn btn-file-download">Download File</button>
+                                </a>
+                            </div>
+                        </div>
+                        {% endif %}
                         <button type="submit" class="btn btn-primary">Update Patient</button>
                     </form>
                 </div>
