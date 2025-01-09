@@ -29,6 +29,10 @@
     padding: 16px;
 }
 
+.dropdown-subheader:hover {
+    background-color: var(--white) !important;
+}
+
 /*** Spinner ***/
 #spinner {
     opacity: 0;
