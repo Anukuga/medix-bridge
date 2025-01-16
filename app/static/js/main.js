@@ -1,32 +1,3 @@
-async function loadTemplate(elementId, filePath, activePage = null) {
-    try {
-        const response = await fetch(filePath);
-        if (!response.ok) throw new Error(`Failed to load ${filePath}`);
-        const htmlContent = await response.text();
-        document.getElementById(elementId).innerHTML = htmlContent;
-
-        if (elementId === "headerLoadedTemplate" && activePage) {
-            setActiveLink(activePage);
-        }
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-function setActiveLink(activePage) {
-    const navLinks = {
-        "/dashboard.html": "homeLink",
-        "my-patients": "myPatientsLink",
-        "register-patient": "registerPatientLink",
-        "signin": "logoutLink"
-    };
-
-    const activeLinkId = navLinks[activePage];
-    if (activeLinkId) {
-        document.getElementById(activeLinkId).classList.add("active");
-    }
-}
-
 function initMain() {
     (function ($) {
         "use strict";
@@ -259,21 +230,4 @@ function initMain() {
     }
 }
 
-(async function initializeApp() {
-    const currentPath = window.location.pathname;
-    const templateFolder = "/static/loadedTemplates";
-    const pagesRequiringTemplates = [
-        "/dashboard",
-        "/my-patients",
-        "/register-patient",
-        "/signin"
-    ];
-
-    if (pagesRequiringTemplates.includes(currentPath)) {
-        await loadTemplate("headerLoadedTemplate", `${templateFolder}/header.html`, currentPath);
-        await loadTemplate("navLoadedTemplate", `${templateFolder}/nav.html`);
-        await loadTemplate("footerLoadedTemplate", `${templateFolder}/footer.html`);
-    }
-
-    initMain();
-})();
+initMain();
