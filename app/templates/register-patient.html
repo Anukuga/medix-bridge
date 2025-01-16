@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>mediBase Portal - Patient Registration</title>
+    <title>MedixBridge Portal - Patient Registration</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -37,7 +37,8 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="/" class="navbar-brand mx-4 mb-3">
-                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo" style="margin-left: -5%;" class="logo">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo"
+                        style="margin-left: -5%;" class="logo">
                 </a>
                 <div class="navbar-nav w-100">
                     <a href="dashboard" class="nav-item nav-link" id="homeLink"><i
@@ -66,15 +67,18 @@
                 </a>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white" style="width: 40px; height: 40px;">
+                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center"
+                            data-bs-toggle="dropdown">
+                            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white"
+                                style="width: 40px; height: 40px;">
                                 {{ doctor_first_name[0] }}{{ doctor_last_name[0] }}
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <!-- Doctor's Information -->
                             <div class="mb-2">
-                                <p class="mb-0 fw-bold dropdown-item dropdown-subheader">Dr. {{ doctor_first_name }} {{ doctor_last_name }}
+                                <p class="mb-0 fw-bold dropdown-item dropdown-subheader">Dr. {{ doctor_first_name }} {{
+                                    doctor_last_name }}
                                 </p>
                                 <p class="mb-0 dropdown-item dropdown-subheader">{{ doctor_specialty }}</p>
                             </div>
@@ -99,19 +103,22 @@
                     <h2 class="mb-4">Register New Patient</h2>
                     <form action="register-patient" method="post">
                         <div class="row mb-3">
-                            <label for="firstName" class="col-sm-2 col-form-label">First Name <span class="text-danger">*</span></label>
+                            <label for="firstName" class="col-sm-2 col-form-label">First Name <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="firstName" name="first_name" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="lastName" class="col-sm-2 col-form-label">Last Name <span class="text-danger">*</span></label>
+                            <label for="lastName" class="col-sm-2 col-form-label">Last Name <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="lastName" name="last_name" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="birthDate" class="col-sm-2 col-form-label">Date of Birth <span class="text-danger">*</span></label>
+                            <label for="birthDate" class="col-sm-2 col-form-label">Date of Birth <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="date" class="form-control" id="birthDate" name="birth_date" required>
                             </div>
@@ -136,7 +143,8 @@
                             </div>
                         </fieldset>
                         <div class="row mb-3">
-                            <label for="nationality" class="col-sm-2 col-form-label">Nationality <span class="text-danger">*</span></label>
+                            <label for="nationality" class="col-sm-2 col-form-label">Nationality <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <!-- Country Names -->
                                 <select class="form-select" id="nationality" name="nationality" required>
@@ -407,14 +415,16 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="healthInsuranceNumber" class="col-sm-2 col-form-label">Health Insurance No. <span class="text-danger">*</span></label>
+                            <label for="healthInsuranceNumber" class="col-sm-2 col-form-label">Health Insurance No.
+                                <span class="text-danger">*</span></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="healthInsuranceNumber" name="health_insurance_number"
-                                    required>
+                                <input type="text" class="form-control" id="healthInsuranceNumber"
+                                    name="health_insurance_number" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="emailAddress" class="col-sm-2 col-form-label">Email Address <span class="text-danger">*</span></label>
+                            <label for="emailAddress" class="col-sm-2 col-form-label">Email Address <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="email" class="form-control" id="emailAddress" name="email" required>
                             </div>
@@ -426,21 +436,26 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="address" class="col-sm-2 col-form-label">Resident Address <span class="text-danger">*</span></label>
+                            <label for="address" class="col-sm-2 col-form-label">Resident Address <span
+                                    class="text-danger">*</span></label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" id="address" name="address" required>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="emergencyContactName" class="col-sm-2 col-form-label">Emergency Contact Name</label>
+                            <label for="emergencyContactName" class="col-sm-2 col-form-label">Emergency Contact
+                                Name</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="emergencyContactName" name="emergency_contact_name">
+                                <input type="text" class="form-control" id="emergencyContactName"
+                                    name="emergency_contact_name">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="emergencyContactNumber" class="col-sm-2 col-form-label">Emergency Contact No.</label>
+                            <label for="emergencyContactNumber" class="col-sm-2 col-form-label">Emergency Contact
+                                No.</label>
                             <div class="col-sm-10">
-                                <input type="tel" class="form-control" id="emergencyContactNumber" name="emergency_contact_number">
+                                <input type="tel" class="form-control" id="emergencyContactNumber"
+                                    name="emergency_contact_number">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -476,13 +491,15 @@
                         <div class="row mb-3">
                             <label for="chronicDiseases" class="col-sm-2 col-form-label">Chronic Diseases</label>
                             <div class="col-sm-10">
-                                <textarea type="text" class="form-control" id="chronicDiseases" name="chronic_diseases"></textarea>
+                                <textarea type="text" class="form-control" id="chronicDiseases"
+                                    name="chronic_diseases"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="disabilities" class="col-sm-2 col-form-label">Disabilities</label>
                             <div class="col-sm-10">
-                                <textarea type="text" class="form-control" id="disabilities" name="disabilities"></textarea>
+                                <textarea type="text" class="form-control" id="disabilities"
+                                    name="disabilities"></textarea>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -517,7 +534,8 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" name="register_patient" id="registerPatientBtn">Register</button>
+                        <button type="submit" class="btn btn-primary" name="register_patient"
+                            id="registerPatientBtn">Register</button>
                     </form>
                 </div>
             </div>
