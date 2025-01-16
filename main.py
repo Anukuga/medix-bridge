@@ -31,10 +31,12 @@ mysql = MySQL(app)
 
 FRONTEND_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "./frontend")
 
+
 @app.route("/")
 def serve_index():
     """Serve the index.html file as the root page"""
     return send_file(os.path.join(FRONTEND_DIR, "index.html"))
+
 
 @app.route("/<path:filename>")
 def serve_static(filename):
@@ -665,6 +667,11 @@ def edit_patient(patient_id):
         doctor_last_name=doctor["last_name"],
         doctor_specialty=doctor["specialty"],
     )
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 
 
 @app.route("/logout")
