@@ -17,7 +17,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
+    <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 </head>
 
@@ -40,7 +40,8 @@
                     <div class="bg-secondary shadowed-layout rounded p-4 p-sm-5 my-4 mx-3">
                         <div class="d-flex align-items-center justify-content-between mb-3">
                             <a href="#" class="">
-                                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo" style="margin-left: -5%;" class="logo">
+                                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo"
+                                    style="margin-left: -5%;" class="logo">
                             </a>
                             <h3>Portal</h3>
                         </div>
@@ -56,7 +57,8 @@
                                 <label for="floatingPassword">Password</label>
                             </div>
                             <div class="mb-4">
-                                <input type="checkbox" class="form-check-input" id="toggle-password" onclick="togglePasswordVisibility()">
+                                <input type="checkbox" class="form-check-input" id="toggle-password"
+                                    onclick="togglePasswordVisibility()">
                                 <label class="form-check-label" for="toggle-password">Show Password</label>
                             </div>
                             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -93,7 +95,7 @@
             }
         }
     </script>
-   
+
 </body>
 
 </html>

@@ -24,7 +24,7 @@
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
+    <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
 </head>
 
@@ -43,7 +43,8 @@
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
                 <a href="/" class="navbar-brand mx-4 mb-3">
-                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo" style="margin-left: -5%;" class="logo">
+                    <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo"
+                        style="margin-left: -5%;" class="logo">
                 </a>
                 <div class="navbar-nav w-100">
                     <a href="dashboard" class="nav-item nav-link active" id="homeLink"><i
@@ -71,15 +72,18 @@
                 </a>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white" style="width: 40px; height: 40px;">
+                        <a href="#" class="nav-link dropdown-toggle d-flex align-items-center"
+                            data-bs-toggle="dropdown">
+                            <div class="rounded-circle me-2 d-flex align-items-center justify-content-center bg-primary text-white"
+                                style="width: 40px; height: 40px;">
                                 {{ doctor_first_name[0] }}{{ doctor_last_name[0] }}
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                             <!-- Doctor's Information -->
                             <div class="mb-2">
-                                <p class="mb-0 fw-bold dropdown-item dropdown-subheader">Dr. {{ doctor_first_name }} {{ doctor_last_name }}
+                                <p class="mb-0 fw-bold dropdown-item dropdown-subheader">Dr. {{ doctor_first_name }} {{
+                                    doctor_last_name }}
                                 </p>
                                 <p class="mb-0 dropdown-item dropdown-subheader">{{ doctor_specialty }}</p>
                             </div>

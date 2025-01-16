@@ -19,7 +19,7 @@
         <!-- Customized Bootstrap Stylesheet -->
         <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
-        <!-- Template Stylesheet -->
+        <!-- Custom CSS -->
         <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
         <style>
                 .button-group-top {
@@ -44,7 +44,8 @@
                 <div class="sidebar pe-4 pb-3">
                         <nav class="navbar bg-secondary navbar-dark">
                                 <a href="/" class="navbar-brand mx-4 mb-3">
-                                        <img src="{{ url_for('static', filename='img/logo.png') }}" alt="MedixBridge logo" style="margin-left: -5%;" class="logo">
+                                        <img src="{{ url_for('static', filename='img/logo.png') }}"
+                                                alt="MedixBridge logo" style="margin-left: -5%;" class="logo">
                                 </a>
                                 <div class="navbar-nav w-100">
                                         <a href="dashboard" class="nav-item nav-link" id="homeLink"><i
@@ -85,11 +86,14 @@
                                                         class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
                                                         <!-- Doctor's Information -->
                                                         <div class="mb-2">
-                                                                <p class="mb-0 fw-bold dropdown-item dropdown-subheader">Dr. {{
+                                                                <p
+                                                                        class="mb-0 fw-bold dropdown-item dropdown-subheader">
+                                                                        Dr. {{
                                                                         user_profile.first_name }} {{
                                                                         user_profile.last_name }}
                                                                 </p>
-                                                                <p class="mb-0 dropdown-item dropdown-subheader">{{ user_profile.specialty
+                                                                <p class="mb-0 dropdown-item dropdown-subheader">{{
+                                                                        user_profile.specialty
                                                                         }}</p>
                                                         </div>
 
