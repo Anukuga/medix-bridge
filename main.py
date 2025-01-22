@@ -9,8 +9,8 @@ from flask import (
     send_file,
     send_from_directory,
 )
-from flask_mysqldb import MySQL
-from MySQLdb.cursors import DictCursor
+from flask_pymysql import MySQL
+from pymysql.cursors import DictCursor
 from werkzeug.security import generate_password_hash, check_password_hash
 import base64
 import os
@@ -19,12 +19,15 @@ app = Flask(__name__, static_folder="app/static", template_folder="app/templates
 app.secret_key = "your_secret_key"
 
 # MySQL Configuration
-app.config["MYSQL_HOST"] = "localhost"
-app.config["MYSQL_USER"] = "root"
-app.config["MYSQL_PASSWORD"] = "password"
-app.config["MYSQL_DB"] = "medixbridge"
-app.config["MYSQL_PORT"] = 3306
-app.config["MYSQL_UNIX_SOCKET"] = "/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock"
+app.config["pymysql_kwargs"] = {
+    "host": "localhost",
+    "user": "root",
+    "password": "password",
+    "port": 8080,
+    "db": "medixbridge",
+    "unix_socket": "/Applications/XAMPP/xamppfiles/var/mysql/mysql.sock",
+    "cursorclass": DictCursor,
+}
 
 mysql = MySQL(app)
 
@@ -53,7 +56,8 @@ def signin():
         password = request.form["password"]
 
         # Query the database for user
-        cur = mysql.connection.cursor(cursorclass=DictCursor)
+        connection = mysql.connect
+        cur = connection.cursor()
         cur.execute(
             "SELECT * FROM doctors_db WHERE email_address = %s", (email_address,)
         )
@@ -98,7 +102,8 @@ def signup():
         hashed_password = generate_password_hash(password)
 
         # Insert new user into the database
-        cur = mysql.connection.cursor(cursorclass=DictCursor)
+        connection = mysql.connect
+        cur = connection.cursor()
         cur.execute(
             """
             INSERT INTO doctors_db 
@@ -140,7 +145,8 @@ def dashboard():
     user_id = session["user_id"]
 
     # Query the database to fetch the doctor's information
-    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    connection = mysql.connect
+    cur = connection.cursor()
     cur.execute(
         """
         SELECT first_name, last_name, specialty 
@@ -224,7 +230,8 @@ def my_profile():
         return redirect(url_for("my_profile"))
 
     # Query the database to fetch the user's current profile data
-    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    connection = mysql.connect
+    cur = connection.cursor()
     cur.execute(
         """
         SELECT first_name, last_name, birth_date, gender, email_address, 
@@ -265,7 +272,8 @@ def update_password():
 
     try:
         # Fetch user's current password hash from the database
-        cur = mysql.connection.cursor(cursorclass=DictCursor)
+        connection = mysql.connect
+        cur = connection.cursor()
         cur.execute("SELECT password FROM doctors_db WHERE id = %s", (user_id,))
         user = cur.fetchone()
         cur.close()
@@ -308,7 +316,8 @@ def register_patient():
     user_id = session[
         "user_id"
     ]  # Assuming `user_id` is stored in the session upon login
-    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    connection = mysql.connect
+    cur = connection.cursor()
     cur.execute(
         """
         SELECT id, first_name, last_name, specialty 
@@ -414,7 +423,8 @@ def my_patients():
     user_id = session["user_id"]
 
     # Query to retrieve patients associated with the logged-in doctor
-    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    connection = mysql.connect
+    cur = connection.cursor()
     cur.execute(
         """
         SELECT 
@@ -439,7 +449,8 @@ def my_patients():
     total_patients = len(patients)
 
     # Fetch doctor details for the header
-    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    connection = mysql.connect
+    cur = connection.cursor()
     cur.execute(
         """
         SELECT first_name, last_name, specialty 
@@ -500,7 +511,8 @@ def edit_patient(patient_id):
     doctor_id = session["user_id"]  # Retrieve logged-in doctor's ID
 
     # Fetch the logged-in doctor's details
-    cur = mysql.connection.cursor(cursorclass=DictCursor)
+    connection = mysql.connect
+    cur = connection.cursor()
     cur.execute(
         """
         SELECT first_name, last_name, specialty
