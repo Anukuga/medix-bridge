@@ -72,8 +72,10 @@ A comprehensive web-based platform for healthcare professionals to manage patien
 ## Usage
 
 1. Access the portal at `http://127.0.0.1:5001/`.
-2. **Signup** to create a new account.
-3. **Login** to manage patients:
+2. **Login** with the provided credentials:
+   - Email: `keerthi@gmail.com`
+   - Password: `@Anusuya2001!`
+3. Explore features to:
    - Register new patients.
    - Edit details and upload files.
    - View and download uploaded files.
