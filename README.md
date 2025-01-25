@@ -31,10 +31,11 @@ A comprehensive web-based platform for healthcare professionals to manage patien
 
 ### Prerequisites
 - Python 3.13
-- MySQL 9.0+
+- MySQL 9.0+ (running on port 8080)
 - Virtual environment tool (e.g., `venv`)
 
 ### Steps
+
 1. **Clone the repository**:
    ```bash
    git clone <repository_url>
@@ -53,23 +54,24 @@ A comprehensive web-based platform for healthcare professionals to manage patien
    ```
 
 4. **Set up MySQL database**:
+   - Ensure your MySQL server is running on port `8080`.
    - Create a database: `CREATE DATABASE medixbridge;`
-   - Update the `app.config` in `main.py` with your database credentials.
+   - Update the `app.config` in `main.py` with your database credentials and port.
    - Run the SQL schema file to set up tables:
      ```bash
-     mysql -u <username> -p medixbridge < schema.sql
+     mysql -u <username> -p -P 8080 medixbridge < schema.sql
      ```
 
 5. **Run the application**:
    ```bash
-   flask run
+   flask run --host=127.0.0.1 --port=5001
    ```
 
 ---
 
 ## Usage
 
-1. Access the portal at `http://127.0.0.1:5000/`.
+1. Access the portal at `http://127.0.0.1:5001/`.
 2. **Signup** to create a new account.
 3. **Login** to manage patients:
    - Register new patients.
@@ -104,6 +106,18 @@ MedixBridge/
 
 ---
 
+## Configuration Notes
+
+- Ensure that MySQL is configured to use port `8080`. Update the `my.cnf` file with the following configuration if necessary:
+  ```ini
+  [mysqld]
+  port = 8080
+  bind-address = 127.0.0.1
+  ```
+- The Flask app will run on port `5001`. You can modify this in the `flask run` command if needed.
+
+---
+
 ## Contributing
 
 1. Fork the repository.
@@ -113,3 +127,4 @@ MedixBridge/
 5. Open a Pull Request.
 
 ---
+
