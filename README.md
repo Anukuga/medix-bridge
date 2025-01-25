@@ -57,9 +57,9 @@ A comprehensive web-based platform for healthcare professionals to manage patien
    - Ensure your MySQL server is running on port `8080`.
    - Create a database: `CREATE DATABASE medixbridge;`
    - Update the `app.config` in `main.py` with your database credentials and port.
-   - Run the SQL schema file to set up tables:
+   - Import the SQL dump file to populate the database:
      ```bash
-     mysql -u <username> -p -P 8080 medixbridge < schema.sql
+     mysql -u <username> -p -P 8080 medixbridge < medixbridge_dump.sql
      ```
 
 5. **Run the application**:
@@ -101,6 +101,7 @@ MedixBridge/
 ├── .gitignore           # Git ignored files
 ├── main.py              # Flask application entry point
 ├── README.md            # Project documentation
+├── medixbridge_dump.sql # SQL dump file for the database
 └── requirements.txt     # Python dependencies
 ```
 
