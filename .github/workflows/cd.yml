@@ -8,7 +8,6 @@ on:
   workflow_run:
     workflows: ["CI Pipeline"]
     types: [completed]
-    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -89,7 +88,5 @@ jobs:
         with:
           app-name: 'Medix-Bridge'
           slot-name: 'Production'
-          package: .
 
-          
 
